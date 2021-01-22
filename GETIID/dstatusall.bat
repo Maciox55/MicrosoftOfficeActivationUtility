@@ -1,0 +1,1 @@
+cscript ospp.vbs /dstatusall

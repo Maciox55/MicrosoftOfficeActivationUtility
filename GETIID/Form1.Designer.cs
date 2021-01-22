@@ -41,6 +41,7 @@ namespace GETIID
             this.label3 = new System.Windows.Forms.Label();
             this.ACTIVATE_BUTTON = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.REFRESH_BUTTON = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,6 +76,7 @@ namespace GETIID
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.REFRESH_BUTTON);
             this.panel1.Controls.Add(this.UNINSTALL_SELECTED_BUTTON);
             this.panel1.Controls.Add(this.ACTIVE_SERIALS);
             this.panel1.Location = new System.Drawing.Point(502, 29);
@@ -86,9 +88,9 @@ namespace GETIID
             // 
             this.UNINSTALL_SELECTED_BUTTON.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.UNINSTALL_SELECTED_BUTTON.Location = new System.Drawing.Point(4, 282);
+            this.UNINSTALL_SELECTED_BUTTON.Location = new System.Drawing.Point(77, 282);
             this.UNINSTALL_SELECTED_BUTTON.Name = "UNINSTALL_SELECTED_BUTTON";
-            this.UNINSTALL_SELECTED_BUTTON.Size = new System.Drawing.Size(244, 23);
+            this.UNINSTALL_SELECTED_BUTTON.Size = new System.Drawing.Size(171, 23);
             this.UNINSTALL_SELECTED_BUTTON.TabIndex = 1;
             this.UNINSTALL_SELECTED_BUTTON.Text = "Uninstall Selected";
             this.UNINSTALL_SELECTED_BUTTON.UseVisualStyleBackColor = true;
@@ -160,6 +162,16 @@ namespace GETIID
             this.label4.TabIndex = 10;
             this.label4.Text = "Office Keys Installed";
             // 
+            // REFRESH_BUTTON
+            // 
+            this.REFRESH_BUTTON.Location = new System.Drawing.Point(4, 282);
+            this.REFRESH_BUTTON.Name = "REFRESH_BUTTON";
+            this.REFRESH_BUTTON.Size = new System.Drawing.Size(67, 23);
+            this.REFRESH_BUTTON.TabIndex = 2;
+            this.REFRESH_BUTTON.Text = "Refresh";
+            this.REFRESH_BUTTON.UseVisualStyleBackColor = true;
+            this.REFRESH_BUTTON.Click += new System.EventHandler(this.REFRESH_BUTTON_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -197,6 +209,7 @@ namespace GETIID
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button ACTIVATE_BUTTON;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button REFRESH_BUTTON;
     }
 }
 

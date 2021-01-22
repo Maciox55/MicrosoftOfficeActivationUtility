@@ -1,1 +1,2 @@
-cscript ospp.vbs /dinstid
+@echo off
+cscript //nologo ospp.vbs /dinstid

@@ -1,1 +1,2 @@
-cscript ospp.vbs /actcid:
+@echo off
+cscript //nologo ospp.vbs /actcid:

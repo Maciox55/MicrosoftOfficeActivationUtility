@@ -1,1 +1,2 @@
-cscript ospp.vbs /dstatus
+@echo off
+cscript //nologo ospp.vbs /dstatus

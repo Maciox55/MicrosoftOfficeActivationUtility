@@ -16,21 +16,24 @@ namespace GETIID
         public Form1()
         {
             InitializeComponent();
+            
 
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.UseShellExecute = false;
+            startInfo.Verb = "runas";
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardInput = true;
             startInfo.CreateNoWindow = true;
-            startInfo.FileName = "cmd.exe";
+            startInfo.FileName = "getiid.bat";
             process.StartInfo = startInfo;
             process.Start();
-            process.StandardInput.Write("cscript ospp.vbs /dstatus");
+            //process.StandardInput.Write("cscript ospp.vbs /dstatus");
             string output = process.StandardOutput.ReadToEnd();
-
-            MessageBox.Show(output);
+            textBox1.Text = output;
             process.WaitForExit();
+
+            updateList();
         }
 
         private void IID_GET_BUTTON_Click(object sender, EventArgs e)
@@ -56,6 +59,32 @@ namespace GETIID
         private void OPEN_BROWSER_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void REFRESH_BUTTON_Click(object sender, EventArgs e)
+        {
+            updateList();   
+        }
+
+        public string get_keys() {
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.UseShellExecute = false;
+            startInfo.Verb = "runas";
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardInput = true;
+            startInfo.CreateNoWindow = true;
+            startInfo.FileName = "dstatusall.bat";
+            process.StartInfo = startInfo;
+            process.Start();
+            string output = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            return output;
+        }
+        public void updateList() {
+            ACTIVE_SERIALS.Items.Clear();
+            var listviewitem = new ListViewItem(get_keys());
+            ACTIVE_SERIALS.Items.Add(listviewitem);
         }
     }
 }

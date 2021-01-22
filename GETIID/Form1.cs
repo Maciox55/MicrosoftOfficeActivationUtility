@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace GETIID
 {
@@ -15,6 +16,21 @@ namespace GETIID
         public Form1()
         {
             InitializeComponent();
+
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardInput = true;
+            startInfo.CreateNoWindow = true;
+            startInfo.FileName = "cmd.exe";
+            process.StartInfo = startInfo;
+            process.Start();
+            process.StandardInput.Write("cscript ospp.vbs /dstatus");
+            string output = process.StandardOutput.ReadToEnd();
+
+            MessageBox.Show(output);
+            process.WaitForExit();
         }
 
         private void IID_GET_BUTTON_Click(object sender, EventArgs e)

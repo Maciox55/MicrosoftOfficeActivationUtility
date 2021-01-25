@@ -36,14 +36,14 @@ namespace GETIID
             this.REFRESH_BUTTON = new System.Windows.Forms.Button();
             this.UNINSTALL_SELECTED_BUTTON = new System.Windows.Forms.Button();
             this.ACTIVE_SERIALS = new System.Windows.Forms.ListView();
+            this.ch_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_key = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label2 = new System.Windows.Forms.Label();
             this.OPEN_BROWSER = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ACTIVATE_BUTTON = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.ch_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_key = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,6 +124,16 @@ namespace GETIID
             this.ACTIVE_SERIALS.UseCompatibleStateImageBehavior = false;
             this.ACTIVE_SERIALS.View = System.Windows.Forms.View.Details;
             // 
+            // ch_name
+            // 
+            this.ch_name.Text = "Product Name";
+            this.ch_name.Width = 83;
+            // 
+            // ch_key
+            // 
+            this.ch_key.Text = "Key";
+            this.ch_key.Width = 72;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -178,16 +188,6 @@ namespace GETIID
             this.label4.TabIndex = 10;
             this.label4.Text = "Office Keys Installed";
             // 
-            // ch_name
-            // 
-            this.ch_name.Text = "Product Name";
-            this.ch_name.Width = 83;
-            // 
-            // ch_key
-            // 
-            this.ch_key.Text = "Key";
-            this.ch_key.Width = 72;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -204,7 +204,7 @@ namespace GETIID
             this.Controls.Add(this.label1);
             this.Controls.Add(this.IID_GET_BUTTON);
             this.Name = "Form1";
-            this.Text = "   ";
+            this.Text = "000";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -14,6 +14,8 @@ namespace GETIID
 {
     public partial class Form1 : Form
     {
+        public string iid;
+        public int[] iidSegments;
         public Form1()
         {
             InitializeComponent();
@@ -31,7 +33,14 @@ namespace GETIID
             process.Start();
             //process.StandardInput.Write("cscript ospp.vbs /dstatus");
             string output = process.StandardOutput.ReadToEnd();
+            string iid = getBetween(output, "edition: ", "-");
             textBox1.Text = output;
+            for (int i = 0; i < 9; i++) {
+                for (int c = 0; c < 7; c++)
+                { 
+                
+                }
+            }
             process.WaitForExit();
 
             updateList();
@@ -79,12 +88,11 @@ namespace GETIID
             process.StartInfo = startInfo;
             process.Start();
             string output = process.StandardOutput.ReadToEnd();
-            string[] strings = Regex.Split(output, @"\W|_");
-            foreach (string s in strings)
-            {
-                Console.WriteLine(s);
-            }
-            
+
+            var listviewitem = new ListViewItem(getBetween(output, "key ", "-"));
+            listviewitem.SubItems.Add("test");
+            ACTIVE_SERIALS.Items.Add(listviewitem);
+
             process.WaitForExit();
             return output;
         }
@@ -94,5 +102,19 @@ namespace GETIID
             listviewitem.SubItems.Add("test");
             ACTIVE_SERIALS.Items.Add(listviewitem);
         }
+
+        public static string getBetween(string strSource, string strStart, string strEnd)
+        {
+            if (strSource.Contains(strStart) && strSource.Contains(strEnd))
+            {
+                int Start, End;
+                Start = strSource.IndexOf(strStart, 0) + strStart.Length;
+                End = strSource.IndexOf(strEnd, Start);
+                return strSource.Substring(Start, End - Start);
+            }
+
+            return "";
+        }
+
     }
 }

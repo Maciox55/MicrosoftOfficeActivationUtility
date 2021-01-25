@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace GETIID
 {
@@ -78,12 +79,19 @@ namespace GETIID
             process.StartInfo = startInfo;
             process.Start();
             string output = process.StandardOutput.ReadToEnd();
+            string[] strings = Regex.Split(output, @"\W|_");
+            foreach (string s in strings)
+            {
+                Console.WriteLine(s);
+            }
+            
             process.WaitForExit();
             return output;
         }
         public void updateList() {
             ACTIVE_SERIALS.Items.Clear();
             var listviewitem = new ListViewItem(get_keys());
+            listviewitem.SubItems.Add("test");
             ACTIVE_SERIALS.Items.Add(listviewitem);
         }
     }

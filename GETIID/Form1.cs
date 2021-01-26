@@ -9,17 +9,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Net.Http;
+
+using System.IO;
 
 namespace GETIID
 {
-    public partial class Form1 : Form
+    public partial class  Form1 : Form
     {
         public string iid;
         public int[] iidSegments;
+        public HttpClient client = new HttpClient();
+        public string url;
         public Form1()
         {
             InitializeComponent();
-            
+
 
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -34,16 +39,17 @@ namespace GETIID
             //process.StandardInput.Write("cscript ospp.vbs /dstatus");
             string output = process.StandardOutput.ReadToEnd();
             string iid = getBetween(output, "edition: ", "-");
-            textBox1.Text = output;
-            for (int i = 0; i < 9; i++) {
-                for (int c = 0; c < 7; c++)
-                { 
-                
-                }
-            }
+            textBox1.Text = iid;
+
             process.WaitForExit();
 
             updateList();
+
+            url = $"https://getcid.info/api/{iid}/fupimuem1lf";
+
+            
+
+
         }
 
         private void IID_GET_BUTTON_Click(object sender, EventArgs e)
@@ -61,8 +67,9 @@ namespace GETIID
             Clipboard.SetText(textBox1.Text);
         }
 
-        private void ACTIVATE_BUTTON_Click(object sender, EventArgs e)
+        private async void ACTIVATE_BUTTON_Click(object sender, EventArgs e)
         {
+            string s = await getCID(url);
 
         }
 
@@ -73,7 +80,7 @@ namespace GETIID
 
         private void REFRESH_BUTTON_Click(object sender, EventArgs e)
         {
-            updateList();   
+            updateList();
         }
 
         public string get_keys() {
@@ -88,11 +95,10 @@ namespace GETIID
             process.StartInfo = startInfo;
             process.Start();
             string output = process.StandardOutput.ReadToEnd();
-
             var listviewitem = new ListViewItem(getBetween(output, "key ", "-"));
             listviewitem.SubItems.Add("test");
             ACTIVE_SERIALS.Items.Add(listviewitem);
-
+            Console.WriteLine(output);
             process.WaitForExit();
             return output;
         }
@@ -116,5 +122,15 @@ namespace GETIID
             return "";
         }
 
+        private void configToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        public async Task getCID(string url) {
+
+            string response = await client.GetStringAsync(url);
+            Console.WriteLine(response);
+        
+        }
     }
 }

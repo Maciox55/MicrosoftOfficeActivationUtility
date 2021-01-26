@@ -40,16 +40,23 @@ namespace GETIID
             this.ch_key = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label2 = new System.Windows.Forms.Label();
             this.OPEN_BROWSER = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.cid_text = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ACTIVATE_BUTTON = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.status_strip = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // IID_GET_BUTTON
             // 
-            this.IID_GET_BUTTON.Location = new System.Drawing.Point(421, 28);
+            this.IID_GET_BUTTON.Location = new System.Drawing.Point(421, 61);
             this.IID_GET_BUTTON.Name = "IID_GET_BUTTON";
             this.IID_GET_BUTTON.Size = new System.Drawing.Size(75, 20);
             this.IID_GET_BUTTON.TabIndex = 0;
@@ -60,7 +67,7 @@ namespace GETIID
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Location = new System.Drawing.Point(12, 45);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(21, 13);
             this.label1.TabIndex = 1;
@@ -68,7 +75,7 @@ namespace GETIID
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(16, 29);
+            this.textBox1.Location = new System.Drawing.Point(12, 61);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(399, 20);
             this.textBox1.TabIndex = 2;
@@ -137,7 +144,7 @@ namespace GETIID
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 67);
+            this.label2.Location = new System.Drawing.Point(13, 101);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(57, 13);
             this.label2.TabIndex = 5;
@@ -145,7 +152,7 @@ namespace GETIID
             // 
             // OPEN_BROWSER
             // 
-            this.OPEN_BROWSER.Location = new System.Drawing.Point(16, 83);
+            this.OPEN_BROWSER.Location = new System.Drawing.Point(16, 129);
             this.OPEN_BROWSER.Name = "OPEN_BROWSER";
             this.OPEN_BROWSER.Size = new System.Drawing.Size(75, 23);
             this.OPEN_BROWSER.TabIndex = 6;
@@ -153,12 +160,12 @@ namespace GETIID
             this.OPEN_BROWSER.UseVisualStyleBackColor = true;
             this.OPEN_BROWSER.Click += new System.EventHandler(this.OPEN_BROWSER_Click);
             // 
-            // textBox2
+            // cid_text
             // 
-            this.textBox2.Location = new System.Drawing.Point(12, 263);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(480, 20);
-            this.textBox2.TabIndex = 7;
+            this.cid_text.Location = new System.Drawing.Point(12, 263);
+            this.cid_text.Name = "cid_text";
+            this.cid_text.Size = new System.Drawing.Size(480, 20);
+            this.cid_text.TabIndex = 7;
             // 
             // label3
             // 
@@ -188,24 +195,72 @@ namespace GETIID
             this.label4.TabIndex = 10;
             this.label4.Text = "Office Keys Installed";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(887, 24);
+            this.menuStrip1.TabIndex = 11;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.configToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // configToolStripMenuItem
+            // 
+            this.configToolStripMenuItem.Name = "configToolStripMenuItem";
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.configToolStripMenuItem.Text = "Config";
+            this.configToolStripMenuItem.Click += new System.EventHandler(this.configToolStripMenuItem_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.status_strip});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 350);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(887, 22);
+            this.statusStrip1.TabIndex = 12;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // status_strip
+            // 
+            this.status_strip.Name = "status_strip";
+            this.status_strip.Size = new System.Drawing.Size(42, 17);
+            this.status_strip.Text = "Status:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(887, 372);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.ACTIVATE_BUTTON);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.cid_text);
             this.Controls.Add(this.OPEN_BROWSER);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.IID_GET_BUTTON);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "000";
+            this.Text = "IID_GET";
             this.panel1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,13 +276,18 @@ namespace GETIID
         private System.Windows.Forms.Button UNINSTALL_SELECTED_BUTTON;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button OPEN_BROWSER;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox cid_text;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button ACTIVATE_BUTTON;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button REFRESH_BUTTON;
         private System.Windows.Forms.ColumnHeader ch_name;
         private System.Windows.Forms.ColumnHeader ch_key;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem configToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel status_strip;
     }
 }
 

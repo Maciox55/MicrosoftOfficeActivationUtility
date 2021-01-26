@@ -48,7 +48,7 @@ namespace GETIID
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.status_strip = new System.Windows.Forms.ToolStripStatusLabel();
+            this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -223,18 +223,18 @@ namespace GETIID
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.status_strip});
+            this.status});
             this.statusStrip1.Location = new System.Drawing.Point(0, 350);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(887, 22);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // status_strip
+            // status
             // 
-            this.status_strip.Name = "status_strip";
-            this.status_strip.Size = new System.Drawing.Size(42, 17);
-            this.status_strip.Text = "Status:";
+            this.status.Name = "status";
+            this.status.Size = new System.Drawing.Size(42, 17);
+            this.status.Text = "Status:";
             // 
             // Form1
             // 
@@ -287,7 +287,7 @@ namespace GETIID
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel status_strip;
+        private System.Windows.Forms.ToolStripStatusLabel status;
     }
 }
 

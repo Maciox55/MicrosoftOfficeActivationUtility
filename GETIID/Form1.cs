@@ -12,6 +12,8 @@ using System.Text.RegularExpressions;
 using System.Net.Http;
 
 using System.IO;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace GETIID
 {
@@ -47,9 +49,6 @@ namespace GETIID
 
             url = $"https://getcid.info/api/{iid}/fupimuem1lf";
 
-            
-
-
         }
 
         private void IID_GET_BUTTON_Click(object sender, EventArgs e)
@@ -67,15 +66,29 @@ namespace GETIID
             Clipboard.SetText(textBox1.Text);
         }
 
-        private async void ACTIVATE_BUTTON_Click(object sender, EventArgs e)
+        private void ACTIVATE_BUTTON_Click(object sender, EventArgs e)
         {
-            string s = await getCID(url);
-
+            activateByCID(cid_text.Text);
         }
 
         private void OPEN_BROWSER_Click(object sender, EventArgs e)
         {
+            IWebDriver driver = new ChromeDriver();
 
+            //Navigate to google page
+            driver.Navigate().GoToUrl("https://microsoft.gointeract.io/interact/index?interaction=1461173234028-3884f8602eccbe259104553afa8415434b4581-05d1&accountId=microsoft&loadFrom=CDN&appkey=196de13c-e946-4531-98f6-2719ec8405ce&name=pana&Language=English&CountryCode=en-US&Environment-Name=Prod&Click%20To%20Call%20Caller%20Id=+12168553563&startedFromSmsToken=sdLybGf&dnis=24&token=QFmoD7");
+
+            //Maximize the window
+            driver.Manage().Window.Maximize();
+
+            //Find the Search text box using xpath
+            IWebElement element = driver.FindElement(By.XPath("//*[@title='Search']"));
+
+            //Enter some text in search text box
+            element.SendKeys("learn-automation");
+
+            //Close the browser
+            driver.Close();
         }
 
         private void REFRESH_BUTTON_Click(object sender, EventArgs e)
@@ -131,6 +144,31 @@ namespace GETIID
             string response = await client.GetStringAsync(url);
             Console.WriteLine(response);
         
+        }
+        public void activateByCID(string cid)
+        {
+            if (cid == null || cid == "")
+            {
+                status.Text = "Status: Please provide CID";
+            }
+            else {
+                string command = "/c cscript //nologo ospp.vbs /actcid:" + cid;
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                startInfo.UseShellExecute = false;
+                startInfo.Verb = "runas";
+                startInfo.RedirectStandardOutput = true;
+                startInfo.RedirectStandardInput = true;
+                startInfo.CreateNoWindow = false;
+                startInfo.FileName = "cmd.exe";
+                startInfo.Arguments = command;
+                process.StartInfo = startInfo;
+                process.Start();
+                string output = process.StandardOutput.ReadToEnd();
+                Console.WriteLine(output);
+                process.WaitForExit();
+                status.Text = "Status: Activation Attempted";
+            }
         }
     }
 }

@@ -14,13 +14,14 @@ using System.Net.Http;
 using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace GETIID
 {
     public partial class  Form1 : Form
     {
         public string iid;
-        public int[] iidSegments;
+        public string cid;
         public HttpClient client = new HttpClient();
         public string url;
         public Form1()
@@ -40,14 +41,10 @@ namespace GETIID
             process.Start();
             //process.StandardInput.Write("cscript ospp.vbs /dstatus");
             string output = process.StandardOutput.ReadToEnd();
-            string iid = getBetween(output, "edition: ", "-");
+            iid = getBetween(output, "edition: ", "-");
             textBox1.Text = iid;
-
             process.WaitForExit();
-
             updateList();
-
-            url = $"https://getcid.info/api/{iid}/fupimuem1lf";
 
         }
 
@@ -75,20 +72,25 @@ namespace GETIID
         {
             IWebDriver driver = new ChromeDriver();
 
-            //Navigate to google page
-            driver.Navigate().GoToUrl("https://microsoft.gointeract.io/interact/index?interaction=1461173234028-3884f8602eccbe259104553afa8415434b4581-05d1&accountId=microsoft&loadFrom=CDN&appkey=196de13c-e946-4531-98f6-2719ec8405ce&name=pana&Language=English&CountryCode=en-US&Environment-Name=Prod&Click%20To%20Call%20Caller%20Id=+12168553563&startedFromSmsToken=sdLybGf&dnis=24&token=QFmoD7");
 
-            //Maximize the window
-            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(Properties.Settings.Default.url);
+            driver.Manage().Window.Minimize();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 
-            //Find the Search text box using xpath
-            IWebElement element = driver.FindElement(By.XPath("//*[@title='Search']"));
+            
+            for (int f = 0; f < 9; f++)
+            {
+                
+                IWebElement element = driver.FindElement(By.Id("field" + (f+1)));
+                element.SendKeys(iid.Substring(f * 7, 7));
+                
+            }
 
-            //Enter some text in search text box
-            element.SendKeys("learn-automation");
-
-            //Close the browser
-            driver.Close();
+            driver.FindElement(By.Id("custom-msft-submit")).Click();
+            
+            //driver.Close();
         }
 
         private void REFRESH_BUTTON_Click(object sender, EventArgs e)
@@ -137,8 +139,10 @@ namespace GETIID
 
         private void configToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var optionsForm = new Options_Form();
+            optionsForm.Show();
         }
+
         public async Task getCID(string url) {
 
             string response = await client.GetStringAsync(url);
@@ -170,5 +174,7 @@ namespace GETIID
                 status.Text = "Status: Activation Attempted";
             }
         }
+
     }
+
 }

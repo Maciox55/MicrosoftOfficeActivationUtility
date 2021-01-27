@@ -38,8 +38,6 @@ namespace GETIID
             this.ACTIVE_SERIALS = new System.Windows.Forms.ListView();
             this.ch_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_key = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label2 = new System.Windows.Forms.Label();
-            this.OPEN_BROWSER = new System.Windows.Forms.Button();
             this.cid_text = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ACTIVATE_BUTTON = new System.Windows.Forms.Button();
@@ -141,28 +139,9 @@ namespace GETIID
             this.ch_key.Text = "Key";
             this.ch_key.Width = 72;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 101);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Temporary";
-            // 
-            // OPEN_BROWSER
-            // 
-            this.OPEN_BROWSER.Location = new System.Drawing.Point(16, 129);
-            this.OPEN_BROWSER.Name = "OPEN_BROWSER";
-            this.OPEN_BROWSER.Size = new System.Drawing.Size(75, 23);
-            this.OPEN_BROWSER.TabIndex = 6;
-            this.OPEN_BROWSER.Text = "GETIID.info";
-            this.OPEN_BROWSER.UseVisualStyleBackColor = true;
-            this.OPEN_BROWSER.Click += new System.EventHandler(this.OPEN_BROWSER_Click);
-            // 
             // cid_text
             // 
-            this.cid_text.Location = new System.Drawing.Point(12, 263);
+            this.cid_text.Location = new System.Drawing.Point(12, 111);
             this.cid_text.Name = "cid_text";
             this.cid_text.Size = new System.Drawing.Size(480, 20);
             this.cid_text.TabIndex = 7;
@@ -170,7 +149,7 @@ namespace GETIID
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 247);
+            this.label3.Location = new System.Drawing.Point(12, 95);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(25, 13);
             this.label3.TabIndex = 8;
@@ -216,7 +195,7 @@ namespace GETIID
             // configToolStripMenuItem
             // 
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
-            this.configToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.configToolStripMenuItem.Text = "Config";
             this.configToolStripMenuItem.Click += new System.EventHandler(this.configToolStripMenuItem_Click);
             // 
@@ -246,8 +225,6 @@ namespace GETIID
             this.Controls.Add(this.ACTIVATE_BUTTON);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cid_text);
-            this.Controls.Add(this.OPEN_BROWSER);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
@@ -274,8 +251,6 @@ namespace GETIID
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ListView ACTIVE_SERIALS;
         private System.Windows.Forms.Button UNINSTALL_SELECTED_BUTTON;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button OPEN_BROWSER;
         private System.Windows.Forms.TextBox cid_text;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button ACTIVATE_BUTTON;

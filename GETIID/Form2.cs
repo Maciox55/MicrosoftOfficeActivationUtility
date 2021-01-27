@@ -15,6 +15,21 @@ namespace GETIID
         public Options_Form()
         {
             InitializeComponent();
+
+            url_textbox.Text = Properties.Settings.Default.url;
+        }
+
+        private void Save_Button_Click(object sender, EventArgs e)
+        {
+            if (url_textbox.Text != null || url_textbox.Text != "")
+            {
+                Properties.Settings.Default.url = url_textbox.Text;
+                this.Close();
+            }
+            else {
+
+                this.Close();
+            }
         }
     }
 }

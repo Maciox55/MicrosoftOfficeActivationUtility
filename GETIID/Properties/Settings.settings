@@ -1,7 +1,9 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GETIID.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="url" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://microsoft.gointeract.io/interact/index?interaction=1461173234028-3884f8602eccbe259104553afa8415434b4581-05d1&amp;accountId=microsoft&amp;loadFrom=CDN&amp;appkey=196de13c-e946-4531-98f6-2719ec8405ce&amp;name=pana&amp;Language=English&amp;CountryCode=en-US&amp;Environment-Name=Prod&amp;Click%20To%20Call%20Caller%20Id=+12168553563&amp;startedFromSmsToken=sdLybGf&amp;dnis=24&amp;token=QFmoD7</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

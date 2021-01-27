@@ -29,21 +29,7 @@ namespace GETIID
             InitializeComponent();
 
 
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.UseShellExecute = false;
-            startInfo.Verb = "runas";
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardInput = true;
-            startInfo.CreateNoWindow = true;
-            startInfo.FileName = "getiid.bat";
-            process.StartInfo = startInfo;
-            process.Start();
-            //process.StandardInput.Write("cscript ospp.vbs /dstatus");
-            string output = process.StandardOutput.ReadToEnd();
-            iid = getBetween(output, "edition: ", "-");
-            textBox1.Text = iid;
-            process.WaitForExit();
+            getIID();
             updateList();
 
         }
@@ -142,12 +128,47 @@ namespace GETIID
             var optionsForm = new Options_Form();
             optionsForm.Show();
         }
+        public void getIID() {
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.UseShellExecute = false;
+            startInfo.Verb = "runas";
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardInput = true;
+            startInfo.CreateNoWindow = true;
+            startInfo.FileName = "getiid.bat";
+            process.StartInfo = startInfo;
+            process.Start();
+            //process.StandardInput.Write("cscript ospp.vbs /dstatus");
+            string output = process.StandardOutput.ReadToEnd();
+            iid = getBetween(output, "edition: ", "-");
+            textBox1.Text = iid;
+            process.WaitForExit();
+            process.Close();
 
-        public async Task getCID(string url) {
+        }
 
-            string response = await client.GetStringAsync(url);
-            Console.WriteLine(response);
-        
+        public void getCID() {
+            IWebDriver driver = new ChromeDriver();
+            
+            driver.Navigate().GoToUrl(Properties.Settings.Default.url);
+            driver.Manage().Window.Minimize();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+
+
+            for (int f = 0; f < 9; f++)
+            {
+
+                IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
+                element.SendKeys(iid.Substring(f * 7, 7));
+
+            }
+
+            driver.FindElement(By.Id("custom-msft-submit")).Click();
+
+            //driver.Close();
         }
         public void activateByCID(string cid)
         {
@@ -172,6 +193,7 @@ namespace GETIID
                 Console.WriteLine(output);
                 process.WaitForExit();
                 status.Text = "Status: Activation Attempted";
+                process.Close();
             }
         }
 

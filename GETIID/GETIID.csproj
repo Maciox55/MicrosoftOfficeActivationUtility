@@ -116,6 +116,7 @@
     <Content Include="OSPP.VBS">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Self Service for Mobile.html" />
     <Content Include="SLERROR.XML">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

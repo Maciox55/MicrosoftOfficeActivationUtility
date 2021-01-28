@@ -28,16 +28,16 @@ namespace GETIID
         {
             InitializeComponent();
 
-
+            
             getIID();
             getCID();
-            updateList();
+            //updateList();
 
         }
 
         private void IID_GET_BUTTON_Click(object sender, EventArgs e)
         {
-
+            getIID();
         }
 
         private void UNINSTALL_SELECTED_BUTTON_Click(object sender, EventArgs e)
@@ -66,7 +66,6 @@ namespace GETIID
             driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 
-            
             for (int f = 0; f < 9; f++)
             {
                 
@@ -76,8 +75,6 @@ namespace GETIID
             }
 
             driver.FindElement(By.Id("custom-msft-submit")).Click();
-            
-            //driver.Close();
         }
 
         private void REFRESH_BUTTON_Click(object sender, EventArgs e)
@@ -120,7 +117,6 @@ namespace GETIID
                 End = strSource.IndexOf(strEnd, Start);
                 return strSource.Substring(Start, End - Start);
             }
-
             return "";
         }
 
@@ -129,6 +125,7 @@ namespace GETIID
             var optionsForm = new Options_Form();
             optionsForm.Show();
         }
+
         public void getIID() {
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -146,14 +143,12 @@ namespace GETIID
             textBox1.Text = iid;
             process.WaitForExit();
             process.Close();
-
         }
 
         public void getCID() {
             IWebDriver driver = new ChromeDriver();
             
             driver.Navigate().GoToUrl(Properties.Settings.Default.url);
-            driver.Manage().Window.Minimize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
@@ -169,7 +164,25 @@ namespace GETIID
 
             driver.FindElement(By.Id("custom-msft-submit")).Click();
 
-            //driver.Close();
+
+            var elements = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
+
+            if (elements != null)
+            {
+                foreach (var element in elements)
+                {
+                    Console.WriteLine(element.Text);
+                    cid += element.Text;
+                }
+                cid_text.Text = cid;
+                status.Text = "Status: CID retireved";
+            }
+            else {
+                status.Text = "Status: Problem getting CID";
+            }
+            activateByCID("test");
+
+            driver.Quit();
         }
         public void activateByCID(string cid)
         {

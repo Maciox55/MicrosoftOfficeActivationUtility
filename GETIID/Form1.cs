@@ -47,12 +47,17 @@ namespace GETIID
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            Clipboard.SetText(textBox1.Text);
+            Clipboard.SetText(iid_textbox.Text);
         }
 
         private void ACTIVATE_BUTTON_Click(object sender, EventArgs e)
         {
-            activateByCID(cid_text.Text);
+            activateByCID(cid_textbox.Text);
+        }
+
+        private void OFFICE_ACTIVATION_BUTTON_Click(object sender, EventArgs e)
+        {
+            activateByKEY(officekey_textbox.Text);
         }
 
         private void OPEN_BROWSER_Click(object sender, EventArgs e)
@@ -140,7 +145,7 @@ namespace GETIID
             //process.StandardInput.Write("cscript ospp.vbs /dstatus");
             string output = process.StandardOutput.ReadToEnd();
             iid = getBetween(output, "edition: ", "-");
-            textBox1.Text = iid;
+            iid_textbox.Text = iid;
             process.WaitForExit();
             process.Close();
         }
@@ -174,7 +179,7 @@ namespace GETIID
                     Console.WriteLine(element.Text);
                     cid += element.Text;
                 }
-                cid_text.Text = cid;
+                cid_textbox.Text = cid;
                 status.Text = "Status: CID retireved";
 
                 activateByCID(cid);
@@ -212,6 +217,35 @@ namespace GETIID
                 process.Close();
             }
         }
+
+        public void activateByKEY(string key)
+        {
+            if (key == null || key == "")
+            {
+                status.Text = "Status: Please provide Office Key";
+            }
+            else
+            {
+                string command = "/c cscript //nologo ospp.vbs /inpkey:" + key;
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                startInfo.UseShellExecute = false;
+                startInfo.Verb = "runas";
+                startInfo.RedirectStandardOutput = true;
+                startInfo.RedirectStandardInput = true;
+                startInfo.CreateNoWindow = false;
+                startInfo.FileName = "cmd.exe";
+                startInfo.Arguments = command;
+                process.StartInfo = startInfo;
+                process.Start();
+                string output = process.StandardOutput.ReadToEnd();
+                Console.WriteLine(output);
+                process.WaitForExit();
+                status.Text = "Status: Key Activation Attempted";
+                process.Close();
+            }
+        }
+
 
     }
 

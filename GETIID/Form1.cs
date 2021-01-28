@@ -62,10 +62,13 @@ namespace GETIID
 
         private void OPEN_BROWSER_Click(object sender, EventArgs e)
         {
-            IWebDriver driver = new ChromeDriver();
+            var chromeOptions = new ChromeOptions();
+            chromeOptions.AddArguments("headless");
+            IWebDriver driver = new ChromeDriver(chromeOptions);
 
-
+            
             driver.Navigate().GoToUrl(Properties.Settings.Default.url);
+
             driver.Manage().Window.Minimize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
@@ -245,8 +248,6 @@ namespace GETIID
                 process.Close();
             }
         }
-
-
     }
 
 }

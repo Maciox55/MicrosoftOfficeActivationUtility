@@ -29,6 +29,7 @@ namespace GETIID
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.IID_GET_BUTTON = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.iid_textbox = new System.Windows.Forms.TextBox();
@@ -46,10 +47,10 @@ namespace GETIID
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.ActivationGroup = new System.Windows.Forms.GroupBox();
-            this.OfficeKeysGroup = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.officekey_textbox = new System.Windows.Forms.TextBox();
             this.OFFICE_ACTIVATION_BUTTON = new System.Windows.Forms.Button();
+            this.officekey_textbox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.OfficeKeysGroup = new System.Windows.Forms.GroupBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ActivationGroup.SuspendLayout();
@@ -86,7 +87,7 @@ namespace GETIID
             // REFRESH_BUTTON
             // 
             this.REFRESH_BUTTON.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.REFRESH_BUTTON.Location = new System.Drawing.Point(3, 244);
+            this.REFRESH_BUTTON.Location = new System.Drawing.Point(3, 239);
             this.REFRESH_BUTTON.Name = "REFRESH_BUTTON";
             this.REFRESH_BUTTON.Size = new System.Drawing.Size(364, 50);
             this.REFRESH_BUTTON.TabIndex = 2;
@@ -97,9 +98,9 @@ namespace GETIID
             // UNINSTALL_SELECTED_BUTTON
             // 
             this.UNINSTALL_SELECTED_BUTTON.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.UNINSTALL_SELECTED_BUTTON.Location = new System.Drawing.Point(3, 294);
+            this.UNINSTALL_SELECTED_BUTTON.Location = new System.Drawing.Point(3, 289);
             this.UNINSTALL_SELECTED_BUTTON.Name = "UNINSTALL_SELECTED_BUTTON";
-            this.UNINSTALL_SELECTED_BUTTON.Size = new System.Drawing.Size(364, 50);
+            this.UNINSTALL_SELECTED_BUTTON.Size = new System.Drawing.Size(364, 55);
             this.UNINSTALL_SELECTED_BUTTON.TabIndex = 1;
             this.UNINSTALL_SELECTED_BUTTON.Text = "Uninstall Selected";
             this.UNINSTALL_SELECTED_BUTTON.UseVisualStyleBackColor = true;
@@ -180,7 +181,7 @@ namespace GETIID
             // configToolStripMenuItem
             // 
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
-            this.configToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.configToolStripMenuItem.Text = "Config";
             this.configToolStripMenuItem.Click += new System.EventHandler(this.configToolStripMenuItem_Click);
             // 
@@ -220,6 +221,32 @@ namespace GETIID
             this.ActivationGroup.TabStop = false;
             this.ActivationGroup.Text = "Activation";
             // 
+            // OFFICE_ACTIVATION_BUTTON
+            // 
+            this.OFFICE_ACTIVATION_BUTTON.Location = new System.Drawing.Point(395, 62);
+            this.OFFICE_ACTIVATION_BUTTON.Name = "OFFICE_ACTIVATION_BUTTON";
+            this.OFFICE_ACTIVATION_BUTTON.Size = new System.Drawing.Size(75, 23);
+            this.OFFICE_ACTIVATION_BUTTON.TabIndex = 12;
+            this.OFFICE_ACTIVATION_BUTTON.Text = "Activate";
+            this.OFFICE_ACTIVATION_BUTTON.UseVisualStyleBackColor = true;
+            this.OFFICE_ACTIVATION_BUTTON.Click += new System.EventHandler(this.OFFICE_ACTIVATION_BUTTON_Click);
+            // 
+            // officekey_textbox
+            // 
+            this.officekey_textbox.Location = new System.Drawing.Point(7, 36);
+            this.officekey_textbox.Name = "officekey_textbox";
+            this.officekey_textbox.Size = new System.Drawing.Size(463, 20);
+            this.officekey_textbox.TabIndex = 11;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 19);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(99, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Office Key Override";
+            // 
             // OfficeKeysGroup
             // 
             this.OfficeKeysGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -234,32 +261,6 @@ namespace GETIID
             this.OfficeKeysGroup.TabStop = false;
             this.OfficeKeysGroup.Text = "Installed Office Keys";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 19);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(99, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Office Key Override";
-            // 
-            // officekey_textbox
-            // 
-            this.officekey_textbox.Location = new System.Drawing.Point(7, 36);
-            this.officekey_textbox.Name = "officekey_textbox";
-            this.officekey_textbox.Size = new System.Drawing.Size(463, 20);
-            this.officekey_textbox.TabIndex = 11;
-            // 
-            // OFFICE_ACTIVATION_BUTTON
-            // 
-            this.OFFICE_ACTIVATION_BUTTON.Location = new System.Drawing.Point(395, 62);
-            this.OFFICE_ACTIVATION_BUTTON.Name = "OFFICE_ACTIVATION_BUTTON";
-            this.OFFICE_ACTIVATION_BUTTON.Size = new System.Drawing.Size(75, 23);
-            this.OFFICE_ACTIVATION_BUTTON.TabIndex = 12;
-            this.OFFICE_ACTIVATION_BUTTON.Text = "Activate";
-            this.OFFICE_ACTIVATION_BUTTON.UseVisualStyleBackColor = true;
-            this.OFFICE_ACTIVATION_BUTTON.Click += new System.EventHandler(this.OFFICE_ACTIVATION_BUTTON_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -269,6 +270,7 @@ namespace GETIID
             this.Controls.Add(this.ActivationGroup);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "IID_GET";

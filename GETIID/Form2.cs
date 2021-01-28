@@ -31,5 +31,10 @@ namespace GETIID
                 this.Close();
             }
         }
+
+        private void github_link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Maciox55/MicrosoftOfficeActivationUtility");
+        }
     }
 }

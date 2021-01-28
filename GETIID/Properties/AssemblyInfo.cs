@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("GETIID")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Created as a wrapper for the Microsoft Office OSPP.VBS utility to automate activation of Office 2016 using IID's and CID's")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Maciej Bregisz")]
 [assembly: AssemblyProduct("GETIID")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]

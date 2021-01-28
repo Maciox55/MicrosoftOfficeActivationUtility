@@ -34,5 +34,17 @@ namespace GETIID.Properties {
                 this["url"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("edge")]
+        public string browser_driver {
+            get {
+                return ((string)(this["browser_driver"]));
+            }
+            set {
+                this["browser_driver"] = value;
+            }
+        }
     }
 }

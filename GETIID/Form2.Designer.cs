@@ -35,20 +35,24 @@ namespace GETIID
             this.URL_Label = new System.Windows.Forms.Label();
             this.Save_Button = new System.Windows.Forms.Button();
             this.About_Group = new System.Windows.Forms.GroupBox();
-            this.Author_Label = new System.Windows.Forms.Label();
             this.github_link = new System.Windows.Forms.LinkLabel();
+            this.Author_Label = new System.Windows.Forms.Label();
+            this.Default_Browser_Settings = new System.Windows.Forms.ComboBox();
+            this.Default_Browser_Driver_Label = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.About_Group.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.Default_Browser_Driver_Label);
+            this.groupBox1.Controls.Add(this.Default_Browser_Settings);
             this.groupBox1.Controls.Add(this.url_textbox);
             this.groupBox1.Controls.Add(this.URL_Label);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(320, 86);
+            this.groupBox1.Size = new System.Drawing.Size(320, 113);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Config";
@@ -75,7 +79,7 @@ namespace GETIID
             // 
             this.Save_Button.AutoSize = true;
             this.Save_Button.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Save_Button.Location = new System.Drawing.Point(3, 204);
+            this.Save_Button.Location = new System.Drawing.Point(3, 177);
             this.Save_Button.Name = "Save_Button";
             this.Save_Button.Size = new System.Drawing.Size(314, 48);
             this.Save_Button.TabIndex = 1;
@@ -89,21 +93,12 @@ namespace GETIID
             this.About_Group.Controls.Add(this.Author_Label);
             this.About_Group.Controls.Add(this.Save_Button);
             this.About_Group.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.About_Group.Location = new System.Drawing.Point(0, 86);
+            this.About_Group.Location = new System.Drawing.Point(0, 113);
             this.About_Group.Name = "About_Group";
-            this.About_Group.Size = new System.Drawing.Size(320, 255);
+            this.About_Group.Size = new System.Drawing.Size(320, 228);
             this.About_Group.TabIndex = 2;
             this.About_Group.TabStop = false;
             this.About_Group.Text = "About";
-            // 
-            // Author_Label
-            // 
-            this.Author_Label.AutoSize = true;
-            this.Author_Label.Location = new System.Drawing.Point(6, 30);
-            this.Author_Label.Name = "Author_Label";
-            this.Author_Label.Size = new System.Drawing.Size(167, 13);
-            this.Author_Label.TabIndex = 2;
-            this.Author_Label.Text = "Created By: Maciej \"Mac\" Bregisz";
             // 
             // github_link
             // 
@@ -115,6 +110,35 @@ namespace GETIID
             this.github_link.TabStop = true;
             this.github_link.Text = "Checkout my GitHub, you can find the source code there!";
             this.github_link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.github_link_LinkClicked);
+            // 
+            // Author_Label
+            // 
+            this.Author_Label.AutoSize = true;
+            this.Author_Label.Location = new System.Drawing.Point(6, 30);
+            this.Author_Label.Name = "Author_Label";
+            this.Author_Label.Size = new System.Drawing.Size(167, 13);
+            this.Author_Label.TabIndex = 2;
+            this.Author_Label.Text = "Created By: Maciej \"Mac\" Bregisz";
+            // 
+            // Default_Browser_Settings
+            // 
+            this.Default_Browser_Settings.FormattingEnabled = true;
+            this.Default_Browser_Settings.Items.AddRange(new object[] {
+            "chrome",
+            "edge"});
+            this.Default_Browser_Settings.Location = new System.Drawing.Point(6, 86);
+            this.Default_Browser_Settings.Name = "Default_Browser_Settings";
+            this.Default_Browser_Settings.Size = new System.Drawing.Size(121, 21);
+            this.Default_Browser_Settings.TabIndex = 2;
+            // 
+            // Default_Browser_Driver_Label
+            // 
+            this.Default_Browser_Driver_Label.AutoSize = true;
+            this.Default_Browser_Driver_Label.Location = new System.Drawing.Point(6, 67);
+            this.Default_Browser_Driver_Label.Name = "Default_Browser_Driver_Label";
+            this.Default_Browser_Driver_Label.Size = new System.Drawing.Size(106, 13);
+            this.Default_Browser_Driver_Label.TabIndex = 3;
+            this.Default_Browser_Driver_Label.Text = "Using Browser Driver";
             // 
             // Options_Form
             // 
@@ -148,5 +172,7 @@ namespace GETIID
         private System.Windows.Forms.GroupBox About_Group;
         private System.Windows.Forms.Label Author_Label;
         private System.Windows.Forms.LinkLabel github_link;
+        private System.Windows.Forms.ComboBox Default_Browser_Settings;
+        private System.Windows.Forms.Label Default_Browser_Driver_Label;
     }
 }

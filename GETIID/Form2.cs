@@ -30,6 +30,13 @@ namespace GETIID
 
                 this.Close();
             }
+            if (Default_Browser_Settings.SelectedValue.ToString() == "chrome")
+            {
+                Properties.Settings.Default.browser_driver = "chrome";
+            }
+            else if (Default_Browser_Settings.SelectedValue.ToString() == "edge") {
+                Properties.Settings.Default.browser_driver = "edge";
+            }
         }
 
         private void github_link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

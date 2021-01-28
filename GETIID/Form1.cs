@@ -15,6 +15,7 @@ using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Edge;
 
 namespace GETIID
 {
@@ -24,10 +25,11 @@ namespace GETIID
         public string cid;
         public HttpClient client = new HttpClient();
         public string url;
+        public IWebDriver driver;
         public Form1()
         {
             InitializeComponent();
-
+            Console.WriteLine(System.Reflection.Assembly.GetEntryAssembly().Location);
             
             getIID();
             getCID();
@@ -159,8 +161,19 @@ namespace GETIID
         }
 
         public void getCID() {
-            IWebDriver driver = new ChromeDriver();
             
+
+            if (Properties.Settings.Default.browser_driver == "chrome")
+            {
+                driver = new ChromeDriver();
+            }
+            else if (Properties.Settings.Default.browser_driver == "edge") {
+
+                ChromeOptions opt = new ChromeOptions();
+                opt.BinaryLocation = "";
+                driver = new EdgeDriver();            
+            }
+                                                                
             driver.Navigate().GoToUrl(Properties.Settings.Default.url);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();

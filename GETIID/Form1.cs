@@ -90,6 +90,11 @@ namespace GETIID
             updateList();
         }
 
+        private void CID_GET_BUTTON_Click(object sender, EventArgs e)
+        {
+            getCID();
+        }
+
         public string get_keys() {
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -248,6 +253,8 @@ namespace GETIID
                 process.Close();
             }
         }
+
+        
     }
 
 }

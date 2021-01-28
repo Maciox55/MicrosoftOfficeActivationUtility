@@ -29,6 +29,7 @@ namespace GETIID
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.IID_GET_BUTTON = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,10 +48,12 @@ namespace GETIID
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.ActivationGroup = new System.Windows.Forms.GroupBox();
+            this.CID_GET_BUTTON = new System.Windows.Forms.Button();
             this.OFFICE_ACTIVATION_BUTTON = new System.Windows.Forms.Button();
             this.officekey_textbox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.OfficeKeysGroup = new System.Windows.Forms.GroupBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ActivationGroup.SuspendLayout();
@@ -64,6 +67,7 @@ namespace GETIID
             this.IID_GET_BUTTON.Size = new System.Drawing.Size(75, 20);
             this.IID_GET_BUTTON.TabIndex = 0;
             this.IID_GET_BUTTON.Text = "GET IID";
+            this.toolTip1.SetToolTip(this.IID_GET_BUTTON, "Get current IID");
             this.IID_GET_BUTTON.UseVisualStyleBackColor = true;
             this.IID_GET_BUTTON.Click += new System.EventHandler(this.IID_GET_BUTTON_Click);
             // 
@@ -92,6 +96,7 @@ namespace GETIID
             this.REFRESH_BUTTON.Size = new System.Drawing.Size(364, 50);
             this.REFRESH_BUTTON.TabIndex = 2;
             this.REFRESH_BUTTON.Text = "Refresh";
+            this.toolTip1.SetToolTip(this.REFRESH_BUTTON, "Refresh Office Key List");
             this.REFRESH_BUTTON.UseVisualStyleBackColor = true;
             this.REFRESH_BUTTON.Click += new System.EventHandler(this.REFRESH_BUTTON_Click);
             // 
@@ -103,6 +108,7 @@ namespace GETIID
             this.UNINSTALL_SELECTED_BUTTON.Size = new System.Drawing.Size(364, 55);
             this.UNINSTALL_SELECTED_BUTTON.TabIndex = 1;
             this.UNINSTALL_SELECTED_BUTTON.Text = "Uninstall Selected";
+            this.toolTip1.SetToolTip(this.UNINSTALL_SELECTED_BUTTON, "Uninstall Selected Office Key");
             this.UNINSTALL_SELECTED_BUTTON.UseVisualStyleBackColor = true;
             this.UNINSTALL_SELECTED_BUTTON.Click += new System.EventHandler(this.UNINSTALL_SELECTED_BUTTON_Click);
             // 
@@ -205,6 +211,7 @@ namespace GETIID
             // 
             this.ActivationGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.ActivationGroup.Controls.Add(this.CID_GET_BUTTON);
             this.ActivationGroup.Controls.Add(this.OFFICE_ACTIVATION_BUTTON);
             this.ActivationGroup.Controls.Add(this.officekey_textbox);
             this.ActivationGroup.Controls.Add(this.label2);
@@ -221,6 +228,17 @@ namespace GETIID
             this.ActivationGroup.TabStop = false;
             this.ActivationGroup.Text = "Activation";
             // 
+            // CID_GET_BUTTON
+            // 
+            this.CID_GET_BUTTON.Location = new System.Drawing.Point(395, 239);
+            this.CID_GET_BUTTON.Name = "CID_GET_BUTTON";
+            this.CID_GET_BUTTON.Size = new System.Drawing.Size(75, 23);
+            this.CID_GET_BUTTON.TabIndex = 13;
+            this.CID_GET_BUTTON.Text = "GET CID";
+            this.toolTip1.SetToolTip(this.CID_GET_BUTTON, "Process current IID into a CID for activation");
+            this.CID_GET_BUTTON.UseVisualStyleBackColor = true;
+            this.CID_GET_BUTTON.Click += new System.EventHandler(this.CID_GET_BUTTON_Click);
+            // 
             // OFFICE_ACTIVATION_BUTTON
             // 
             this.OFFICE_ACTIVATION_BUTTON.Location = new System.Drawing.Point(395, 62);
@@ -228,6 +246,7 @@ namespace GETIID
             this.OFFICE_ACTIVATION_BUTTON.Size = new System.Drawing.Size(75, 23);
             this.OFFICE_ACTIVATION_BUTTON.TabIndex = 12;
             this.OFFICE_ACTIVATION_BUTTON.Text = "Activate";
+            this.toolTip1.SetToolTip(this.OFFICE_ACTIVATION_BUTTON, "Activate Office 2016 using a Microsoft Office Key");
             this.OFFICE_ACTIVATION_BUTTON.UseVisualStyleBackColor = true;
             this.OFFICE_ACTIVATION_BUTTON.Click += new System.EventHandler(this.OFFICE_ACTIVATION_BUTTON_Click);
             // 
@@ -309,6 +328,8 @@ namespace GETIID
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox OfficeKeysGroup;
         private System.Windows.Forms.Button OFFICE_ACTIVATION_BUTTON;
+        private System.Windows.Forms.Button CID_GET_BUTTON;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

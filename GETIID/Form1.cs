@@ -176,11 +176,13 @@ namespace GETIID
                 }
                 cid_text.Text = cid;
                 status.Text = "Status: CID retireved";
+
+                activateByCID(cid);
             }
             else {
                 status.Text = "Status: Problem getting CID";
             }
-            activateByCID("test");
+            
 
             driver.Quit();
         }

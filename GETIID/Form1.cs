@@ -32,7 +32,7 @@ namespace GETIID
             Console.WriteLine(System.Reflection.Assembly.GetEntryAssembly().Location);
             
             getIID();
-            getCID();
+            //getCID();
             //updateList();
 
         }
@@ -161,19 +161,55 @@ namespace GETIID
         }
 
         public void getCID() {
-            
 
-            if (Properties.Settings.Default.browser_driver == "chrome")
+
+            if (Properties.Settings.Default.browser_driver == "chrome" && Properties.Settings.Default.portable_mode == false)
             {
-                driver = new ChromeDriver();
-            }
-            else if (Properties.Settings.Default.browser_driver == "edge") {
-
                 ChromeOptions opt = new ChromeOptions();
-                opt.BinaryLocation = "";
-                driver = new EdgeDriver();            
+                driver = new ChromeDriver();
+                
             }
-                                                                
+            else if (Properties.Settings.Default.browser_driver == "edge" && Properties.Settings.Default.portable_mode == false)
+            {
+
+                var options = new EdgeOptions();
+                options.UseChromium = true;
+
+                //options.AddArgument("--headless");
+                //options.AddArgument("--no-sandbox");
+                //options.AddArgument("--disable-dev-shm-usage");
+                //options.BinaryLocation = Path.Combine(Environment.CurrentDirectory, @"msedgedriver.exe");
+
+                driver = new EdgeDriver(options);
+                //opt.BinaryLocation = Path.Combine(Environment.CurrentDirectory, @"msedgedriver.exe");
+                //driver = new EdgeDriver();
+
+
+
+            }
+            else if (Properties.Settings.Default.portable_mode == true)
+            {
+                if (Properties.Settings.Default.browser_driver == "chrome")
+                {
+
+                }
+                else if (Properties.Settings.Default.browser_driver == "edge")
+                {
+
+                    var options = new EdgeOptions();
+                    options.UseChromium = true;
+
+                    //options.AddArgument("--headless");
+                    //options.AddArgument("--no-sandbox");
+                    //options.AddArgument("--disable-dev-shm-usage");
+                    options.BinaryLocation = Path.Combine(Environment.CurrentDirectory, @"msedgedriver.exe");
+
+                    driver = new EdgeDriver(options);
+
+                }
+
+            }
+                                                          
             driver.Navigate().GoToUrl(Properties.Settings.Default.url);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();

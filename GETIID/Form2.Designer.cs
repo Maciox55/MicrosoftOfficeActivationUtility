@@ -31,20 +31,29 @@ namespace GETIID
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options_Form));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Default_Browser_Driver_Label = new System.Windows.Forms.Label();
+            this.Default_Browser_Settings = new System.Windows.Forms.ComboBox();
             this.url_textbox = new System.Windows.Forms.TextBox();
             this.URL_Label = new System.Windows.Forms.Label();
             this.Save_Button = new System.Windows.Forms.Button();
             this.About_Group = new System.Windows.Forms.GroupBox();
             this.github_link = new System.Windows.Forms.LinkLabel();
             this.Author_Label = new System.Windows.Forms.Label();
-            this.Default_Browser_Settings = new System.Windows.Forms.ComboBox();
-            this.Default_Browser_Driver_Label = new System.Windows.Forms.Label();
+            this.BrowserBinaryLocation = new System.Windows.Forms.OpenFileDialog();
+            this.Binary_Location_Textbox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Find_Binary_Location_Button = new System.Windows.Forms.Button();
+            this.Portable_Mode = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.About_Group.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.Portable_Mode);
+            this.groupBox1.Controls.Add(this.Find_Binary_Location_Button);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.Binary_Location_Textbox);
             this.groupBox1.Controls.Add(this.Default_Browser_Driver_Label);
             this.groupBox1.Controls.Add(this.Default_Browser_Settings);
             this.groupBox1.Controls.Add(this.url_textbox);
@@ -52,10 +61,30 @@ namespace GETIID
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(320, 113);
+            this.groupBox1.Size = new System.Drawing.Size(320, 181);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Config";
+            // 
+            // Default_Browser_Driver_Label
+            // 
+            this.Default_Browser_Driver_Label.AutoSize = true;
+            this.Default_Browser_Driver_Label.Location = new System.Drawing.Point(6, 67);
+            this.Default_Browser_Driver_Label.Name = "Default_Browser_Driver_Label";
+            this.Default_Browser_Driver_Label.Size = new System.Drawing.Size(106, 13);
+            this.Default_Browser_Driver_Label.TabIndex = 3;
+            this.Default_Browser_Driver_Label.Text = "Using Browser Driver";
+            // 
+            // Default_Browser_Settings
+            // 
+            this.Default_Browser_Settings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Default_Browser_Settings.Items.AddRange(new object[] {
+            "chrome",
+            "edge"});
+            this.Default_Browser_Settings.Location = new System.Drawing.Point(6, 86);
+            this.Default_Browser_Settings.Name = "Default_Browser_Settings";
+            this.Default_Browser_Settings.Size = new System.Drawing.Size(121, 21);
+            this.Default_Browser_Settings.TabIndex = 2;
             // 
             // url_textbox
             // 
@@ -79,7 +108,7 @@ namespace GETIID
             // 
             this.Save_Button.AutoSize = true;
             this.Save_Button.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Save_Button.Location = new System.Drawing.Point(3, 177);
+            this.Save_Button.Location = new System.Drawing.Point(3, 109);
             this.Save_Button.Name = "Save_Button";
             this.Save_Button.Size = new System.Drawing.Size(314, 48);
             this.Save_Button.TabIndex = 1;
@@ -93,9 +122,9 @@ namespace GETIID
             this.About_Group.Controls.Add(this.Author_Label);
             this.About_Group.Controls.Add(this.Save_Button);
             this.About_Group.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.About_Group.Location = new System.Drawing.Point(0, 113);
+            this.About_Group.Location = new System.Drawing.Point(0, 181);
             this.About_Group.Name = "About_Group";
-            this.About_Group.Size = new System.Drawing.Size(320, 228);
+            this.About_Group.Size = new System.Drawing.Size(320, 160);
             this.About_Group.TabIndex = 2;
             this.About_Group.TabStop = false;
             this.About_Group.Text = "About";
@@ -120,25 +149,47 @@ namespace GETIID
             this.Author_Label.TabIndex = 2;
             this.Author_Label.Text = "Created By: Maciej \"Mac\" Bregisz";
             // 
-            // Default_Browser_Settings
+            // BrowserBinaryLocation
             // 
-            this.Default_Browser_Settings.FormattingEnabled = true;
-            this.Default_Browser_Settings.Items.AddRange(new object[] {
-            "chrome",
-            "edge"});
-            this.Default_Browser_Settings.Location = new System.Drawing.Point(6, 86);
-            this.Default_Browser_Settings.Name = "Default_Browser_Settings";
-            this.Default_Browser_Settings.Size = new System.Drawing.Size(121, 21);
-            this.Default_Browser_Settings.TabIndex = 2;
+            this.BrowserBinaryLocation.FileName = "openFileDialog1";
             // 
-            // Default_Browser_Driver_Label
+            // Binary_Location_Textbox
             // 
-            this.Default_Browser_Driver_Label.AutoSize = true;
-            this.Default_Browser_Driver_Label.Location = new System.Drawing.Point(6, 67);
-            this.Default_Browser_Driver_Label.Name = "Default_Browser_Driver_Label";
-            this.Default_Browser_Driver_Label.Size = new System.Drawing.Size(106, 13);
-            this.Default_Browser_Driver_Label.TabIndex = 3;
-            this.Default_Browser_Driver_Label.Text = "Using Browser Driver";
+            this.Binary_Location_Textbox.Location = new System.Drawing.Point(9, 130);
+            this.Binary_Location_Textbox.Name = "Binary_Location_Textbox";
+            this.Binary_Location_Textbox.Size = new System.Drawing.Size(241, 20);
+            this.Binary_Location_Textbox.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 114);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(121, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Browser Binary Location";
+            // 
+            // Find_Binary_Location_Button
+            // 
+            this.Find_Binary_Location_Button.Location = new System.Drawing.Point(256, 128);
+            this.Find_Binary_Location_Button.Name = "Find_Binary_Location_Button";
+            this.Find_Binary_Location_Button.Size = new System.Drawing.Size(52, 23);
+            this.Find_Binary_Location_Button.TabIndex = 6;
+            this.Find_Binary_Location_Button.Text = "Find";
+            this.Find_Binary_Location_Button.UseVisualStyleBackColor = true;
+            this.Find_Binary_Location_Button.Click += new System.EventHandler(this.Find_Binary_Location_Button_Click);
+            // 
+            // Portable_Mode
+            // 
+            this.Portable_Mode.AutoSize = true;
+            this.Portable_Mode.Checked = global::GETIID.Properties.Settings.Default.portable_mode;
+            this.Portable_Mode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::GETIID.Properties.Settings.Default, "portable_mode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Portable_Mode.Location = new System.Drawing.Point(170, 86);
+            this.Portable_Mode.Name = "Portable_Mode";
+            this.Portable_Mode.Size = new System.Drawing.Size(104, 17);
+            this.Portable_Mode.TabIndex = 7;
+            this.Portable_Mode.Text = "Portable_Mode?";
+            this.Portable_Mode.UseVisualStyleBackColor = true;
             // 
             // Options_Form
             // 
@@ -174,5 +225,10 @@ namespace GETIID
         private System.Windows.Forms.LinkLabel github_link;
         private System.Windows.Forms.ComboBox Default_Browser_Settings;
         private System.Windows.Forms.Label Default_Browser_Driver_Label;
+        private System.Windows.Forms.Button Find_Binary_Location_Button;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox Binary_Location_Textbox;
+        private System.Windows.Forms.OpenFileDialog BrowserBinaryLocation;
+        private System.Windows.Forms.CheckBox Portable_Mode;
     }
 }

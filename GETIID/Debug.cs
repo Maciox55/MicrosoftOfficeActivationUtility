@@ -21,11 +21,14 @@ namespace GETIID
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = "Find browser";
-            dialog.Filter = "EXE files|*.exe";
+            dialog.Filter = "Label files|*.label";
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                var label =  dialog.FileName;
+                
+                var label = DYMO.Label.Framework.Label.Open(dialog.FileName);
+                label.SetObjectText("Office_Key", "Testing");
+                label.Print("DYMO LabelWriter 450 Turbo");
             }
         }
     }

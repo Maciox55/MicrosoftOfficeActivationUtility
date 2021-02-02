@@ -16,7 +16,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Edge;
-
+using System.Management;
 namespace GETIID
 {
     public partial class  Form1 : Form
@@ -165,9 +165,7 @@ namespace GETIID
 
             if (Properties.Settings.Default.browser_driver == "chrome" && Properties.Settings.Default.portable_mode == false)
             {
-                ChromeOptions opt = new ChromeOptions();
                 driver = new ChromeDriver();
-                
             }
             else if (Properties.Settings.Default.browser_driver == "edge" && Properties.Settings.Default.portable_mode == false)
             {
@@ -191,7 +189,9 @@ namespace GETIID
             {
                 if (Properties.Settings.Default.browser_driver == "chrome")
                 {
-
+                    ChromeOptions opt = new ChromeOptions();
+                    opt.BinaryLocation = Properties.Settings.Default.browser_binary_location;
+                    driver = new ChromeDriver(opt);
                 }
                 else if (Properties.Settings.Default.browser_driver == "edge")
                 {
@@ -202,9 +202,36 @@ namespace GETIID
                     //options.AddArgument("--headless");
                     //options.AddArgument("--no-sandbox");
                     //options.AddArgument("--disable-dev-shm-usage");
-                    options.BinaryLocation = Path.Combine(Environment.CurrentDirectory, @"msedgedriver.exe");
+                    options.BinaryLocation = Properties.Settings.Default.browser_binary_location;
+
+                    //options.BinaryLocation = Path.Combine(Properties.Settings.Default.browser_binary_location);
 
                     driver = new EdgeDriver(options);
+
+                } else if (Properties.Settings.Default.browser_driver == "edge_legacy") {
+
+                    string command = "DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0";
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                    startInfo.UseShellExecute = false;
+                    startInfo.Verb = "runas";
+                    startInfo.RedirectStandardOutput = true;
+                    startInfo.RedirectStandardInput = true;
+                    startInfo.CreateNoWindow = false;
+                    startInfo.FileName = "cmd.exe";
+                    startInfo.Arguments = command;
+                    process.StartInfo = startInfo;
+                    process.Start();
+                    process.WaitForExit();
+                    status.Text = "Status: Edge Legacy setup complete";
+                    process.Close();
+
+
+                    var options = new EdgeOptions();
+                    driver = new EdgeDriver();
+
+                    driver.Navigate().GoToUrl("test");
+
 
                 }
 
@@ -225,6 +252,19 @@ namespace GETIID
             }
 
             driver.FindElement(By.Id("custom-msft-submit")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+
+            try
+            {
+                var numInst = driver.FindElement(By.Id("numberOfInstalls"));
+                driver.FindElement(By.Id("numberOfInstalls")).SendKeys("0");
+                driver.FindElement(By.Id("custom-msft-submit")).Click();
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
 
             var elements = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
@@ -237,9 +277,9 @@ namespace GETIID
                     cid += element.Text;
                 }
                 cid_textbox.Text = cid;
-                status.Text = "Status: CID retireved";
+                status.Text = "Status: CID retireved, ready for activation";
 
-                activateByCID(cid);
+                //activateByCID(cid);
             }
             else {
                 status.Text = "Status: Problem getting CID";
@@ -302,6 +342,7 @@ namespace GETIID
                 process.Close();
             }
         }
+        
 
         
     }

@@ -31,6 +31,10 @@ namespace GETIID
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options_Form));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Portable_Mode = new System.Windows.Forms.CheckBox();
+            this.Find_Binary_Location_Button = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Binary_Location_Textbox = new System.Windows.Forms.TextBox();
             this.Default_Browser_Driver_Label = new System.Windows.Forms.Label();
             this.Default_Browser_Settings = new System.Windows.Forms.ComboBox();
             this.url_textbox = new System.Windows.Forms.TextBox();
@@ -40,10 +44,6 @@ namespace GETIID
             this.github_link = new System.Windows.Forms.LinkLabel();
             this.Author_Label = new System.Windows.Forms.Label();
             this.BrowserBinaryLocation = new System.Windows.Forms.OpenFileDialog();
-            this.Binary_Location_Textbox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Find_Binary_Location_Button = new System.Windows.Forms.Button();
-            this.Portable_Mode = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.About_Group.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +66,44 @@ namespace GETIID
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Config";
             // 
+            // Portable_Mode
+            // 
+            this.Portable_Mode.AutoSize = true;
+            this.Portable_Mode.Checked = global::GETIID.Properties.Settings.Default.portable_mode;
+            this.Portable_Mode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::GETIID.Properties.Settings.Default, "portable_mode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Portable_Mode.Location = new System.Drawing.Point(170, 86);
+            this.Portable_Mode.Name = "Portable_Mode";
+            this.Portable_Mode.Size = new System.Drawing.Size(95, 17);
+            this.Portable_Mode.TabIndex = 7;
+            this.Portable_Mode.Text = "Portable Mode";
+            this.Portable_Mode.UseVisualStyleBackColor = true;
+            // 
+            // Find_Binary_Location_Button
+            // 
+            this.Find_Binary_Location_Button.Location = new System.Drawing.Point(256, 128);
+            this.Find_Binary_Location_Button.Name = "Find_Binary_Location_Button";
+            this.Find_Binary_Location_Button.Size = new System.Drawing.Size(52, 23);
+            this.Find_Binary_Location_Button.TabIndex = 6;
+            this.Find_Binary_Location_Button.Text = "Find";
+            this.Find_Binary_Location_Button.UseVisualStyleBackColor = true;
+            this.Find_Binary_Location_Button.Click += new System.EventHandler(this.Find_Binary_Location_Button_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 114);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(121, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Browser Binary Location";
+            // 
+            // Binary_Location_Textbox
+            // 
+            this.Binary_Location_Textbox.Location = new System.Drawing.Point(9, 130);
+            this.Binary_Location_Textbox.Name = "Binary_Location_Textbox";
+            this.Binary_Location_Textbox.Size = new System.Drawing.Size(241, 20);
+            this.Binary_Location_Textbox.TabIndex = 4;
+            // 
             // Default_Browser_Driver_Label
             // 
             this.Default_Browser_Driver_Label.AutoSize = true;
@@ -80,7 +118,8 @@ namespace GETIID
             this.Default_Browser_Settings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Default_Browser_Settings.Items.AddRange(new object[] {
             "chrome",
-            "edge"});
+            "edge",
+            "edge_legacy"});
             this.Default_Browser_Settings.Location = new System.Drawing.Point(6, 86);
             this.Default_Browser_Settings.Name = "Default_Browser_Settings";
             this.Default_Browser_Settings.Size = new System.Drawing.Size(121, 21);
@@ -152,44 +191,6 @@ namespace GETIID
             // BrowserBinaryLocation
             // 
             this.BrowserBinaryLocation.FileName = "openFileDialog1";
-            // 
-            // Binary_Location_Textbox
-            // 
-            this.Binary_Location_Textbox.Location = new System.Drawing.Point(9, 130);
-            this.Binary_Location_Textbox.Name = "Binary_Location_Textbox";
-            this.Binary_Location_Textbox.Size = new System.Drawing.Size(241, 20);
-            this.Binary_Location_Textbox.TabIndex = 4;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 114);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(121, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Browser Binary Location";
-            // 
-            // Find_Binary_Location_Button
-            // 
-            this.Find_Binary_Location_Button.Location = new System.Drawing.Point(256, 128);
-            this.Find_Binary_Location_Button.Name = "Find_Binary_Location_Button";
-            this.Find_Binary_Location_Button.Size = new System.Drawing.Size(52, 23);
-            this.Find_Binary_Location_Button.TabIndex = 6;
-            this.Find_Binary_Location_Button.Text = "Find";
-            this.Find_Binary_Location_Button.UseVisualStyleBackColor = true;
-            this.Find_Binary_Location_Button.Click += new System.EventHandler(this.Find_Binary_Location_Button_Click);
-            // 
-            // Portable_Mode
-            // 
-            this.Portable_Mode.AutoSize = true;
-            this.Portable_Mode.Checked = global::GETIID.Properties.Settings.Default.portable_mode;
-            this.Portable_Mode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::GETIID.Properties.Settings.Default, "portable_mode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Portable_Mode.Location = new System.Drawing.Point(170, 86);
-            this.Portable_Mode.Name = "Portable_Mode";
-            this.Portable_Mode.Size = new System.Drawing.Size(104, 17);
-            this.Portable_Mode.TabIndex = 7;
-            this.Portable_Mode.Text = "Portable_Mode?";
-            this.Portable_Mode.UseVisualStyleBackColor = true;
             // 
             // Options_Form
             // 

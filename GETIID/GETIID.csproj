@@ -135,10 +135,10 @@
     </Content>
     <Content Include="LinkToSelfService.txt" />
     <Content Include="MicrosoftWebDriver.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="msedgedriver.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="OSPP.VBS">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -70,5 +70,17 @@ namespace GETIID.Properties {
                 this["portable_mode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string browser_driver_location {
+            get {
+                return ((string)(this["browser_driver_location"]));
+            }
+            set {
+                this["browser_driver_location"] = value;
+            }
+        }
     }
 }

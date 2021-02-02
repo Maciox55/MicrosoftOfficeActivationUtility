@@ -40,6 +40,10 @@ namespace GETIID
             {
                 Properties.Settings.Default.browser_binary_location = Binary_Location_Textbox.Text;
             }
+            if (Driver_Location_Textbox.Text != null || Driver_Location_Textbox.Text != "")
+            {
+                Properties.Settings.Default.browser_driver_location = Driver_Location_Textbox.Text;
+            }
             Properties.Settings.Default.portable_mode = Portable_Mode.Checked;
             Properties.Settings.Default.Save();
             this.Close();
@@ -53,7 +57,7 @@ namespace GETIID
         private void Find_Binary_Location_Button_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Title = "Find driver";
+            dialog.Title = "Find browser";
             dialog.Filter = "EXE files|*.exe";
 
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -62,5 +66,17 @@ namespace GETIID
             }
 
          }
+
+        private void Driver_Location_Button_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Find driver";
+            dialog.Filter = "EXE files|*.exe";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Driver_Location_Textbox.Text = dialog.FileName;
+            }
+        }
     }
 }

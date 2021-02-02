@@ -191,7 +191,7 @@ namespace GETIID
                 {
                     ChromeOptions opt = new ChromeOptions();
                     opt.BinaryLocation = Properties.Settings.Default.browser_binary_location;
-                    driver = new ChromeDriver(opt);
+                    driver = new ChromeDriver(Properties.Settings.Default.browser_driver_location,opt);
                 }
                 else if (Properties.Settings.Default.browser_driver == "edge")
                 {
@@ -341,10 +341,14 @@ namespace GETIID
                 status.Text = "Status: Key Activation Attempted";
                 process.Close();
             }
-        }
-        
 
-        
+        }
+
+        private void debugToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var debug = new DebugMenu();
+            debug.Show();
+        }
     }
 
 }

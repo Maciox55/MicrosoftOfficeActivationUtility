@@ -34,7 +34,7 @@ namespace GETIID
             
             getIID();
             //getCID();
-            //updateList();
+            get_keys();
 
         }
 
@@ -110,7 +110,10 @@ namespace GETIID
             process.StartInfo = startInfo;
             process.Start();
             string output = process.StandardOutput.ReadToEnd();
-            var listviewitem = new ListViewItem(getBetween(output, "key ", "-"));
+
+
+
+            var listviewitem = new ListViewItem();
             listviewitem.SubItems.Add("test");
             ACTIVE_SERIALS.Items.Add(listviewitem);
             Console.WriteLine(output);

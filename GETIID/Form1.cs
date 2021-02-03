@@ -17,6 +17,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Edge;
 using System.Management;
+using SeleniumExtras.WaitHelpers;
 namespace GETIID
 {
     public partial class  Form1 : Form
@@ -254,18 +255,18 @@ namespace GETIID
             driver.FindElement(By.Id("custom-msft-submit")).Click();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 
-            try
+
+            
+
+
+            var numinstalls = WaitUntilElementVisible(driver, "numberOfInstalls",10);
+
+            if (numinstalls != null)
             {
-                var numInst = driver.FindElement(By.Id("numberOfInstalls"));
-                driver.FindElement(By.Id("numberOfInstalls")).SendKeys("0");
+                numinstalls.SendKeys("0");
                 driver.FindElement(By.Id("custom-msft-submit")).Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
 
             var elements = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
 
@@ -343,7 +344,30 @@ namespace GETIID
             }
 
         }
+        public static IWebElement WaitUntilElementVisible(IWebDriver drvr,string elementSelector, int timeout = 10)
+        {
+            try
+            {
+                var wait = new WebDriverWait(drvr, new TimeSpan(0, 0, timeout));
+                var element = wait.Until(ExpectedConditions.ElementIsVisible(By.Id(elementSelector)));
+                return element;
+            }
+            catch (Exception e)
+            {
+                if (e is NoSuchElementException)
+                {
+                    Console.WriteLine("Element with selector: '" + elementSelector + "' was not found.");
+                    return null;
+                }
+                else if (e is WebDriverTimeoutException)
+                {
+                    Console.WriteLine("Web Driver Timedout, continuing");
+                    return null;
+                }
 
+                return null;
+            }
+        }
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var debug = new DebugMenu();

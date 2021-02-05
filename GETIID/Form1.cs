@@ -166,7 +166,6 @@ namespace GETIID
 
         public void getCID() {
 
-
             if (Properties.Settings.Default.browser_driver == "chrome" && Properties.Settings.Default.portable_mode == false)
             {
                 driver = new ChromeDriver();
@@ -235,8 +234,6 @@ namespace GETIID
                     driver = new EdgeDriver();
 
                     driver.Navigate().GoToUrl("test");
-
-
                 }
 
             }

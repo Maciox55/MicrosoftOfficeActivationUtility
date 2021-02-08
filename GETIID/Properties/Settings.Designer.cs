@@ -37,7 +37,7 @@ namespace GETIID.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("chrome")]
+        [global::System.Configuration.DefaultSettingValueAttribute("edge")]
         public string browser_driver {
             get {
                 return ((string)(this["browser_driver"]));

@@ -31,13 +31,13 @@ namespace GETIID
         {
             InitializeComponent();
             Console.WriteLine(System.Reflection.Assembly.GetEntryAssembly().Location);
-            
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
             getIID();
             //getCID();
             get_keys();
-
         }
-
         private void IID_GET_BUTTON_Click(object sender, EventArgs e)
         {
             getIID();
@@ -176,17 +176,7 @@ namespace GETIID
                 var options = new EdgeOptions();
                 options.UseChromium = true;
 
-                //options.AddArgument("--headless");
-                //options.AddArgument("--no-sandbox");
-                //options.AddArgument("--disable-dev-shm-usage");
-                //options.BinaryLocation = Path.Combine(Environment.CurrentDirectory, @"msedgedriver.exe");
-
                 driver = new EdgeDriver(options);
-                //opt.BinaryLocation = Path.Combine(Environment.CurrentDirectory, @"msedgedriver.exe");
-                //driver = new EdgeDriver();
-
-
-
             }
             else if (Properties.Settings.Default.portable_mode == true)
             {
@@ -229,7 +219,6 @@ namespace GETIID
                     status.Text = "Status: Edge Legacy setup complete";
                     process.Close();
 
-
                     var options = new EdgeOptions();
                     driver = new EdgeDriver();
 
@@ -249,15 +238,10 @@ namespace GETIID
 
                 IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
                 element.SendKeys(iid.Substring(f * 7, 7));
-
             }
 
             driver.FindElement(By.Id("custom-msft-submit")).Click();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
-
-
-            
-
 
             var numinstalls = WaitUntilElementVisible(driver, "numberOfInstalls",10);
 
@@ -285,7 +269,6 @@ namespace GETIID
             else {
                 status.Text = "Status: Problem getting CID";
             }
-            
 
             driver.Quit();
         }
@@ -373,6 +356,8 @@ namespace GETIID
             var debug = new DebugMenu();
             debug.Show();
         }
+
+        
     }
 
 }

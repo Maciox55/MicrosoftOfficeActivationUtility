@@ -45,6 +45,7 @@ namespace GETIID
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.ActivationGroup = new System.Windows.Forms.GroupBox();
@@ -54,7 +55,6 @@ namespace GETIID
             this.label2 = new System.Windows.Forms.Label();
             this.OfficeKeysGroup = new System.Windows.Forms.GroupBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ActivationGroup.SuspendLayout();
@@ -189,9 +189,16 @@ namespace GETIID
             // configToolStripMenuItem
             // 
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
-            this.configToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.configToolStripMenuItem.Text = "Config";
             this.configToolStripMenuItem.Click += new System.EventHandler(this.configToolStripMenuItem_Click);
+            // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.debugToolStripMenuItem.Text = "Debug";
+            this.debugToolStripMenuItem.Click += new System.EventHandler(this.debugToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -282,13 +289,6 @@ namespace GETIID
             this.OfficeKeysGroup.TabStop = false;
             this.OfficeKeysGroup.Text = "Installed Office Keys";
             // 
-            // debugToolStripMenuItem
-            // 
-            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.debugToolStripMenuItem.Text = "Debug";
-            this.debugToolStripMenuItem.Click += new System.EventHandler(this.debugToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -302,6 +302,7 @@ namespace GETIID
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "IID_GET";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

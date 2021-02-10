@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Net.Http;
-
 using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -18,10 +17,12 @@ using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Edge;
 using System.Management;
 using SeleniumExtras.WaitHelpers;
+
 namespace GETIID
 {
     public partial class  Form1 : Form
     {
+        public ProductKey[] productKeys;
         public string iid;
         public string cid;
         public HttpClient client = new HttpClient();
@@ -112,11 +113,50 @@ namespace GETIID
             string output = process.StandardOutput.ReadToEnd();
 
 
+            output = output.Remove(0, Convert.ToString(output).Split('\n').FirstOrDefault().Length + 1);//Remove the first PROCESSING line.
+            string[] separators = {"---------------------------------------"};
+            string[] sets = output.Split(separators, StringSplitOptions.RemoveEmptyEntries); //Separate the sets of keys into 3 
+            Array.Resize(ref sets, sets.Length - 2); //Remove the two trailing EXITING and --- lines.
 
-            var listviewitem = new ListViewItem();
-            listviewitem.SubItems.Add("test");
-            ACTIVE_SERIALS.Items.Add(listviewitem);
-            Console.WriteLine(output);
+            foreach (var entry in sets)
+            {
+                string[] sep = { "\r\n" };
+                string[] lines = entry.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+                
+                foreach (var line in lines)
+                {
+                    Console.WriteLine(line);
+                }
+                
+                var listviewitem = new ListViewItem();
+                listviewitem.Text = entry;
+                ACTIVE_SERIALS.Items.Add(listviewitem);
+            }
+            
+
+
+            string pattern = @"(.+:)|(\w.*[a-zA-Z0-9])";
+            Regex r = new Regex(pattern);
+            Match m = r.Match(output);
+            int matchCount = 0;
+            if (m.Success)
+            {
+                Console.WriteLine("Match" + (++matchCount));
+                for (int i = 1; i <= 2; i++)
+                {
+                    Group g = m.Groups[i];
+                    Console.WriteLine("Group"+i+"="+g);
+                }
+            }
+
+
+
+
+
+            //var listviewitem = new ListViewItem();
+            //listviewitem.SubItems.Add("test");
+            //ACTIVE_SERIALS.Items.Add(listviewitem);
+            //Console.WriteLine(output);
             process.WaitForExit();
             return output;
         }

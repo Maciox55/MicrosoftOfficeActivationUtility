@@ -105,6 +105,7 @@
     <Compile Include="Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProductKey.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Debug.resx">
@@ -170,6 +171,7 @@
     <Content Include="OSPP.VBS">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Output.txt" />
     <Content Include="SLERROR.XML">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -49,7 +49,7 @@ namespace GETIID
             {
                 status.Text = "Status: Attempting Key Uninstall";
                 string command = "/c cscript //nologo ospp.vbs /unpkey:" + ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text.Trim();
-                CMDCommand(command);
+                CMDCommand(command,true);
                 Console.WriteLine(ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text.Trim());
             }
             else {
@@ -59,7 +59,7 @@ namespace GETIID
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            Clipboard.SetText(iid_textbox.Text);
+            //Clipboard.SetText(iid_textbox.Text);
         }
 
         private void ACTIVATE_BUTTON_Click(object sender, EventArgs e)
@@ -109,7 +109,7 @@ namespace GETIID
         public void get_keys() {
             string command = "/c cscript //nologo ospp.vbs /dstatusall";
             
-            string output = CMDCommand(command);
+            string output = CMDCommand(command,true);
 
 
             output = output.Remove(0, Convert.ToString(output).Split('\n').FirstOrDefault().Length + 1);//Remove the first PROCESSING line.
@@ -204,7 +204,7 @@ namespace GETIID
 
         public void getIID() {
             string command = "/c cscript //nologo ospp.vbs /dinstid";
-            string output = CMDCommand(command);
+            string output = CMDCommand(command,true);
             iid = getBetween(output, "edition: ", "-");
             iid_textbox.Text = iid;
         }
@@ -320,7 +320,7 @@ namespace GETIID
             }
             else {
                 string command = "/c cscript //nologo ospp.vbs /actcid:" + cid;
-                string output = CMDCommand(command);
+                string output = CMDCommand(command,true);
                 status.Text = "Status: CID Activation Attempted";
             }
         }
@@ -333,8 +333,8 @@ namespace GETIID
             }
             else
             {
-                string command = "/c cscript //nologo ospp.vbs /inpkey:" + key;
-                string output = CMDCommand(command);
+                string command = "/c /user:Administrator cscript //nologo ospp.vbs /inpkey:" + key;
+                string output = CMDCommand(command,false);
                 status.Text = "Status: Key Activation Attempted";
             }
 
@@ -364,17 +364,18 @@ namespace GETIID
             }
         }
 
-        public string CMDCommand(string command)
+        public string CMDCommand(string command,bool noWindow)
         {
             
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.UseShellExecute = false;
-            startInfo.Verb = "runas";
+            
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardInput = true;
-            startInfo.CreateNoWindow = true;
+            startInfo.CreateNoWindow = noWindow;
             startInfo.FileName = "cmd.exe";
+            startInfo.UseShellExecute = false;
+            startInfo.Verb = "runas";
             startInfo.Arguments = command;
             process.StartInfo = startInfo;
             process.Start();

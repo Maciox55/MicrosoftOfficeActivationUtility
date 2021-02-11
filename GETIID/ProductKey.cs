@@ -15,5 +15,10 @@ namespace GETIID
         public string LicenseKey;
         public string ErrorCode;
         public string ErrorDescription;
+
+        public ProductKey() { 
+        
+        
+        }
     }
 }

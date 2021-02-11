@@ -55,6 +55,9 @@ namespace GETIID
             this.label2 = new System.Windows.Forms.Label();
             this.OfficeKeysGroup = new System.Windows.Forms.GroupBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.ch_skuid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_desc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ActivationGroup.SuspendLayout();
@@ -94,7 +97,7 @@ namespace GETIID
             this.REFRESH_BUTTON.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.REFRESH_BUTTON.Location = new System.Drawing.Point(3, 239);
             this.REFRESH_BUTTON.Name = "REFRESH_BUTTON";
-            this.REFRESH_BUTTON.Size = new System.Drawing.Size(364, 50);
+            this.REFRESH_BUTTON.Size = new System.Drawing.Size(555, 50);
             this.REFRESH_BUTTON.TabIndex = 2;
             this.REFRESH_BUTTON.Text = "Refresh";
             this.toolTip1.SetToolTip(this.REFRESH_BUTTON, "Refresh Office Key List");
@@ -106,7 +109,7 @@ namespace GETIID
             this.UNINSTALL_SELECTED_BUTTON.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.UNINSTALL_SELECTED_BUTTON.Location = new System.Drawing.Point(3, 289);
             this.UNINSTALL_SELECTED_BUTTON.Name = "UNINSTALL_SELECTED_BUTTON";
-            this.UNINSTALL_SELECTED_BUTTON.Size = new System.Drawing.Size(364, 55);
+            this.UNINSTALL_SELECTED_BUTTON.Size = new System.Drawing.Size(555, 55);
             this.UNINSTALL_SELECTED_BUTTON.TabIndex = 1;
             this.UNINSTALL_SELECTED_BUTTON.Text = "Uninstall Selected";
             this.toolTip1.SetToolTip(this.UNINSTALL_SELECTED_BUTTON, "Uninstall Selected Office Key");
@@ -119,14 +122,19 @@ namespace GETIID
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ACTIVE_SERIALS.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ch_skuid,
             this.ch_name,
-            this.ch_key});
+            this.ch_key,
+            this.ch_desc,
+            this.ch_status});
+            this.ACTIVE_SERIALS.FullRowSelect = true;
             this.ACTIVE_SERIALS.HideSelection = false;
             this.ACTIVE_SERIALS.Location = new System.Drawing.Point(8, 19);
             this.ACTIVE_SERIALS.MultiSelect = false;
             this.ACTIVE_SERIALS.Name = "ACTIVE_SERIALS";
-            this.ACTIVE_SERIALS.Size = new System.Drawing.Size(356, 220);
+            this.ACTIVE_SERIALS.Size = new System.Drawing.Size(547, 220);
             this.ACTIVE_SERIALS.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.ACTIVE_SERIALS, "Select the installation key that you want to uninstall");
             this.ACTIVE_SERIALS.UseCompatibleStateImageBehavior = false;
             this.ACTIVE_SERIALS.View = System.Windows.Forms.View.Details;
             // 
@@ -137,8 +145,8 @@ namespace GETIID
             // 
             // ch_key
             // 
-            this.ch_key.Text = "Key";
-            this.ch_key.Width = 72;
+            this.ch_key.Text = "Last 5 of Key";
+            this.ch_key.Width = 86;
             // 
             // cid_textbox
             // 
@@ -173,7 +181,7 @@ namespace GETIID
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(897, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1088, 24);
             this.menuStrip1.TabIndex = 11;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -206,7 +214,7 @@ namespace GETIID
             this.status});
             this.statusStrip1.Location = new System.Drawing.Point(0, 382);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(897, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1088, 22);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -277,23 +285,38 @@ namespace GETIID
             // 
             // OfficeKeysGroup
             // 
-            this.OfficeKeysGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.OfficeKeysGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.OfficeKeysGroup.Controls.Add(this.REFRESH_BUTTON);
             this.OfficeKeysGroup.Controls.Add(this.ACTIVE_SERIALS);
             this.OfficeKeysGroup.Controls.Add(this.UNINSTALL_SELECTED_BUTTON);
             this.OfficeKeysGroup.Location = new System.Drawing.Point(505, 29);
             this.OfficeKeysGroup.Name = "OfficeKeysGroup";
-            this.OfficeKeysGroup.Size = new System.Drawing.Size(370, 347);
+            this.OfficeKeysGroup.Size = new System.Drawing.Size(561, 347);
             this.OfficeKeysGroup.TabIndex = 14;
             this.OfficeKeysGroup.TabStop = false;
             this.OfficeKeysGroup.Text = "Installed Office Keys";
+            // 
+            // ch_skuid
+            // 
+            this.ch_skuid.Text = "SKU ID";
+            // 
+            // ch_desc
+            // 
+            this.ch_desc.Text = "License Description";
+            this.ch_desc.Width = 183;
+            // 
+            // ch_status
+            // 
+            this.ch_status.Text = "Status";
+            this.ch_status.Width = 90;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(897, 404);
+            this.ClientSize = new System.Drawing.Size(1088, 404);
             this.Controls.Add(this.OfficeKeysGroup);
             this.Controls.Add(this.ActivationGroup);
             this.Controls.Add(this.statusStrip1);
@@ -341,6 +364,9 @@ namespace GETIID
         private System.Windows.Forms.Button CID_GET_BUTTON;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader ch_skuid;
+        private System.Windows.Forms.ColumnHeader ch_desc;
+        private System.Windows.Forms.ColumnHeader ch_status;
     }
 }
 

@@ -36,7 +36,6 @@ namespace GETIID
         private void Form1_Load(object sender, EventArgs e)
         {
             getIID();
-            //getCID();
             get_keys();
         }
         private void IID_GET_BUTTON_Click(object sender, EventArgs e)
@@ -46,7 +45,16 @@ namespace GETIID
 
         private void UNINSTALL_SELECTED_BUTTON_Click(object sender, EventArgs e)
         {
-
+            if (ACTIVE_SERIALS.SelectedItems.Count > 0 && ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text != "")
+            {
+                status.Text = "Status: Attempting Key Uninstall";
+                string command = "/c cscript //nologo ospp.vbs /unpkey:" + ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text.Trim();
+                CMDCommand(command);
+                Console.WriteLine(ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text.Trim());
+            }
+            else {
+                status.Text = "Status: Please select a valid item with key from the list.";
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -83,7 +91,6 @@ namespace GETIID
                 
                 IWebElement element = driver.FindElement(By.Id("field" + (f+1)));
                 element.SendKeys(iid.Substring(f * 7, 7));
-                
             }
 
             driver.FindElement(By.Id("custom-msft-submit")).Click();
@@ -99,18 +106,10 @@ namespace GETIID
             getCID();
         }
 
-        public string get_keys() {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.UseShellExecute = false;
-            startInfo.Verb = "runas";
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardInput = true;
-            startInfo.CreateNoWindow = true;
-            startInfo.FileName = "dstatusall.bat";
-            process.StartInfo = startInfo;
-            process.Start();
-            string output = process.StandardOutput.ReadToEnd();
+        public void get_keys() {
+            string command = "/c cscript //nologo ospp.vbs /dstatusall";
+            
+            string output = CMDCommand(command);
 
 
             output = output.Remove(0, Convert.ToString(output).Split('\n').FirstOrDefault().Length + 1);//Remove the first PROCESSING line.
@@ -122,14 +121,45 @@ namespace GETIID
             {
                 string[] sep = { "\r\n" };
                 string[] lines = entry.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+                ProductKey pk = new ProductKey();
                 
                 foreach (var line in lines)
                 {
-                    Console.WriteLine(line);
+                    string[] values = line.Split(':');
+
+                    switch (values[0])
+                    {
+                        case "SKU ID":
+                            pk.SKUID = values[1];
+                            break;
+                        case "LICENSE NAME":
+                            pk.LicenseName = values[1];
+                            break;
+                        case "LICENSE DESCRIPTION":
+                            pk.LicenseDesc = values[1];
+                            break;
+                        case "LICENSE STATUS":
+                            pk.LicenseStatus = values[1];
+                            break;
+                        case "ERROR CODE":
+                            pk.ErrorCode = values[1];
+                            break;
+                        case "ERROR DESCRIPTION":
+                            pk.ErrorDescription = values[1];
+                            break;
+                        case "Last 5 characters of installed product key":
+                            pk.LicenseKey = values[1];
+                            break;
+                    }
                 }
                 
                 var listviewitem = new ListViewItem();
-                listviewitem.Text = entry;
+                listviewitem.Text = pk.SKUID;
+                listviewitem.SubItems.Add(pk.LicenseName);
+                listviewitem.SubItems.Add(pk.LicenseKey);
+                listviewitem.SubItems.Add(pk.LicenseDesc);
+                listviewitem.SubItems.Add(pk.LicenseStatus);
+                listviewitem.Tag = pk;
                 ACTIVE_SERIALS.Items.Add(listviewitem);
             }
             
@@ -148,23 +178,10 @@ namespace GETIID
                     Console.WriteLine("Group"+i+"="+g);
                 }
             }
-
-
-
-
-
-            //var listviewitem = new ListViewItem();
-            //listviewitem.SubItems.Add("test");
-            //ACTIVE_SERIALS.Items.Add(listviewitem);
-            //Console.WriteLine(output);
-            process.WaitForExit();
-            return output;
         }
         public void updateList() {
             ACTIVE_SERIALS.Items.Clear();
-            var listviewitem = new ListViewItem(get_keys());
-            listviewitem.SubItems.Add("test");
-            ACTIVE_SERIALS.Items.Add(listviewitem);
+            get_keys();
         }
 
         public static string getBetween(string strSource, string strStart, string strEnd)
@@ -186,22 +203,10 @@ namespace GETIID
         }
 
         public void getIID() {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.UseShellExecute = false;
-            startInfo.Verb = "runas";
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardInput = true;
-            startInfo.CreateNoWindow = true;
-            startInfo.FileName = "getiid.bat";
-            process.StartInfo = startInfo;
-            process.Start();
-            //process.StandardInput.Write("cscript ospp.vbs /dstatus");
-            string output = process.StandardOutput.ReadToEnd();
+            string command = "/c cscript //nologo ospp.vbs /dinstid";
+            string output = CMDCommand(command);
             iid = getBetween(output, "edition: ", "-");
             iid_textbox.Text = iid;
-            process.WaitForExit();
-            process.Close();
         }
 
         public void getCID() {
@@ -228,21 +233,16 @@ namespace GETIID
                 }
                 else if (Properties.Settings.Default.browser_driver == "edge")
                 {
-
+                    
                     var options = new EdgeOptions();
                     options.UseChromium = true;
-
-                    //options.AddArgument("--headless");
-                    //options.AddArgument("--no-sandbox");
-                    //options.AddArgument("--disable-dev-shm-usage");
                     options.BinaryLocation = Properties.Settings.Default.browser_binary_location;
-
-                    //options.BinaryLocation = Path.Combine(Properties.Settings.Default.browser_binary_location);
 
                     driver = new EdgeDriver(options);
 
-                } else if (Properties.Settings.Default.browser_driver == "edge_legacy") {
-
+                } else if (Properties.Settings.Default.browser_driver == "edge_legacy") 
+                {
+                    //MAY NOT WORK, UNTESTED
                     string command = "DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0";
                     System.Diagnostics.Process process = new System.Diagnostics.Process();
                     System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -320,22 +320,8 @@ namespace GETIID
             }
             else {
                 string command = "/c cscript //nologo ospp.vbs /actcid:" + cid;
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-                startInfo.UseShellExecute = false;
-                startInfo.Verb = "runas";
-                startInfo.RedirectStandardOutput = true;
-                startInfo.RedirectStandardInput = true;
-                startInfo.CreateNoWindow = false;
-                startInfo.FileName = "cmd.exe";
-                startInfo.Arguments = command;
-                process.StartInfo = startInfo;
-                process.Start();
-                string output = process.StandardOutput.ReadToEnd();
-                Console.WriteLine(output);
-                process.WaitForExit();
-                status.Text = "Status: Activation Attempted";
-                process.Close();
+                string output = CMDCommand(command);
+                status.Text = "Status: CID Activation Attempted";
             }
         }
 
@@ -348,22 +334,8 @@ namespace GETIID
             else
             {
                 string command = "/c cscript //nologo ospp.vbs /inpkey:" + key;
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-                startInfo.UseShellExecute = false;
-                startInfo.Verb = "runas";
-                startInfo.RedirectStandardOutput = true;
-                startInfo.RedirectStandardInput = true;
-                startInfo.CreateNoWindow = false;
-                startInfo.FileName = "cmd.exe";
-                startInfo.Arguments = command;
-                process.StartInfo = startInfo;
-                process.Start();
-                string output = process.StandardOutput.ReadToEnd();
-                Console.WriteLine(output);
-                process.WaitForExit();
+                string output = CMDCommand(command);
                 status.Text = "Status: Key Activation Attempted";
-                process.Close();
             }
 
         }
@@ -390,6 +362,26 @@ namespace GETIID
 
                 return null;
             }
+        }
+
+        public string CMDCommand(string command)
+        {
+            
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.UseShellExecute = false;
+            startInfo.Verb = "runas";
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardInput = true;
+            startInfo.CreateNoWindow = true;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = command;
+            process.StartInfo = startInfo;
+            process.Start();
+            string output = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            process.Close();
+            return output;
         }
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {

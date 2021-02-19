@@ -390,7 +390,12 @@ namespace GETIID
             debug.Show();
         }
 
-        
+        private void cid_textbox_TextChanged(object sender, EventArgs e)
+        {
+            
+            ACTIVATE_BUTTON.Enabled = !string.IsNullOrWhiteSpace(cid_textbox.Text);
+            
+        }
     }
 
 }

@@ -37,8 +37,11 @@ namespace GETIID
             this.REFRESH_BUTTON = new System.Windows.Forms.Button();
             this.UNINSTALL_SELECTED_BUTTON = new System.Windows.Forms.Button();
             this.ACTIVE_SERIALS = new System.Windows.Forms.ListView();
+            this.ch_skuid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_key = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_desc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cid_textbox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ACTIVATE_BUTTON = new System.Windows.Forms.Button();
@@ -55,9 +58,6 @@ namespace GETIID
             this.label2 = new System.Windows.Forms.Label();
             this.OfficeKeysGroup = new System.Windows.Forms.GroupBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.ch_skuid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_desc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ActivationGroup.SuspendLayout();
@@ -138,6 +138,10 @@ namespace GETIID
             this.ACTIVE_SERIALS.UseCompatibleStateImageBehavior = false;
             this.ACTIVE_SERIALS.View = System.Windows.Forms.View.Details;
             // 
+            // ch_skuid
+            // 
+            this.ch_skuid.Text = "SKU ID";
+            // 
             // ch_name
             // 
             this.ch_name.Text = "Product Name";
@@ -148,12 +152,23 @@ namespace GETIID
             this.ch_key.Text = "Last 5 of Key";
             this.ch_key.Width = 86;
             // 
+            // ch_desc
+            // 
+            this.ch_desc.Text = "License Description";
+            this.ch_desc.Width = 183;
+            // 
+            // ch_status
+            // 
+            this.ch_status.Text = "Status";
+            this.ch_status.Width = 90;
+            // 
             // cid_textbox
             // 
             this.cid_textbox.Location = new System.Drawing.Point(9, 212);
             this.cid_textbox.Name = "cid_textbox";
             this.cid_textbox.Size = new System.Drawing.Size(461, 20);
             this.cid_textbox.TabIndex = 7;
+            this.cid_textbox.TextChanged += new System.EventHandler(this.cid_textbox_TextChanged);
             // 
             // label3
             // 
@@ -167,6 +182,7 @@ namespace GETIID
             // ACTIVATE_BUTTON
             // 
             this.ACTIVATE_BUTTON.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ACTIVATE_BUTTON.Enabled = false;
             this.ACTIVATE_BUTTON.Location = new System.Drawing.Point(3, 289);
             this.ACTIVATE_BUTTON.Name = "ACTIVATE_BUTTON";
             this.ACTIVATE_BUTTON.Size = new System.Drawing.Size(470, 53);
@@ -297,20 +313,6 @@ namespace GETIID
             this.OfficeKeysGroup.TabIndex = 14;
             this.OfficeKeysGroup.TabStop = false;
             this.OfficeKeysGroup.Text = "Installed Office Keys";
-            // 
-            // ch_skuid
-            // 
-            this.ch_skuid.Text = "SKU ID";
-            // 
-            // ch_desc
-            // 
-            this.ch_desc.Text = "License Description";
-            this.ch_desc.Width = 183;
-            // 
-            // ch_status
-            // 
-            this.ch_status.Text = "Status";
-            this.ch_status.Width = 90;
             // 
             // Form1
             // 

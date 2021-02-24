@@ -31,6 +31,9 @@ namespace GETIID
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options_Form));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Driver_Location_Button = new System.Windows.Forms.Button();
+            this.Driver_Location_Textbox = new System.Windows.Forms.TextBox();
+            this.Browser_Driver_Label = new System.Windows.Forms.Label();
             this.Portable_Mode = new System.Windows.Forms.CheckBox();
             this.Find_Binary_Location_Button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,15 +47,18 @@ namespace GETIID
             this.github_link = new System.Windows.Forms.LinkLabel();
             this.Author_Label = new System.Windows.Forms.Label();
             this.BrowserBinaryLocation = new System.Windows.Forms.OpenFileDialog();
-            this.Browser_Driver_Label = new System.Windows.Forms.Label();
-            this.Driver_Location_Textbox = new System.Windows.Forms.TextBox();
-            this.Driver_Location_Button = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.Office_License_Location_Label = new System.Windows.Forms.Label();
+            this.Office_Licenes_Location_Button = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.About_Group.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.Office_Licenes_Location_Button);
+            this.groupBox1.Controls.Add(this.Office_License_Location_Label);
+            this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.Driver_Location_Button);
             this.groupBox1.Controls.Add(this.Driver_Location_Textbox);
             this.groupBox1.Controls.Add(this.Browser_Driver_Label);
@@ -67,10 +73,36 @@ namespace GETIID
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(320, 208);
+            this.groupBox1.Size = new System.Drawing.Size(320, 276);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Config";
+            // 
+            // Driver_Location_Button
+            // 
+            this.Driver_Location_Button.Location = new System.Drawing.Point(256, 174);
+            this.Driver_Location_Button.Name = "Driver_Location_Button";
+            this.Driver_Location_Button.Size = new System.Drawing.Size(52, 23);
+            this.Driver_Location_Button.TabIndex = 10;
+            this.Driver_Location_Button.Text = "Find";
+            this.Driver_Location_Button.UseVisualStyleBackColor = true;
+            this.Driver_Location_Button.Click += new System.EventHandler(this.Driver_Location_Button_Click);
+            // 
+            // Driver_Location_Textbox
+            // 
+            this.Driver_Location_Textbox.Location = new System.Drawing.Point(9, 174);
+            this.Driver_Location_Textbox.Name = "Driver_Location_Textbox";
+            this.Driver_Location_Textbox.Size = new System.Drawing.Size(241, 20);
+            this.Driver_Location_Textbox.TabIndex = 9;
+            // 
+            // Browser_Driver_Label
+            // 
+            this.Browser_Driver_Label.AutoSize = true;
+            this.Browser_Driver_Label.Location = new System.Drawing.Point(6, 153);
+            this.Browser_Driver_Label.Name = "Browser_Driver_Label";
+            this.Browser_Driver_Label.Size = new System.Drawing.Size(120, 13);
+            this.Browser_Driver_Label.TabIndex = 8;
+            this.Browser_Driver_Label.Text = "Browser Driver Location";
             // 
             // Portable_Mode
             // 
@@ -153,7 +185,7 @@ namespace GETIID
             // 
             this.Save_Button.AutoSize = true;
             this.Save_Button.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Save_Button.Location = new System.Drawing.Point(3, 82);
+            this.Save_Button.Location = new System.Drawing.Point(3, 96);
             this.Save_Button.Name = "Save_Button";
             this.Save_Button.Size = new System.Drawing.Size(314, 48);
             this.Save_Button.TabIndex = 1;
@@ -167,9 +199,9 @@ namespace GETIID
             this.About_Group.Controls.Add(this.Author_Label);
             this.About_Group.Controls.Add(this.Save_Button);
             this.About_Group.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.About_Group.Location = new System.Drawing.Point(0, 208);
+            this.About_Group.Location = new System.Drawing.Point(0, 276);
             this.About_Group.Name = "About_Group";
-            this.About_Group.Size = new System.Drawing.Size(320, 133);
+            this.About_Group.Size = new System.Drawing.Size(320, 147);
             this.About_Group.TabIndex = 2;
             this.About_Group.TabStop = false;
             this.About_Group.Text = "About";
@@ -198,31 +230,30 @@ namespace GETIID
             // 
             this.BrowserBinaryLocation.FileName = "openFileDialog1";
             // 
-            // Browser_Driver_Label
+            // textBox1
             // 
-            this.Browser_Driver_Label.AutoSize = true;
-            this.Browser_Driver_Label.Location = new System.Drawing.Point(6, 153);
-            this.Browser_Driver_Label.Name = "Browser_Driver_Label";
-            this.Browser_Driver_Label.Size = new System.Drawing.Size(120, 13);
-            this.Browser_Driver_Label.TabIndex = 8;
-            this.Browser_Driver_Label.Text = "Browser Driver Location";
+            this.textBox1.Location = new System.Drawing.Point(9, 221);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(241, 20);
+            this.textBox1.TabIndex = 11;
             // 
-            // Driver_Location_Textbox
+            // Office_License_Location_Label
             // 
-            this.Driver_Location_Textbox.Location = new System.Drawing.Point(9, 174);
-            this.Driver_Location_Textbox.Name = "Driver_Location_Textbox";
-            this.Driver_Location_Textbox.Size = new System.Drawing.Size(241, 20);
-            this.Driver_Location_Textbox.TabIndex = 9;
+            this.Office_License_Location_Label.AutoSize = true;
+            this.Office_License_Location_Label.Location = new System.Drawing.Point(9, 202);
+            this.Office_License_Location_Label.Name = "Office_License_Location_Label";
+            this.Office_License_Location_Label.Size = new System.Drawing.Size(124, 13);
+            this.Office_License_Location_Label.TabIndex = 12;
+            this.Office_License_Location_Label.Text = "Office Licenses Location";
             // 
-            // Driver_Location_Button
+            // Office_Licenes_Location_Button
             // 
-            this.Driver_Location_Button.Location = new System.Drawing.Point(256, 174);
-            this.Driver_Location_Button.Name = "Driver_Location_Button";
-            this.Driver_Location_Button.Size = new System.Drawing.Size(52, 23);
-            this.Driver_Location_Button.TabIndex = 10;
-            this.Driver_Location_Button.Text = "Find";
-            this.Driver_Location_Button.UseVisualStyleBackColor = true;
-            this.Driver_Location_Button.Click += new System.EventHandler(this.Driver_Location_Button_Click);
+            this.Office_Licenes_Location_Button.Location = new System.Drawing.Point(257, 221);
+            this.Office_Licenes_Location_Button.Name = "Office_Licenes_Location_Button";
+            this.Office_Licenes_Location_Button.Size = new System.Drawing.Size(51, 23);
+            this.Office_Licenes_Location_Button.TabIndex = 13;
+            this.Office_Licenes_Location_Button.Text = "Find";
+            this.Office_Licenes_Location_Button.UseVisualStyleBackColor = true;
             // 
             // Options_Form
             // 
@@ -230,7 +261,7 @@ namespace GETIID
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(320, 341);
+            this.ClientSize = new System.Drawing.Size(320, 423);
             this.Controls.Add(this.About_Group);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -266,5 +297,8 @@ namespace GETIID
         private System.Windows.Forms.TextBox Driver_Location_Textbox;
         private System.Windows.Forms.Label Browser_Driver_Label;
         private System.Windows.Forms.Button Driver_Location_Button;
+        private System.Windows.Forms.Button Office_Licenes_Location_Button;
+        private System.Windows.Forms.Label Office_License_Location_Label;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

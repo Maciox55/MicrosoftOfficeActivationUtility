@@ -25,7 +25,7 @@ namespace GETIID.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"https://microsoft.gointeract.io/interact/index?interaction=1461173234028-3884f8602eccbe259104553afa8415434b4581-05d1&accountId=microsoft&loadFrom=CDN&appkey=196de13c-e946-4531-98f6-2719ec8405ce&name=pana&Language=English&CountryCode=en-US&Environment-Name=Prod&Click%20To%20Call%20Caller%20Id=+12168553563&startedFromSmsToken=sdLybGf&dnis=24&token=QFmoD7")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"https://microsoft.gointeract.io/interact/index?interaction=1461173234028-3884f8602eccbe259104553afa8415434b4581-05d1&accountId=microsoft&loadFrom=CDN&appkey=196de13c-e946-4531-98f6-2719ec8405ce&Language=English&name=pana&CountryCode=en-US&Click%20To%20Call%20Caller%20Id=+17142064889&startedFromSmsToken=3jUenpr&dnis=26&token=0Yr8Nd")]
         public string url {
             get {
                 return ((string)(this["url"]));

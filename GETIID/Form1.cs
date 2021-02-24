@@ -211,106 +211,115 @@ namespace GETIID
 
         public void getCID() {
 
-            if (Properties.Settings.Default.browser_driver == "chrome" && Properties.Settings.Default.portable_mode == false)
+            try
             {
-                driver = new ChromeDriver();
-            }
-            else if (Properties.Settings.Default.browser_driver == "edge" && Properties.Settings.Default.portable_mode == false)
-            {
-
-                var options = new EdgeOptions();
-                options.UseChromium = true;
-
-                driver = new EdgeDriver(options);
-            }
-            else if (Properties.Settings.Default.portable_mode == true)
-            {
-                if (Properties.Settings.Default.browser_driver == "chrome")
+                if (Properties.Settings.Default.browser_driver == "chrome" && Properties.Settings.Default.portable_mode == false)
                 {
-                    ChromeOptions opt = new ChromeOptions();
-                    opt.BinaryLocation = Properties.Settings.Default.browser_binary_location;
-                    driver = new ChromeDriver(Properties.Settings.Default.browser_driver_location,opt);
+                    driver = new ChromeDriver();
                 }
-                else if (Properties.Settings.Default.browser_driver == "edge")
+                else if (Properties.Settings.Default.browser_driver == "edge" && Properties.Settings.Default.portable_mode == false)
                 {
-                    
+
                     var options = new EdgeOptions();
                     options.UseChromium = true;
-                    options.BinaryLocation = Properties.Settings.Default.browser_binary_location;
 
                     driver = new EdgeDriver(options);
-
-                } else if (Properties.Settings.Default.browser_driver == "edge_legacy") 
+                }
+                else if (Properties.Settings.Default.portable_mode == true)
                 {
-                    //MAY NOT WORK, UNTESTED
-                    string command = "DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0";
-                    System.Diagnostics.Process process = new System.Diagnostics.Process();
-                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-                    startInfo.UseShellExecute = false;
-                    startInfo.Verb = "runas";
-                    startInfo.RedirectStandardOutput = true;
-                    startInfo.RedirectStandardInput = true;
-                    startInfo.CreateNoWindow = false;
-                    startInfo.FileName = "cmd.exe";
-                    startInfo.Arguments = command;
-                    process.StartInfo = startInfo;
-                    process.Start();
-                    process.WaitForExit();
-                    status.Text = "Status: Edge Legacy setup complete";
-                    process.Close();
+                    if (Properties.Settings.Default.browser_driver == "chrome")
+                    {
+                        ChromeOptions opt = new ChromeOptions();
+                        opt.BinaryLocation = Properties.Settings.Default.browser_binary_location;
+                        driver = new ChromeDriver(Properties.Settings.Default.browser_driver_location, opt);
+                    }
+                    else if (Properties.Settings.Default.browser_driver == "edge")
+                    {
 
-                    var options = new EdgeOptions();
-                    driver = new EdgeDriver();
+                        var options = new EdgeOptions();
+                        options.UseChromium = true;
+                        options.BinaryLocation = Properties.Settings.Default.browser_binary_location;
 
-                    driver.Navigate().GoToUrl("test");
+                        driver = new EdgeDriver(options);
+
+                    }
+                    else if (Properties.Settings.Default.browser_driver == "edge_legacy")
+                    {
+                        //MAY NOT WORK, UNTESTED
+                        string command = "DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0";
+                        System.Diagnostics.Process process = new System.Diagnostics.Process();
+                        System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                        startInfo.UseShellExecute = false;
+                        startInfo.Verb = "runas";
+                        startInfo.RedirectStandardOutput = true;
+                        startInfo.RedirectStandardInput = true;
+                        startInfo.CreateNoWindow = false;
+                        startInfo.FileName = "cmd.exe";
+                        startInfo.Arguments = command;
+                        process.StartInfo = startInfo;
+                        process.Start();
+                        process.WaitForExit();
+                        status.Text = "Status: Edge Legacy setup complete";
+                        process.Close();
+
+                        var options = new EdgeOptions();
+                        driver = new EdgeDriver();
+
+                        driver.Navigate().GoToUrl("test");
+                    }
+
                 }
 
-            }
-                                                          
-            driver.Navigate().GoToUrl(Properties.Settings.Default.url);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+                driver.Navigate().GoToUrl(Properties.Settings.Default.url);
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 
 
-            for (int f = 0; f < 9; f++)
-            {
+                for (int f = 0; f < 9; f++)
+                {
 
-                IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
-                element.SendKeys(iid.Substring(f * 7, 7));
-            }
+                    IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
+                    element.SendKeys(iid.Substring(f * 7, 7));
+                }
 
-            driver.FindElement(By.Id("custom-msft-submit")).Click();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
-
-            var numinstalls = WaitUntilElementVisible(driver, "numberOfInstalls",10);
-
-            if (numinstalls != null)
-            {
-                numinstalls.SendKeys("0");
                 driver.FindElement(By.Id("custom-msft-submit")).Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
-            }
 
-            var elements = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
+                var numinstalls = WaitUntilElementVisible(driver, "numberOfInstalls", 10);
 
-            if (elements != null)
-            {
-                foreach (var element in elements)
+                if (numinstalls != null)
                 {
-                    Console.WriteLine(element.Text);
-                    cid += element.Text;
+                    numinstalls.SendKeys("0");
+                    driver.FindElement(By.Id("custom-msft-submit")).Click();
+                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
                 }
-                cid_textbox.Text = cid;
-                status.Text = "Status: CID retireved, ready for activation";
 
-                //activateByCID(cid);
-            }
-            else {
-                status.Text = "Status: Problem getting CID";
-            }
+                var elements = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
 
-            driver.Quit();
+                if (elements != null)
+                {
+                    foreach (var element in elements)
+                    {
+                        Console.WriteLine(element.Text);
+                        cid += element.Text;
+                    }
+                    cid_textbox.Text = cid;
+                    status.Text = "Status: CID retireved, ready for activation";
+
+                    //activateByCID(cid);
+                }
+                else
+                {
+                    status.Text = "Status: Problem getting CID";
+                }
+
+                driver.Quit();
+            }
+            catch(Exception e){
+                MessageBox.Show("Oops! " + e.Message);
+
+            }
         }
         public void activateByCID(string cid)
         {

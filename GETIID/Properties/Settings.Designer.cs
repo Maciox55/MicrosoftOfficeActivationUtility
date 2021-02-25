@@ -82,5 +82,17 @@ namespace GETIID.Properties {
                 this["browser_driver_location"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string remote_server_address {
+            get {
+                return ((string)(this["remote_server_address"]));
+            }
+            set {
+                this["remote_server_address"] = value;
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Remote;
 using System.Management;
 using SeleniumExtras.WaitHelpers;
 
@@ -213,25 +214,30 @@ namespace GETIID
 
             try
             {
-                if (Properties.Settings.Default.browser_driver == "chrome" && Properties.Settings.Default.portable_mode == false)
+                if (Properties.Settings.Default.portable_mode == false)
                 {
-                    driver = new ChromeDriver();
-                }
-                else if (Properties.Settings.Default.browser_driver == "edge" && Properties.Settings.Default.portable_mode == false)
-                {
+                    if (Properties.Settings.Default.browser_driver == "chrome")
+                    {
+                        driver = new ChromeDriver();
+                    }
+                    else if (Properties.Settings.Default.browser_driver == "edge")
+                    {
 
-                    var options = new EdgeOptions();
-                    options.UseChromium = true;
+                        var options = new EdgeOptions();
+                        options.UseChromium = true;
 
-                    driver = new EdgeDriver(options);
+                        driver = new EdgeDriver(options);
+                    }
                 }
                 else if (Properties.Settings.Default.portable_mode == true)
                 {
                     if (Properties.Settings.Default.browser_driver == "chrome")
                     {
-                        ChromeOptions opt = new ChromeOptions();
-                        opt.BinaryLocation = Properties.Settings.Default.browser_binary_location;
-                        driver = new ChromeDriver(Properties.Settings.Default.browser_driver_location, opt);
+                        var chromeOptions = new ChromeOptions();
+                        chromeOptions.PlatformName = "windows";
+                        driver = new RemoteWebDriver(new Uri("http://" + Properties.Settings.Default.remote_server_address + "/wd/hub"), chromeOptions);
+                        Console.WriteLine(driver);
+
                     }
                     else if (Properties.Settings.Default.browser_driver == "edge")
                     {
@@ -243,30 +249,7 @@ namespace GETIID
                         driver = new EdgeDriver(options);
 
                     }
-                    else if (Properties.Settings.Default.browser_driver == "edge_legacy")
-                    {
-                        //MAY NOT WORK, UNTESTED
-                        string command = "DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0";
-                        System.Diagnostics.Process process = new System.Diagnostics.Process();
-                        System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-                        startInfo.UseShellExecute = false;
-                        startInfo.Verb = "runas";
-                        startInfo.RedirectStandardOutput = true;
-                        startInfo.RedirectStandardInput = true;
-                        startInfo.CreateNoWindow = false;
-                        startInfo.FileName = "cmd.exe";
-                        startInfo.Arguments = command;
-                        process.StartInfo = startInfo;
-                        process.Start();
-                        process.WaitForExit();
-                        status.Text = "Status: Edge Legacy setup complete";
-                        process.Close();
-
-                        var options = new EdgeOptions();
-                        driver = new EdgeDriver();
-
-                        driver.Navigate().GoToUrl("test");
-                    }
+                    
 
                 }
 

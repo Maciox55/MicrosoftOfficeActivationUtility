@@ -19,6 +19,7 @@ namespace GETIID
             url_textbox.Text = Properties.Settings.Default.url;
             Default_Browser_Settings.SelectedItem = Properties.Settings.Default.browser_driver;
             Binary_Location_Textbox.Text = Properties.Settings.Default.browser_binary_location;
+            Remote_Server_Address.Text = Properties.Settings.Default.remote_server_address;
         }
 
         private void Save_Button_Click(object sender, EventArgs e)
@@ -43,6 +44,10 @@ namespace GETIID
             if (Driver_Location_Textbox.Text != null || Driver_Location_Textbox.Text != "")
             {
                 Properties.Settings.Default.browser_driver_location = Driver_Location_Textbox.Text;
+            }
+            if (Remote_Server_Address != null || Remote_Server_Address.Text != "")
+            {
+                Properties.Settings.Default.remote_server_address = Remote_Server_Address.Text;
             }
             Properties.Settings.Default.portable_mode = Portable_Mode.Checked;
             Properties.Settings.Default.Save();

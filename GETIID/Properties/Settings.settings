@@ -20,5 +20,8 @@
     <Setting Name="remote_server_address" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="remote_server_platform" Type="System.String" Scope="User">
+      <Value Profile="(Default)">WINDOWS</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

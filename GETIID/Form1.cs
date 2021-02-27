@@ -50,17 +50,12 @@ namespace GETIID
             {
                 status.Text = "Status: Attempting Key Uninstall";
                 string command = "/c cscript //nologo ospp.vbs /unpkey:" + ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text.Trim();
-                CMDCommand(command,true);
+                CMDCommand(command,true,true);
                 Console.WriteLine(ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text.Trim());
             }
             else {
                 status.Text = "Status: Please select a valid item with key from the list.";
             }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            //Clipboard.SetText(iid_textbox.Text);
         }
 
         private void ACTIVATE_BUTTON_Click(object sender, EventArgs e)
@@ -71,30 +66,6 @@ namespace GETIID
         private void OFFICE_ACTIVATION_BUTTON_Click(object sender, EventArgs e)
         {
             activateByKEY(officekey_textbox.Text);
-        }
-
-        private void OPEN_BROWSER_Click(object sender, EventArgs e)
-        {
-            var chromeOptions = new ChromeOptions();
-            chromeOptions.AddArguments("headless");
-            IWebDriver driver = new ChromeDriver(chromeOptions);
-
-            
-            driver.Navigate().GoToUrl(Properties.Settings.Default.url);
-
-            driver.Manage().Window.Minimize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
-
-            for (int f = 0; f < 9; f++)
-            {
-                
-                IWebElement element = driver.FindElement(By.Id("field" + (f+1)));
-                element.SendKeys(iid.Substring(f * 7, 7));
-            }
-
-            driver.FindElement(By.Id("custom-msft-submit")).Click();
         }
 
         private void REFRESH_BUTTON_Click(object sender, EventArgs e)
@@ -110,7 +81,7 @@ namespace GETIID
         public void get_keys() {
             string command = "/c cscript //nologo ospp.vbs /dstatusall";
             
-            string output = CMDCommand(command,true);
+            string output = CMDCommand(command,true,false);
 
 
             output = output.Remove(0, Convert.ToString(output).Split('\n').FirstOrDefault().Length + 1);//Remove the first PROCESSING line.
@@ -163,8 +134,6 @@ namespace GETIID
                 listviewitem.Tag = pk;
                 ACTIVE_SERIALS.Items.Add(listviewitem);
             }
-            
-
 
             string pattern = @"(.+:)|(\w.*[a-zA-Z0-9])";
             Regex r = new Regex(pattern);
@@ -205,7 +174,7 @@ namespace GETIID
 
         public void getIID() {
             string command = "/c cscript //nologo ospp.vbs /dinstid";
-            string output = CMDCommand(command,true);
+            string output = CMDCommand(command,true,false);
             iid = getBetween(output, "edition: ", "-");
             iid_textbox.Text = iid;
         }
@@ -222,10 +191,8 @@ namespace GETIID
                     }
                     else if (Properties.Settings.Default.browser_driver == "edge")
                     {
-
                         var options = new EdgeOptions();
                         options.UseChromium = true;
-
                         driver = new EdgeDriver(options);
                     }
                 }
@@ -234,22 +201,17 @@ namespace GETIID
                     if (Properties.Settings.Default.browser_driver == "chrome")
                     {
                         var chromeOptions = new ChromeOptions();
-                        chromeOptions.PlatformName = "windows";
+                        chromeOptions.PlatformName = Properties.Settings.Default.remote_server_platform;
                         driver = new RemoteWebDriver(new Uri("http://" + Properties.Settings.Default.remote_server_address + "/wd/hub"), chromeOptions);
-                        Console.WriteLine(driver);
-
+                        
                     }
                     else if (Properties.Settings.Default.browser_driver == "edge")
                     {
-
                         var options = new EdgeOptions();
                         options.UseChromium = true;
-                        options.BinaryLocation = Properties.Settings.Default.browser_binary_location;
-
-                        driver = new EdgeDriver(options);
-
+                        options.PlatformName = Properties.Settings.Default.remote_server_platform;
+                        driver = new RemoteWebDriver(new Uri("http://" + Properties.Settings.Default.remote_server_address + "/wd/hub"), options);
                     }
-                    
 
                 }
 
@@ -312,7 +274,7 @@ namespace GETIID
             }
             else {
                 string command = "/c cscript //nologo ospp.vbs /actcid:" + cid;
-                string output = CMDCommand(command,true);
+                string output = CMDCommand(command,true,true);
                 status.Text = "Status: CID Activation Attempted";
             }
         }
@@ -326,7 +288,7 @@ namespace GETIID
             else
             {
                 string command = "/c /user:Administrator cscript //nologo ospp.vbs /inpkey:" + key;
-                string output = CMDCommand(command,false);
+                string output = CMDCommand(command,false,true);
                 status.Text = "Status: Key Activation Attempted";
             }
 
@@ -343,20 +305,24 @@ namespace GETIID
             {
                 if (e is NoSuchElementException)
                 {
-                    Console.WriteLine("Element with selector: '" + elementSelector + "' was not found.");
+                    MessageBox.Show("Oops! " + e.Message);
                     return null;
                 }
                 else if (e is WebDriverTimeoutException)
                 {
-                    Console.WriteLine("Web Driver Timedout, continuing");
+                    MessageBox.Show("Oops! " + e.Message);
                     return null;
+                }
+                else
+                { 
+                    
                 }
 
                 return null;
             }
         }
 
-        public string CMDCommand(string command,bool noWindow)
+        public string CMDCommand(string command, bool noWindow, bool shellexe)
         {
             
             System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -366,15 +332,23 @@ namespace GETIID
             startInfo.RedirectStandardInput = true;
             startInfo.CreateNoWindow = noWindow;
             startInfo.FileName = "cmd.exe";
-            startInfo.UseShellExecute = false;
+            startInfo.UseShellExecute = shellexe;
             startInfo.Verb = "runas";
             startInfo.Arguments = command;
             process.StartInfo = startInfo;
             process.Start();
-            string output = process.StandardOutput.ReadToEnd();
+
+            if (shellexe == false)
+            {
+                string output = process.StandardOutput.ReadToEnd();
+                return output;
+            }
+            else {
+                return null;
+            }
             process.WaitForExit();
             process.Close();
-            return output;
+            
         }
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {

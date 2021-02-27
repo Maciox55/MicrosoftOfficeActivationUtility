@@ -94,5 +94,17 @@ namespace GETIID.Properties {
                 this["remote_server_address"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("WINDOWS")]
+        public string remote_server_platform {
+            get {
+                return ((string)(this["remote_server_platform"]));
+            }
+            set {
+                this["remote_server_platform"] = value;
+            }
+        }
     }
 }

@@ -31,12 +31,17 @@ namespace GETIID
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options_Form));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.Remote_Server_Platform = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.Remote_Server_Address = new System.Windows.Forms.TextBox();
             this.Office_Licenes_Location_Button = new System.Windows.Forms.Button();
             this.Office_License_Location_Label = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.Driver_Location_Button = new System.Windows.Forms.Button();
             this.Driver_Location_Textbox = new System.Windows.Forms.TextBox();
             this.Browser_Driver_Label = new System.Windows.Forms.Label();
+            this.Portable_Mode = new System.Windows.Forms.CheckBox();
             this.Find_Binary_Location_Button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.Binary_Location_Textbox = new System.Windows.Forms.TextBox();
@@ -49,15 +54,14 @@ namespace GETIID
             this.github_link = new System.Windows.Forms.LinkLabel();
             this.Author_Label = new System.Windows.Forms.Label();
             this.BrowserBinaryLocation = new System.Windows.Forms.OpenFileDialog();
-            this.Remote_Server_Address = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.Portable_Mode = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.About_Group.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.Remote_Server_Platform);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.Remote_Server_Address);
             this.groupBox1.Controls.Add(this.Office_Licenes_Location_Button);
@@ -81,6 +85,45 @@ namespace GETIID
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Config";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 160);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(85, 13);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Remote Platform";
+            // 
+            // Remote_Server_Platform
+            // 
+            this.Remote_Server_Platform.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Remote_Server_Platform.Items.AddRange(new object[] {
+            "WINDOWS",
+            "XP",
+            "VISTA",
+            "MAC",
+            "LINUX"});
+            this.Remote_Server_Platform.Location = new System.Drawing.Point(9, 176);
+            this.Remote_Server_Platform.Name = "Remote_Server_Platform";
+            this.Remote_Server_Platform.Size = new System.Drawing.Size(121, 21);
+            this.Remote_Server_Platform.TabIndex = 16;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 117);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(131, 13);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Remote Server IP address";
+            // 
+            // Remote_Server_Address
+            // 
+            this.Remote_Server_Address.Location = new System.Drawing.Point(9, 133);
+            this.Remote_Server_Address.Name = "Remote_Server_Address";
+            this.Remote_Server_Address.Size = new System.Drawing.Size(299, 20);
+            this.Remote_Server_Address.TabIndex = 14;
             // 
             // Office_Licenes_Location_Button
             // 
@@ -132,6 +175,18 @@ namespace GETIID
             this.Browser_Driver_Label.Size = new System.Drawing.Size(120, 13);
             this.Browser_Driver_Label.TabIndex = 8;
             this.Browser_Driver_Label.Text = "Browser Driver Location";
+            // 
+            // Portable_Mode
+            // 
+            this.Portable_Mode.AutoSize = true;
+            this.Portable_Mode.Checked = global::GETIID.Properties.Settings.Default.portable_mode;
+            this.Portable_Mode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::GETIID.Properties.Settings.Default, "portable_mode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Portable_Mode.Location = new System.Drawing.Point(170, 86);
+            this.Portable_Mode.Name = "Portable_Mode";
+            this.Portable_Mode.Size = new System.Drawing.Size(93, 17);
+            this.Portable_Mode.TabIndex = 7;
+            this.Portable_Mode.Text = "Remote Mode";
+            this.Portable_Mode.UseVisualStyleBackColor = true;
             // 
             // Find_Binary_Location_Button
             // 
@@ -247,34 +302,6 @@ namespace GETIID
             // 
             this.BrowserBinaryLocation.FileName = "openFileDialog1";
             // 
-            // Remote_Server_Address
-            // 
-            this.Remote_Server_Address.Location = new System.Drawing.Point(9, 145);
-            this.Remote_Server_Address.Name = "Remote_Server_Address";
-            this.Remote_Server_Address.Size = new System.Drawing.Size(241, 20);
-            this.Remote_Server_Address.TabIndex = 14;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 126);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(131, 13);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Remote Server IP address";
-            // 
-            // Portable_Mode
-            // 
-            this.Portable_Mode.AutoSize = true;
-            this.Portable_Mode.Checked = global::GETIID.Properties.Settings.Default.portable_mode;
-            this.Portable_Mode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::GETIID.Properties.Settings.Default, "portable_mode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Portable_Mode.Location = new System.Drawing.Point(170, 86);
-            this.Portable_Mode.Name = "Portable_Mode";
-            this.Portable_Mode.Size = new System.Drawing.Size(93, 17);
-            this.Portable_Mode.TabIndex = 7;
-            this.Portable_Mode.Text = "Remote Mode";
-            this.Portable_Mode.UseVisualStyleBackColor = true;
-            // 
             // Options_Form
             // 
             this.AcceptButton = this.Save_Button;
@@ -322,5 +349,7 @@ namespace GETIID
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox Remote_Server_Address;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox Remote_Server_Platform;
     }
 }

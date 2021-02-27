@@ -90,7 +90,6 @@ namespace GETIID
             this.iid_textbox.Name = "iid_textbox";
             this.iid_textbox.Size = new System.Drawing.Size(463, 20);
             this.iid_textbox.TabIndex = 2;
-            this.iid_textbox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // REFRESH_BUTTON
             // 

@@ -200,10 +200,19 @@ namespace GETIID
                 {
                     if (Properties.Settings.Default.browser_driver == "chrome")
                     {
+
                         var chromeOptions = new ChromeOptions();
+                        chromeOptions.AddArgument("no-sandbox");
+                        ICapabilities cap;
+                        //chromeOptions.AddArgument("no-sandbox");
                         chromeOptions.PlatformName = Properties.Settings.Default.remote_server_platform;
-                        driver = new RemoteWebDriver(new Uri("http://" + Properties.Settings.Default.remote_server_address + "/wd/hub"), chromeOptions);
                         
+                        driver = new RemoteWebDriver(new Uri("http://" + Properties.Settings.Default.remote_server_address + "/wd/hub"),chromeOptions.ToCapabilities());
+                        //ICapabilities capabilities = ((RemoteWebDriver)driver).Capabilities;
+                        //Console.WriteLine((capabilities.GetCapability("chrome") as Dictionary<string, object>)["chromedriverVersion"]);
+                        
+
+
                     }
                     else if (Properties.Settings.Default.browser_driver == "edge")
                     {
@@ -341,13 +350,15 @@ namespace GETIID
             if (shellexe == false)
             {
                 string output = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+                process.Close();
                 return output;
             }
             else {
+                process.WaitForExit();
+                process.Close();
                 return null;
             }
-            process.WaitForExit();
-            process.Close();
             
         }
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)

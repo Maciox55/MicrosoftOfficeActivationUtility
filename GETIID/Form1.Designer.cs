@@ -58,10 +58,15 @@ namespace GETIID
             this.label2 = new System.Windows.Forms.Label();
             this.OfficeKeysGroup = new System.Windows.Forms.GroupBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ActivationGroup.SuspendLayout();
             this.OfficeKeysGroup.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // IID_GET_BUTTON
@@ -94,9 +99,9 @@ namespace GETIID
             // REFRESH_BUTTON
             // 
             this.REFRESH_BUTTON.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.REFRESH_BUTTON.Location = new System.Drawing.Point(3, 239);
+            this.REFRESH_BUTTON.Location = new System.Drawing.Point(3, 259);
             this.REFRESH_BUTTON.Name = "REFRESH_BUTTON";
-            this.REFRESH_BUTTON.Size = new System.Drawing.Size(555, 50);
+            this.REFRESH_BUTTON.Size = new System.Drawing.Size(550, 50);
             this.REFRESH_BUTTON.TabIndex = 2;
             this.REFRESH_BUTTON.Text = "Refresh";
             this.toolTip1.SetToolTip(this.REFRESH_BUTTON, "Refresh Office Key List");
@@ -106,9 +111,9 @@ namespace GETIID
             // UNINSTALL_SELECTED_BUTTON
             // 
             this.UNINSTALL_SELECTED_BUTTON.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.UNINSTALL_SELECTED_BUTTON.Location = new System.Drawing.Point(3, 289);
+            this.UNINSTALL_SELECTED_BUTTON.Location = new System.Drawing.Point(3, 309);
             this.UNINSTALL_SELECTED_BUTTON.Name = "UNINSTALL_SELECTED_BUTTON";
-            this.UNINSTALL_SELECTED_BUTTON.Size = new System.Drawing.Size(555, 55);
+            this.UNINSTALL_SELECTED_BUTTON.Size = new System.Drawing.Size(550, 55);
             this.UNINSTALL_SELECTED_BUTTON.TabIndex = 1;
             this.UNINSTALL_SELECTED_BUTTON.Text = "Uninstall Selected";
             this.toolTip1.SetToolTip(this.UNINSTALL_SELECTED_BUTTON, "Uninstall Selected Office Key");
@@ -131,7 +136,7 @@ namespace GETIID
             this.ACTIVE_SERIALS.Location = new System.Drawing.Point(8, 19);
             this.ACTIVE_SERIALS.MultiSelect = false;
             this.ACTIVE_SERIALS.Name = "ACTIVE_SERIALS";
-            this.ACTIVE_SERIALS.Size = new System.Drawing.Size(547, 220);
+            this.ACTIVE_SERIALS.Size = new System.Drawing.Size(542, 234);
             this.ACTIVE_SERIALS.TabIndex = 0;
             this.toolTip1.SetToolTip(this.ACTIVE_SERIALS, "Select the installation key that you want to uninstall");
             this.ACTIVE_SERIALS.UseCompatibleStateImageBehavior = false;
@@ -182,7 +187,7 @@ namespace GETIID
             // 
             this.ACTIVATE_BUTTON.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.ACTIVATE_BUTTON.Enabled = false;
-            this.ACTIVATE_BUTTON.Location = new System.Drawing.Point(3, 289);
+            this.ACTIVATE_BUTTON.Location = new System.Drawing.Point(3, 348);
             this.ACTIVATE_BUTTON.Name = "ACTIVATE_BUTTON";
             this.ACTIVATE_BUTTON.Size = new System.Drawing.Size(470, 53);
             this.ACTIVATE_BUTTON.TabIndex = 9;
@@ -227,7 +232,7 @@ namespace GETIID
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.status});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 382);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 441);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1088, 22);
             this.statusStrip1.TabIndex = 12;
@@ -255,7 +260,7 @@ namespace GETIID
             this.ActivationGroup.Controls.Add(this.label3);
             this.ActivationGroup.Location = new System.Drawing.Point(20, 29);
             this.ActivationGroup.Name = "ActivationGroup";
-            this.ActivationGroup.Size = new System.Drawing.Size(476, 345);
+            this.ActivationGroup.Size = new System.Drawing.Size(476, 404);
             this.ActivationGroup.TabIndex = 13;
             this.ActivationGroup.TabStop = false;
             this.ActivationGroup.Text = "Activation";
@@ -306,19 +311,50 @@ namespace GETIID
             this.OfficeKeysGroup.Controls.Add(this.REFRESH_BUTTON);
             this.OfficeKeysGroup.Controls.Add(this.ACTIVE_SERIALS);
             this.OfficeKeysGroup.Controls.Add(this.UNINSTALL_SELECTED_BUTTON);
-            this.OfficeKeysGroup.Location = new System.Drawing.Point(505, 29);
+            this.OfficeKeysGroup.Location = new System.Drawing.Point(6, 4);
             this.OfficeKeysGroup.Name = "OfficeKeysGroup";
-            this.OfficeKeysGroup.Size = new System.Drawing.Size(561, 347);
+            this.OfficeKeysGroup.Size = new System.Drawing.Size(556, 367);
             this.OfficeKeysGroup.TabIndex = 14;
             this.OfficeKeysGroup.TabStop = false;
             this.OfficeKeysGroup.Text = "Installed Office Keys";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(502, 27);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(586, 403);
+            this.tabControl1.TabIndex = 15;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.OfficeKeysGroup);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(578, 377);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(578, 377);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1088, 404);
-            this.Controls.Add(this.OfficeKeysGroup);
+            this.ClientSize = new System.Drawing.Size(1088, 463);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.ActivationGroup);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -334,6 +370,8 @@ namespace GETIID
             this.ActivationGroup.ResumeLayout(false);
             this.ActivationGroup.PerformLayout();
             this.OfficeKeysGroup.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -368,6 +406,9 @@ namespace GETIID
         private System.Windows.Forms.ColumnHeader ch_skuid;
         private System.Windows.Forms.ColumnHeader ch_desc;
         private System.Windows.Forms.ColumnHeader ch_status;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 

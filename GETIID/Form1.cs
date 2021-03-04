@@ -283,7 +283,7 @@ namespace GETIID
             }
             else {
                 string command = "/c cscript //nologo ospp.vbs /actcid:" + cid;
-                string output = CMDCommand(command,true,true);
+                string output = CMDCommand(command,true,false);
                 status.Text = "Status: CID Activation Attempted";
             }
         }
@@ -297,7 +297,7 @@ namespace GETIID
             else
             {
                 string command = "/c /user:Administrator cscript //nologo ospp.vbs /inpkey:" + key;
-                string output = CMDCommand(command,false,true);
+                CMDCommand(command,false,false);
                 status.Text = "Status: Key Activation Attempted";
             }
 
@@ -323,8 +323,9 @@ namespace GETIID
                     return null;
                 }
                 else
-                { 
-                    
+                {
+                    MessageBox.Show("Oops! " + e.Message);
+                    return null;
                 }
 
                 return null;

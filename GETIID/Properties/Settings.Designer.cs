@@ -37,7 +37,7 @@ namespace GETIID.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("edge")]
+        [global::System.Configuration.DefaultSettingValueAttribute("chrome")]
         public string browser_driver {
             get {
                 return ((string)(this["browser_driver"]));
@@ -61,7 +61,7 @@ namespace GETIID.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool portable_mode {
             get {
                 return ((bool)(this["portable_mode"]));
@@ -85,7 +85,7 @@ namespace GETIID.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10.0.45.247:4444")]
         public string remote_server_address {
             get {
                 return ((string)(this["remote_server_address"]));

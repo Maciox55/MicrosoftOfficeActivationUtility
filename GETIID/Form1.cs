@@ -40,7 +40,10 @@ namespace GETIID
         {
             GetIID();
             get_keys();
-            getLicenses();
+            if (Properties.Settings.Default.licenses_location != null || Properties.Settings.Default.licenses_location ==  "")
+            { 
+                getLicenses();
+            }
         }
 
         
@@ -72,6 +75,7 @@ namespace GETIID
         private void OFFICE_ACTIVATION_BUTTON_Click(object sender, EventArgs e)
         {
             ActivateByKEY(officekey_textbox.Text);
+            
         }
 
         private void REFRESH_BUTTON_Click(object sender, EventArgs e)
@@ -271,6 +275,7 @@ namespace GETIID
                 }
                 else
                 {
+                    //var notValidKey = driver.FindElement();
                     status.Text = "Status: Problem getting CID";
                 }
 
@@ -289,7 +294,7 @@ namespace GETIID
             }
             else {
                 string command = "/c cscript //nologo ospp.vbs /actcid:" + cid;
-                string output = CMDCommand(command,true,false);
+                CMDCommand(command,true,false);
                 status.Text = "Status: CID Activation Attempted";
             }
         }
@@ -303,7 +308,11 @@ namespace GETIID
             else
             {
                 string command = "/c cscript //nologo ospp.vbs /inpkey:" + key;
-                CMDCommand(command,false,true);
+                CMDCommand(command,true,true);
+                updateList();
+                GetIID();
+                GetCID();
+                ActivateByCID(cid_textbox.Text);
                 status.Text = "Status: Key Activation Attempted";
             }
 
@@ -325,7 +334,8 @@ namespace GETIID
                 }
                 else if (e is WebDriverTimeoutException)
                 {
-                    MessageBox.Show("Oops! " + e.Message);
+                    //MessageBox.Show("Oops! " + e.Message);
+                    Console.WriteLine("Could not find the Number of installs element, moving on.");
                     return null;
                 }
                 else

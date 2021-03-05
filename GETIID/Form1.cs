@@ -203,7 +203,6 @@ namespace GETIID
 
                         var chromeOptions = new ChromeOptions();
                         chromeOptions.AddArgument("no-sandbox");
-                        ICapabilities cap;
                         //chromeOptions.AddArgument("no-sandbox");
                         chromeOptions.PlatformName = Properties.Settings.Default.remote_server_platform;
                         
@@ -327,8 +326,6 @@ namespace GETIID
                     MessageBox.Show("Oops! " + e.Message);
                     return null;
                 }
-
-                return null;
             }
         }
 

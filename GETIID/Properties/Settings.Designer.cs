@@ -106,5 +106,17 @@ namespace GETIID.Properties {
                 this["remote_server_platform"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string licenses_location {
+            get {
+                return ((string)(this["licenses_location"]));
+            }
+            set {
+                this["licenses_location"] = value;
+            }
+        }
     }
 }

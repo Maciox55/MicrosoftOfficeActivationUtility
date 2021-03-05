@@ -61,12 +61,14 @@ namespace GETIID
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.licenseListView = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ActivationGroup.SuspendLayout();
             this.OfficeKeysGroup.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // IID_GET_BUTTON
@@ -336,18 +338,30 @@ namespace GETIID
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(578, 377);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Keys On System";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.licenseListView);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(578, 377);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Office Licenses";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // licenseListView
+            // 
+            this.licenseListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.licenseListView.HideSelection = false;
+            this.licenseListView.Location = new System.Drawing.Point(3, 3);
+            this.licenseListView.Name = "licenseListView";
+            this.licenseListView.Size = new System.Drawing.Size(572, 371);
+            this.licenseListView.TabIndex = 0;
+            this.licenseListView.UseCompatibleStateImageBehavior = false;
+            this.licenseListView.View = System.Windows.Forms.View.Details;
             // 
             // Form1
             // 
@@ -372,6 +386,7 @@ namespace GETIID
             this.OfficeKeysGroup.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -409,6 +424,7 @@ namespace GETIID
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ListView licenseListView;
     }
 }
 

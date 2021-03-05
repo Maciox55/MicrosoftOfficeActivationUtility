@@ -13,5 +13,11 @@ namespace GETIID
         public string Status;
         public string CID;
         public bool Good;
+
+        public OfficeKey()
+        {
+
+
+        }
     }
 }

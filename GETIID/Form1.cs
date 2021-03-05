@@ -24,6 +24,8 @@ namespace GETIID
     public partial class  Form1 : Form
     {
         public ProductKey[] productKeys;
+        public OfficeKey[] officeKeys;
+        public List<OfficeKey> officeKeyList;
         public string iid;
         public string cid;
         public HttpClient client = new HttpClient();
@@ -36,12 +38,16 @@ namespace GETIID
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            getIID();
+            GetIID();
             get_keys();
+            getLicenses();
         }
+
+        
+
         private void IID_GET_BUTTON_Click(object sender, EventArgs e)
         {
-            getIID();
+            GetIID();
         }
 
         private void UNINSTALL_SELECTED_BUTTON_Click(object sender, EventArgs e)
@@ -51,7 +57,7 @@ namespace GETIID
                 status.Text = "Status: Attempting Key Uninstall";
                 string command = "/c cscript //nologo ospp.vbs /unpkey:" + ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text.Trim();
                 CMDCommand(command,true,true);
-                Console.WriteLine(ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text.Trim());
+                updateList();
             }
             else {
                 status.Text = "Status: Please select a valid item with key from the list.";
@@ -60,12 +66,12 @@ namespace GETIID
 
         private void ACTIVATE_BUTTON_Click(object sender, EventArgs e)
         {
-            activateByCID(cid_textbox.Text);
+            ActivateByCID(cid_textbox.Text);
         }
 
         private void OFFICE_ACTIVATION_BUTTON_Click(object sender, EventArgs e)
         {
-            activateByKEY(officekey_textbox.Text);
+            ActivateByKEY(officekey_textbox.Text);
         }
 
         private void REFRESH_BUTTON_Click(object sender, EventArgs e)
@@ -75,7 +81,7 @@ namespace GETIID
 
         private void CID_GET_BUTTON_Click(object sender, EventArgs e)
         {
-            getCID();
+            GetCID();
         }
 
         public void get_keys() {
@@ -152,6 +158,7 @@ namespace GETIID
         public void updateList() {
             ACTIVE_SERIALS.Items.Clear();
             get_keys();
+            GetIID();
         }
 
         public static string getBetween(string strSource, string strStart, string strEnd)
@@ -172,14 +179,14 @@ namespace GETIID
             optionsForm.Show();
         }
 
-        public void getIID() {
+        public void GetIID() {
             string command = "/c cscript //nologo ospp.vbs /dinstid";
             string output = CMDCommand(command,true,false);
             iid = getBetween(output, "edition: ", "-");
             iid_textbox.Text = iid;
         }
 
-        public void getCID() {
+        public void GetCID() {
 
             try
             {
@@ -274,7 +281,7 @@ namespace GETIID
 
             }
         }
-        public void activateByCID(string cid)
+        public void ActivateByCID(string cid)
         {
             if (cid == null || cid == "")
             {
@@ -287,7 +294,7 @@ namespace GETIID
             }
         }
 
-        public void activateByKEY(string key)
+        public void ActivateByKEY(string key)
         {
             if (key == null || key == "")
             {
@@ -295,8 +302,8 @@ namespace GETIID
             }
             else
             {
-                string command = "/c /user:Administrator cscript //nologo ospp.vbs /inpkey:" + key;
-                CMDCommand(command,false,false);
+                string command = "/c cscript //nologo ospp.vbs /inpkey:" + key;
+                CMDCommand(command,false,true);
                 status.Text = "Status: Key Activation Attempted";
             }
 
@@ -332,29 +339,31 @@ namespace GETIID
         public string CMDCommand(string command, bool noWindow, bool shellexe)
         {
             
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardInput = true;
-            startInfo.CreateNoWindow = noWindow;
-            startInfo.FileName = "cmd.exe";
-            startInfo.UseShellExecute = shellexe;
-            startInfo.Verb = "runas";
-            startInfo.Arguments = command;
-            process.StartInfo = startInfo;
-            process.Start();
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                CreateNoWindow = noWindow,
+                FileName = "cmd.exe",
+                UseShellExecute = shellexe,
+                Verb = "runas",
+                Arguments = command
+            };
+
 
             if (shellexe == false)
             {
+                startInfo.RedirectStandardOutput = true;
+                startInfo.RedirectStandardInput = true;
+                process.StartInfo = startInfo;
+                process.Start();
                 string output = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
                 process.Close();
                 return output;
             }
             else {
-                process.WaitForExit();
-                process.Close();
+                process.StartInfo = startInfo;
+                process.Start();
                 return null;
             }
             
@@ -371,6 +380,18 @@ namespace GETIID
             ACTIVATE_BUTTON.Enabled = !string.IsNullOrWhiteSpace(cid_textbox.Text);
             
         }
-    }
 
+        private void getLicenses()
+        {
+            if (Properties.Settings.Default.licenses_location != null)
+            {
+                string[] files = Directory.GetFiles(Properties.Settings.Default.licenses_location,"*.txt", SearchOption.AllDirectories);
+
+                foreach (var file in files)
+                {
+                    licenseListView.Groups.Add(new ListViewGroup(file, HorizontalAlignment.Left));
+                }
+            }
+        }
+    }
 }

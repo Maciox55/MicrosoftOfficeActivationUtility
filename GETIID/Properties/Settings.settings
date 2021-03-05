@@ -23,5 +23,8 @@
     <Setting Name="remote_server_platform" Type="System.String" Scope="User">
       <Value Profile="(Default)">WINDOWS</Value>
     </Setting>
+    <Setting Name="licenses_location" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -20,5 +20,10 @@ namespace GETIID
         
         
         }
+        public string PrintKey()
+        {
+            return LicenseName + " , KEY: " + LicenseKey;
+        }
     }
+
 }

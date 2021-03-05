@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace GETIID
             Binary_Location_Textbox.Text = Properties.Settings.Default.browser_binary_location;
             Remote_Server_Address.Text = Properties.Settings.Default.remote_server_address;
             Remote_Server_Platform.SelectedItem = Properties.Settings.Default.remote_server_platform;
-
+            Licenses_Location_Textbox.Text = Properties.Settings.Default.licenses_location;
         }
 
         private void Save_Button_Click(object sender, EventArgs e)
@@ -34,7 +35,6 @@ namespace GETIID
             {
                 Properties.Settings.Default.browser_driver = Default_Browser_Settings.SelectedItem.ToString();
             }
-
             if (Binary_Location_Textbox.Text != null || Binary_Location_Textbox.Text !="")
             {
                 Properties.Settings.Default.browser_binary_location = Binary_Location_Textbox.Text;
@@ -50,6 +50,10 @@ namespace GETIID
             if (Remote_Server_Platform.SelectedText != Properties.Settings.Default.remote_server_platform)
             {
                 Properties.Settings.Default.remote_server_platform = Remote_Server_Platform.SelectedItem.ToString();
+            }
+            if (Licenses_Location_Textbox.Text != Properties.Settings.Default.licenses_location)
+            {
+                Properties.Settings.Default.licenses_location = Licenses_Location_Textbox.Text;
             }
             Properties.Settings.Default.portable_mode = Portable_Mode.Checked;
             Properties.Settings.Default.Save();
@@ -71,8 +75,7 @@ namespace GETIID
             {
                 Binary_Location_Textbox.Text = dialog.FileName;
             }
-
-         }
+        }
 
         private void Driver_Location_Button_Click(object sender, EventArgs e)
         {
@@ -83,6 +86,16 @@ namespace GETIID
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Driver_Location_Textbox.Text = dialog.FileName;
+            }
+        }
+
+        private void Office_Licenes_Location_Button_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            {
+                Licenses_Location_Textbox.Text = dialog.SelectedPath;
             }
         }
     }

@@ -190,8 +190,7 @@ namespace GETIID
             iid_textbox.Text = iid;
         }
 
-        public void GetCID() {
-
+        public void GetCID() { 
             try
             {
                 if (Properties.Settings.Default.portable_mode == false)
@@ -246,9 +245,14 @@ namespace GETIID
                     IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
                     element.SendKeys(iid.Substring(f * 7, 7));
                 }
-
                 driver.FindElement(By.Id("custom-msft-submit")).Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+
+                //var errormessage = WaitUntilElementVisible(driver, By.XPath(),3) ;
+                //if (errormessage != null)
+                //{
+                  //  MessageBox.Show("Invalid Office Key, try another.");
+                //}
 
                 var numinstalls = WaitUntilElementVisible(driver, "numberOfInstalls", 10);
 
@@ -256,7 +260,6 @@ namespace GETIID
                 {
                     numinstalls.SendKeys("0");
                     driver.FindElement(By.Id("custom-msft-submit")).Click();
-                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
                 }
 
                 var elements = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
@@ -275,7 +278,7 @@ namespace GETIID
                 }
                 else
                 {
-                    //var notValidKey = driver.FindElement();
+                    
                     status.Text = "Status: Problem getting CID";
                 }
 
@@ -283,17 +286,17 @@ namespace GETIID
             }
             catch(Exception e){
                 MessageBox.Show("Oops! " + e.Message);
-
+                driver.Quit();
             }
         }
-        public void ActivateByCID(string cid)
+        public void ActivateByCID(string tcid)
         {
-            if (cid == null || cid == "")
+            if (tcid == null || tcid == "")
             {
                 status.Text = "Status: Please provide CID";
             }
             else {
-                string command = "/c cscript //nologo ospp.vbs /actcid:" + cid;
+                string command = "/c cscript //nologo ospp.vbs /actcid:" + tcid;
                 CMDCommand(command,true,false);
                 status.Text = "Status: CID Activation Attempted";
             }

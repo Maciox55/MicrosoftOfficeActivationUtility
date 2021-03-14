@@ -62,6 +62,11 @@ namespace GETIID
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.licenseListView = new System.Windows.Forms.ListView();
+            this.LicenseKey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.UsedOn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.UsedBy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Printed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Good = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ActivationGroup.SuspendLayout();
@@ -343,6 +348,7 @@ namespace GETIID
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.Good);
             this.tabPage2.Controls.Add(this.licenseListView);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -354,14 +360,47 @@ namespace GETIID
             // 
             // licenseListView
             // 
-            this.licenseListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.licenseListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.LicenseKey,
+            this.UsedOn,
+            this.UsedBy,
+            this.Printed});
+            this.licenseListView.Dock = System.Windows.Forms.DockStyle.Top;
             this.licenseListView.HideSelection = false;
             this.licenseListView.Location = new System.Drawing.Point(3, 3);
             this.licenseListView.Name = "licenseListView";
-            this.licenseListView.Size = new System.Drawing.Size(572, 371);
+            this.licenseListView.Size = new System.Drawing.Size(572, 321);
             this.licenseListView.TabIndex = 0;
             this.licenseListView.UseCompatibleStateImageBehavior = false;
             this.licenseListView.View = System.Windows.Forms.View.Details;
+            // 
+            // LicenseKey
+            // 
+            this.LicenseKey.Text = "LicenseKey";
+            this.LicenseKey.Width = 220;
+            // 
+            // UsedOn
+            // 
+            this.UsedOn.Text = "Used On";
+            this.UsedOn.Width = 68;
+            // 
+            // UsedBy
+            // 
+            this.UsedBy.Text = "Used By";
+            this.UsedBy.Width = 78;
+            // 
+            // Printed
+            // 
+            this.Printed.Text = "Printed";
+            // 
+            // Good
+            // 
+            this.Good.Location = new System.Drawing.Point(3, 328);
+            this.Good.Name = "Good";
+            this.Good.Size = new System.Drawing.Size(130, 46);
+            this.Good.TabIndex = 1;
+            this.Good.Text = "button1";
+            this.Good.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -425,6 +464,11 @@ namespace GETIID
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListView licenseListView;
+        private System.Windows.Forms.ColumnHeader UsedBy;
+        private System.Windows.Forms.ColumnHeader LicenseKey;
+        private System.Windows.Forms.ColumnHeader UsedOn;
+        private System.Windows.Forms.ColumnHeader Printed;
+        private System.Windows.Forms.Button Good;
     }
 }
 

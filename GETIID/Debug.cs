@@ -13,6 +13,8 @@ using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Remote;
 using DYMO.Label.Framework;
+using MongoDB.Driver;
+using MongoDB.Bson;
 namespace GETIID
 {
     public partial class DebugMenu : Form
@@ -39,12 +41,13 @@ namespace GETIID
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var chromeOptions = new ChromeOptions();
-            //chromeOptions.BrowserName = "chrome";
+            MongoClient dbClient = new MongoClient("mongodb://root:Macioxxx1@192.168.1.140:27018");
+            var dblist = dbClient.ListDatabases().ToList();
+            var db = dbClient.GetDatabase("IIDGet");
+            var collection = db.GetCollection<BsonDocument>("officeLicenses");
 
-            chromeOptions.PlatformName = "windows";
-            IWebDriver driver = new RemoteWebDriver(new Uri("http://" + Properties.Settings.Default.remote_server_address + "/wd/hub"), chromeOptions);
-            driver.Navigate().GoToUrl(Properties.Settings.Default.url);
+            var document = new BsonDocument { {"SKU ID", 10000} };
+            collection.InsertOne(document);
         }
     }
 }

@@ -118,5 +118,41 @@ namespace GETIID.Properties {
                 this["licenses_location"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string db_ipaddress {
+            get {
+                return ((string)(this["db_ipaddress"]));
+            }
+            set {
+                this["db_ipaddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string db_username {
+            get {
+                return ((string)(this["db_username"]));
+            }
+            set {
+                this["db_username"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string db_password {
+            get {
+                return ((string)(this["db_password"]));
+            }
+            set {
+                this["db_password"] = value;
+            }
+        }
     }
 }

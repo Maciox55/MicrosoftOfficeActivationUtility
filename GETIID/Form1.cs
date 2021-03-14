@@ -17,7 +17,10 @@ using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Remote;
 using System.Management;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using SeleniumExtras.WaitHelpers;
+using MongoDB.Driver;
 
 namespace GETIID
 {
@@ -31,10 +34,11 @@ namespace GETIID
         public HttpClient client = new HttpClient();
         public string url;
         public IWebDriver driver;
+        public MongoCRUD db = new MongoCRUD();
         public Form1()
         {
             InitializeComponent();
-            Console.WriteLine(System.Reflection.Assembly.GetEntryAssembly().Location);
+            
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -43,7 +47,6 @@ namespace GETIID
             getLicenses();
         }
 
-        
 
         private void IID_GET_BUTTON_Click(object sender, EventArgs e)
         {
@@ -278,7 +281,7 @@ namespace GETIID
             }
             catch(Exception e){
                 MessageBox.Show("Oops! " + e.Message);
-
+                driver.Quit();
             }
         }
         public void ActivateByCID(string cid)
@@ -383,14 +386,71 @@ namespace GETIID
 
         private void getLicenses()
         {
-            if (Properties.Settings.Default.licenses_location != null)
+            try
             {
-                string[] files = Directory.GetFiles(Properties.Settings.Default.licenses_location,"*.txt", SearchOption.AllDirectories);
-
-                foreach (var file in files)
+                var keys = db.FineRecordAllKeys<OfficeKey>("officeLicenses");
+                foreach (var key in keys)
                 {
-                    licenseListView.Groups.Add(new ListViewGroup(file, HorizontalAlignment.Left));
+                    ListViewItem item = new ListViewItem();
+                    item.Tag = key;
+
+                    item.Text = key.LicenseKey;
+                    item.SubItems.Add(key.UsedOn);
+                    item.SubItems.Add(key.UsedBy);
+                    item.SubItems.Add(key.Printed.ToString());
+                    if (key.Good)
+                    {
+                        item.BackColor = Color.PaleGreen;
+                    }
+                    else if (key.Good == false)
+                    {
+                        item.BackColor = Color.PaleVioletRed;
+                    }
+
+                    licenseListView.Items.Add(item);
+
+                    Console.WriteLine(key.LicenseKey);
                 }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Issues connecting to Database");
+
+            }
+
+            
+        }
+
+        public class MongoCRUD
+        {
+            private IMongoDatabase db;
+
+            public MongoCRUD()
+            {
+                var dbclient = new MongoClient("mongodb://"+ Properties.Settings.Default.db_username + ":"+ Properties.Settings.Default.db_password+ "@"+ Properties.Settings.Default.db_ipaddress);
+                db = dbclient.GetDatabase("IIDGet");
+            }
+
+            public void InsertRecord<T>(string table, T record)
+            {
+                var collection = db.GetCollection<T>(table);
+                collection.InsertOne(record);
+            }
+
+            public List<T> FineRecordAllKeys<T>(string table)
+            {
+                var collection = db.GetCollection<T>(table);
+                //BsonDocument files = await collection.Find()
+                return collection.Find(new BsonDocument()).ToList();
+            }
+
+            public void UpsertRecord<T>(string table, string key, T record)
+            {
+                var collection = db.GetCollection<T>(table);
+                var result = collection.ReplaceOne(
+                    new BsonDocument("LicenseKey", key),
+                    record,
+                    new ReplaceOptions { IsUpsert = true });
             }
         }
     }

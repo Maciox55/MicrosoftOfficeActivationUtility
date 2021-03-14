@@ -23,6 +23,11 @@ namespace GETIID
             Remote_Server_Address.Text = Properties.Settings.Default.remote_server_address;
             Remote_Server_Platform.SelectedItem = Properties.Settings.Default.remote_server_platform;
             Licenses_Location_Textbox.Text = Properties.Settings.Default.licenses_location;
+
+            //DB Settings
+            ipAddressTextBox.Text = Properties.Settings.Default.db_ipaddress;
+            db_UsernameTextBox.Text = Properties.Settings.Default.db_username;
+            db_PasswordTextBox.Text = Properties.Settings.Default.db_password; //I know it's not secure, tool will only be used in a local network environment therefore no real security needed.
         }
 
         private void Save_Button_Click(object sender, EventArgs e)
@@ -55,6 +60,21 @@ namespace GETIID
             {
                 Properties.Settings.Default.licenses_location = Licenses_Location_Textbox.Text;
             }
+
+            //DB Settings
+            if (ipAddressTextBox.Text != Properties.Settings.Default.db_ipaddress)
+            {
+                Properties.Settings.Default.db_ipaddress = ipAddressTextBox.Text;
+            }
+            if (db_UsernameTextBox.Text != Properties.Settings.Default.licenses_location)
+            {
+                Properties.Settings.Default.db_username = db_UsernameTextBox.Text;
+            }
+            if (db_PasswordTextBox.Text != Properties.Settings.Default.licenses_location)
+            {
+                Properties.Settings.Default.db_password = db_PasswordTextBox.Text;
+            }
+
             Properties.Settings.Default.portable_mode = Portable_Mode.Checked;
             Properties.Settings.Default.Save();
             this.Close();

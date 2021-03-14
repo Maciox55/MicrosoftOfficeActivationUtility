@@ -31,6 +31,13 @@ namespace GETIID
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options_Form));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dbSettingsPanel = new System.Windows.Forms.GroupBox();
+            this.PasswordLabel = new System.Windows.Forms.Label();
+            this.UsernameLabel = new System.Windows.Forms.Label();
+            this.db_PasswordTextBox = new System.Windows.Forms.TextBox();
+            this.db_UsernameTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ipAddressTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.Remote_Server_Platform = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,6 +48,7 @@ namespace GETIID
             this.Driver_Location_Button = new System.Windows.Forms.Button();
             this.Driver_Location_Textbox = new System.Windows.Forms.TextBox();
             this.Browser_Driver_Label = new System.Windows.Forms.Label();
+            this.Portable_Mode = new System.Windows.Forms.CheckBox();
             this.Find_Binary_Location_Button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.Binary_Location_Textbox = new System.Windows.Forms.TextBox();
@@ -53,13 +61,14 @@ namespace GETIID
             this.github_link = new System.Windows.Forms.LinkLabel();
             this.Author_Label = new System.Windows.Forms.Label();
             this.BrowserBinaryLocation = new System.Windows.Forms.OpenFileDialog();
-            this.Portable_Mode = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
+            this.dbSettingsPanel.SuspendLayout();
             this.About_Group.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.dbSettingsPanel);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.Remote_Server_Platform);
             this.groupBox1.Controls.Add(this.label2);
@@ -81,10 +90,74 @@ namespace GETIID
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(320, 344);
+            this.groupBox1.Size = new System.Drawing.Size(663, 344);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Config";
+            // 
+            // dbSettingsPanel
+            // 
+            this.dbSettingsPanel.Controls.Add(this.PasswordLabel);
+            this.dbSettingsPanel.Controls.Add(this.UsernameLabel);
+            this.dbSettingsPanel.Controls.Add(this.db_PasswordTextBox);
+            this.dbSettingsPanel.Controls.Add(this.db_UsernameTextBox);
+            this.dbSettingsPanel.Controls.Add(this.label4);
+            this.dbSettingsPanel.Controls.Add(this.ipAddressTextBox);
+            this.dbSettingsPanel.Location = new System.Drawing.Point(371, 133);
+            this.dbSettingsPanel.Name = "dbSettingsPanel";
+            this.dbSettingsPanel.Size = new System.Drawing.Size(286, 205);
+            this.dbSettingsPanel.TabIndex = 18;
+            this.dbSettingsPanel.TabStop = false;
+            this.dbSettingsPanel.Text = "License Database Settings";
+            // 
+            // PasswordLabel
+            // 
+            this.PasswordLabel.AutoSize = true;
+            this.PasswordLabel.Location = new System.Drawing.Point(8, 151);
+            this.PasswordLabel.Name = "PasswordLabel";
+            this.PasswordLabel.Size = new System.Drawing.Size(53, 13);
+            this.PasswordLabel.TabIndex = 7;
+            this.PasswordLabel.Text = "Password";
+            this.PasswordLabel.UseMnemonic = false;
+            // 
+            // UsernameLabel
+            // 
+            this.UsernameLabel.AutoSize = true;
+            this.UsernameLabel.Location = new System.Drawing.Point(6, 103);
+            this.UsernameLabel.Name = "UsernameLabel";
+            this.UsernameLabel.Size = new System.Drawing.Size(55, 13);
+            this.UsernameLabel.TabIndex = 6;
+            this.UsernameLabel.Text = "Username";
+            // 
+            // db_PasswordTextBox
+            // 
+            this.db_PasswordTextBox.Location = new System.Drawing.Point(6, 172);
+            this.db_PasswordTextBox.Name = "db_PasswordTextBox";
+            this.db_PasswordTextBox.Size = new System.Drawing.Size(274, 20);
+            this.db_PasswordTextBox.TabIndex = 5;
+            // 
+            // db_UsernameTextBox
+            // 
+            this.db_UsernameTextBox.Location = new System.Drawing.Point(6, 122);
+            this.db_UsernameTextBox.Name = "db_UsernameTextBox";
+            this.db_UsernameTextBox.Size = new System.Drawing.Size(274, 20);
+            this.db_UsernameTextBox.TabIndex = 4;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 59);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(58, 13);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "IP Address";
+            // 
+            // ipAddressTextBox
+            // 
+            this.ipAddressTextBox.Location = new System.Drawing.Point(6, 75);
+            this.ipAddressTextBox.Name = "ipAddressTextBox";
+            this.ipAddressTextBox.Size = new System.Drawing.Size(274, 20);
+            this.ipAddressTextBox.TabIndex = 0;
             // 
             // label3
             // 
@@ -177,6 +250,18 @@ namespace GETIID
             this.Browser_Driver_Label.TabIndex = 8;
             this.Browser_Driver_Label.Text = "Browser Driver Location";
             // 
+            // Portable_Mode
+            // 
+            this.Portable_Mode.AutoSize = true;
+            this.Portable_Mode.Checked = global::GETIID.Properties.Settings.Default.portable_mode;
+            this.Portable_Mode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::GETIID.Properties.Settings.Default, "portable_mode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Portable_Mode.Location = new System.Drawing.Point(170, 86);
+            this.Portable_Mode.Name = "Portable_Mode";
+            this.Portable_Mode.Size = new System.Drawing.Size(93, 17);
+            this.Portable_Mode.TabIndex = 7;
+            this.Portable_Mode.Text = "Remote Mode";
+            this.Portable_Mode.UseVisualStyleBackColor = true;
+            // 
             // Find_Binary_Location_Button
             // 
             this.Find_Binary_Location_Button.Location = new System.Drawing.Point(256, 222);
@@ -230,7 +315,7 @@ namespace GETIID
             | System.Windows.Forms.AnchorStyles.Right)));
             this.url_textbox.Location = new System.Drawing.Point(9, 41);
             this.url_textbox.Name = "url_textbox";
-            this.url_textbox.Size = new System.Drawing.Size(305, 20);
+            this.url_textbox.Size = new System.Drawing.Size(648, 20);
             this.url_textbox.TabIndex = 1;
             // 
             // URL_Label
@@ -248,7 +333,7 @@ namespace GETIID
             this.Save_Button.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Save_Button.Location = new System.Drawing.Point(3, 96);
             this.Save_Button.Name = "Save_Button";
-            this.Save_Button.Size = new System.Drawing.Size(314, 48);
+            this.Save_Button.Size = new System.Drawing.Size(657, 48);
             this.Save_Button.TabIndex = 1;
             this.Save_Button.Text = "Save";
             this.Save_Button.UseVisualStyleBackColor = true;
@@ -262,7 +347,7 @@ namespace GETIID
             this.About_Group.Dock = System.Windows.Forms.DockStyle.Fill;
             this.About_Group.Location = new System.Drawing.Point(0, 344);
             this.About_Group.Name = "About_Group";
-            this.About_Group.Size = new System.Drawing.Size(320, 147);
+            this.About_Group.Size = new System.Drawing.Size(663, 147);
             this.About_Group.TabIndex = 2;
             this.About_Group.TabStop = false;
             this.About_Group.Text = "About";
@@ -291,25 +376,13 @@ namespace GETIID
             // 
             this.BrowserBinaryLocation.FileName = "openFileDialog1";
             // 
-            // Portable_Mode
-            // 
-            this.Portable_Mode.AutoSize = true;
-            this.Portable_Mode.Checked = global::GETIID.Properties.Settings.Default.portable_mode;
-            this.Portable_Mode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::GETIID.Properties.Settings.Default, "portable_mode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Portable_Mode.Location = new System.Drawing.Point(170, 86);
-            this.Portable_Mode.Name = "Portable_Mode";
-            this.Portable_Mode.Size = new System.Drawing.Size(93, 17);
-            this.Portable_Mode.TabIndex = 7;
-            this.Portable_Mode.Text = "Remote Mode";
-            this.Portable_Mode.UseVisualStyleBackColor = true;
-            // 
             // Options_Form
             // 
             this.AcceptButton = this.Save_Button;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(320, 491);
+            this.ClientSize = new System.Drawing.Size(663, 491);
             this.Controls.Add(this.About_Group);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -320,6 +393,8 @@ namespace GETIID
             this.Text = "Options";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.dbSettingsPanel.ResumeLayout(false);
+            this.dbSettingsPanel.PerformLayout();
             this.About_Group.ResumeLayout(false);
             this.About_Group.PerformLayout();
             this.ResumeLayout(false);
@@ -352,5 +427,12 @@ namespace GETIID
         private System.Windows.Forms.TextBox Remote_Server_Address;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox Remote_Server_Platform;
+        private System.Windows.Forms.GroupBox dbSettingsPanel;
+        private System.Windows.Forms.Label PasswordLabel;
+        private System.Windows.Forms.Label UsernameLabel;
+        private System.Windows.Forms.TextBox db_PasswordTextBox;
+        private System.Windows.Forms.TextBox db_UsernameTextBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox ipAddressTextBox;
     }
 }

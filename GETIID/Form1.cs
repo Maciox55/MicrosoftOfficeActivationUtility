@@ -17,14 +17,14 @@ using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Remote;
 using System.Management;
-//using MongoDB.Bson;
-//using MongoDB.Bson.Serialization;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using SeleniumExtras.WaitHelpers;
 using MongoDB.Driver;
 
 namespace GETIID
 {
-    public partial class Form1 : Form
+    public partial class  Form1 : Form
     {
         public ProductKey[] productKeys;
         public OfficeKey[] officeKeys;
@@ -34,18 +34,19 @@ namespace GETIID
         public HttpClient client = new HttpClient();
         public string url;
         public IWebDriver driver;
+        public MongoCRUD db = new MongoCRUD();
         public Form1()
         {
             InitializeComponent();
-
+            
         }
         private void Form1_Load(object sender, EventArgs e)
         {
             GetIID();
             get_keys();
-            if (Properties.Settings.Default.licenses_location != null || Properties.Settings.Default.licenses_location == "")
-            {
-                //getLicenses();
+            if (Properties.Settings.Default.licenses_location != null || Properties.Settings.Default.licenses_location ==  "")
+            { 
+                getLicenses();
             }
         }
 
@@ -61,7 +62,7 @@ namespace GETIID
             {
                 status.Text = "Status: Attempting Key Uninstall";
                 string command = "/c cscript //nologo ospp.vbs /unpkey:" + ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text.Trim();
-                CMDCommand(command, true, true);
+                CMDCommand(command,true,true);
                 updateList();
             }
             else {
@@ -77,7 +78,7 @@ namespace GETIID
         private void OFFICE_ACTIVATION_BUTTON_Click(object sender, EventArgs e)
         {
             ActivateByKEY(officekey_textbox.Text);
-
+            
         }
 
         private void REFRESH_BUTTON_Click(object sender, EventArgs e)
@@ -92,12 +93,12 @@ namespace GETIID
 
         public void get_keys() {
             string command = "/c cscript //nologo ospp.vbs /dstatusall";
-
-            string output = CMDCommand(command, true, false);
+            
+            string output = CMDCommand(command,true,false);
 
 
             output = output.Remove(0, Convert.ToString(output).Split('\n').FirstOrDefault().Length + 1);//Remove the first PROCESSING line.
-            string[] separators = { "---------------------------------------" };
+            string[] separators = {"---------------------------------------"};
             string[] sets = output.Split(separators, StringSplitOptions.RemoveEmptyEntries); //Separate the sets of keys into 3 
             Array.Resize(ref sets, sets.Length - 2); //Remove the two trailing EXITING and --- lines.
 
@@ -106,7 +107,7 @@ namespace GETIID
                 string[] sep = { "\r\n" };
                 string[] lines = entry.Split(sep, StringSplitOptions.RemoveEmptyEntries);
                 ProductKey pk = new ProductKey();
-
+                
                 foreach (var line in lines)
                 {
                     string[] values = line.Split(':');
@@ -136,7 +137,7 @@ namespace GETIID
                             break;
                     }
                 }
-
+                
                 var listviewitem = new ListViewItem();
                 listviewitem.Text = pk.SKUID;
                 listviewitem.SubItems.Add(pk.LicenseName);
@@ -157,7 +158,7 @@ namespace GETIID
                 for (int i = 1; i <= 2; i++)
                 {
                     Group g = m.Groups[i];
-                    Console.WriteLine("Group" + i + "=" + g);
+                    Console.WriteLine("Group"+i+"="+g);
                 }
             }
         }
@@ -187,12 +188,12 @@ namespace GETIID
 
         public void GetIID() {
             string command = "/c cscript //nologo ospp.vbs /dinstid";
-            string output = CMDCommand(command, true, false);
+            string output = CMDCommand(command,true,false);
             iid = getBetween(output, "edition: ", "-");
             iid_textbox.Text = iid;
         }
 
-        public void GetCID() {
+        public void GetCID() { 
             try
             {
                 if (Properties.Settings.Default.portable_mode == false)
@@ -217,11 +218,11 @@ namespace GETIID
                         chromeOptions.AddArgument("no-sandbox");
                         //chromeOptions.AddArgument("no-sandbox");
                         chromeOptions.PlatformName = Properties.Settings.Default.remote_server_platform;
-
-                        driver = new RemoteWebDriver(new Uri("http://" + Properties.Settings.Default.remote_server_address + "/wd/hub"), chromeOptions.ToCapabilities());
+                        
+                        driver = new RemoteWebDriver(new Uri("http://" + Properties.Settings.Default.remote_server_address + "/wd/hub"),chromeOptions.ToCapabilities());
                         //ICapabilities capabilities = ((RemoteWebDriver)driver).Capabilities;
                         //Console.WriteLine((capabilities.GetCapability("chrome") as Dictionary<string, object>)["chromedriverVersion"]);
-
+                        
 
 
                     }
@@ -253,7 +254,7 @@ namespace GETIID
                 //var errormessage = WaitUntilElementVisible(driver, By.XPath(),3) ;
                 //if (errormessage != null)
                 //{
-                //  MessageBox.Show("Invalid Office Key, try another.");
+                  //  MessageBox.Show("Invalid Office Key, try another.");
                 //}
 
                 var numinstalls = WaitUntilElementVisible(driver, "numberOfInstalls", 10);
@@ -280,13 +281,13 @@ namespace GETIID
                 }
                 else
                 {
-
+                    
                     status.Text = "Status: Problem getting CID";
                 }
 
                 driver.Quit();
             }
-            catch (Exception e) {
+            catch(Exception e){
                 MessageBox.Show("Oops! " + e.Message);
                 driver.Quit();
             }
@@ -299,7 +300,7 @@ namespace GETIID
             }
             else {
                 string command = "/c cscript //nologo ospp.vbs /actcid:" + tcid;
-                CMDCommand(command, true, false);
+                CMDCommand(command,true,false);
                 status.Text = "Status: CID Activation Attempted";
             }
         }
@@ -313,7 +314,7 @@ namespace GETIID
             else
             {
                 string command = "/c cscript //nologo ospp.vbs /inpkey:" + key;
-                CMDCommand(command, true, true);
+                CMDCommand(command,true,true);
                 updateList();
                 GetIID();
                 GetCID();
@@ -322,7 +323,7 @@ namespace GETIID
             }
 
         }
-        public static IWebElement WaitUntilElementVisible(IWebDriver drvr, string elementSelector, int timeout = 10)
+        public static IWebElement WaitUntilElementVisible(IWebDriver drvr,string elementSelector, int timeout = 10)
         {
             try
             {
@@ -353,7 +354,7 @@ namespace GETIID
 
         public string CMDCommand(string command, bool noWindow, bool shellexe)
         {
-
+            
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
@@ -381,7 +382,7 @@ namespace GETIID
                 process.Start();
                 return null;
             }
-
+            
         }
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -391,16 +392,79 @@ namespace GETIID
 
         private void cid_textbox_TextChanged(object sender, EventArgs e)
         {
-
+            
             ACTIVATE_BUTTON.Enabled = !string.IsNullOrWhiteSpace(cid_textbox.Text);
-
+            
         }
 
-       
+        private void getLicenses()
+        {
+            try
+            {
+                var keys = db.FineRecordAllKeys<OfficeKey>("officeLicenses");
+                foreach (var key in keys)
+                {
+                    ListViewItem item = new ListViewItem();
+                    item.Tag = key;
 
-        
-        
+                    item.Text = key.LicenseKey;
+                    item.SubItems.Add(key.UsedOn);
+                    item.SubItems.Add(key.UsedBy);
+                    item.SubItems.Add(key.Printed.ToString());
+                    if (key.Good)
+                    {
+                        item.BackColor = Color.PaleGreen;
+                    }
+                    else if (key.Good == false)
+                    {
+                        item.BackColor = Color.PaleVioletRed;
+                    }
 
-        
+                    licenseListView.Items.Add(item);
+
+                    Console.WriteLine(key.LicenseKey);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Issues connecting to Database");
+
+            }
+
+            
+        }
+
+        public class MongoCRUD
+        {
+            private IMongoDatabase db;
+
+            public MongoCRUD()
+            {
+                var dbclient = new MongoClient("mongodb://"+ Properties.Settings.Default.db_username + ":"+ Properties.Settings.Default.db_password+ "@"+ Properties.Settings.Default.db_ipaddress);
+                db = dbclient.GetDatabase("IIDGet");
+            }
+
+            public void InsertRecord<T>(string table, T record)
+            {
+                var collection = db.GetCollection<T>(table);
+                collection.InsertOne(record);
+            }
+
+            public List<T> FineRecordAllKeys<T>(string table)
+            {
+                var collection = db.GetCollection<T>(table);
+                //BsonDocument files = await collection.Find()
+                return collection.Find(new BsonDocument()).ToList();
+            }
+
+            public void UpsertRecord<T>(string table, string key, T record)
+            {
+                var collection = db.GetCollection<T>(table);
+                var result = collection.ReplaceOne(
+                    new BsonDocument("LicenseKey", key),
+                    record,
+                    new ReplaceOptions { IsUpsert = true });
+            }
+        }
     }
 }

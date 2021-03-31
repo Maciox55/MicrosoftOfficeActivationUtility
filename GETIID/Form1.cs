@@ -46,7 +46,7 @@ namespace GETIID
             get_keys();
             if (Properties.Settings.Default.licenses_location != null || Properties.Settings.Default.licenses_location ==  "")
             { 
-                getLicenses();
+                //getLicenses();
             }
         }
 
@@ -440,8 +440,8 @@ namespace GETIID
 
             public MongoCRUD()
             {
-                var dbclient = new MongoClient("mongodb://"+ Properties.Settings.Default.db_username + ":"+ Properties.Settings.Default.db_password+ "@"+ Properties.Settings.Default.db_ipaddress);
-                db = dbclient.GetDatabase("IIDGet");
+                //var dbclient = new MongoClient("mongodb://"+ Properties.Settings.Default.db_username + ":"+ Properties.Settings.Default.db_password+ "@"+ Properties.Settings.Default.db_ipaddress);
+                //db = dbclient.GetDatabase("IIDGet");
             }
 
             public void InsertRecord<T>(string table, T record)

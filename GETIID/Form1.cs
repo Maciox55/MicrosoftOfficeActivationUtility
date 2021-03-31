@@ -32,16 +32,16 @@ namespace GETIID
         public Form1()
         {
             InitializeComponent();
-            Console.WriteLine(System.Reflection.Assembly.GetEntryAssembly().Location);
+            
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            getIID();
+            GetIID();
             get_keys();
         }
         private void IID_GET_BUTTON_Click(object sender, EventArgs e)
         {
-            getIID();
+            GetIID();
         }
 
         private void UNINSTALL_SELECTED_BUTTON_Click(object sender, EventArgs e)
@@ -51,7 +51,7 @@ namespace GETIID
                 status.Text = "Status: Attempting Key Uninstall";
                 string command = "/c cscript //nologo ospp.vbs /unpkey:" + ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text.Trim();
                 CMDCommand(command,true,true);
-                Console.WriteLine(ACTIVE_SERIALS.SelectedItems[0].SubItems[2].Text.Trim());
+                updateList();
             }
             else {
                 status.Text = "Status: Please select a valid item with key from the list.";
@@ -60,12 +60,13 @@ namespace GETIID
 
         private void ACTIVATE_BUTTON_Click(object sender, EventArgs e)
         {
-            activateByCID(cid_textbox.Text);
+            ActivateByCID(cid_textbox.Text);
         }
 
         private void OFFICE_ACTIVATION_BUTTON_Click(object sender, EventArgs e)
         {
-            activateByKEY(officekey_textbox.Text);
+            ActivateByKEY(officekey_textbox.Text);
+            
         }
 
         private void REFRESH_BUTTON_Click(object sender, EventArgs e)
@@ -75,7 +76,7 @@ namespace GETIID
 
         private void CID_GET_BUTTON_Click(object sender, EventArgs e)
         {
-            getCID();
+            GetCID();
         }
 
         public void get_keys() {
@@ -172,15 +173,14 @@ namespace GETIID
             optionsForm.Show();
         }
 
-        public void getIID() {
+        public void GetIID() {
             string command = "/c cscript //nologo ospp.vbs /dinstid";
             string output = CMDCommand(command,true,false);
             iid = getBetween(output, "edition: ", "-");
             iid_textbox.Text = iid;
         }
 
-        public void getCID() {
-
+        public void GetCID() { 
             try
             {
                 if (Properties.Settings.Default.portable_mode == false)
@@ -203,7 +203,6 @@ namespace GETIID
 
                         var chromeOptions = new ChromeOptions();
                         chromeOptions.AddArgument("no-sandbox");
-                        ICapabilities cap;
                         //chromeOptions.AddArgument("no-sandbox");
                         chromeOptions.PlatformName = Properties.Settings.Default.remote_server_platform;
                         
@@ -236,7 +235,6 @@ namespace GETIID
                     IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
                     element.SendKeys(iid.Substring(f * 7, 7));
                 }
-
                 driver.FindElement(By.Id("custom-msft-submit")).Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 
@@ -246,7 +244,6 @@ namespace GETIID
                 {
                     numinstalls.SendKeys("0");
                     driver.FindElement(By.Id("custom-msft-submit")).Click();
-                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
                 }
 
                 var elements = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
@@ -272,23 +269,23 @@ namespace GETIID
             }
             catch(Exception e){
                 MessageBox.Show("Oops! " + e.Message);
-
+                driver.Quit();
             }
         }
-        public void activateByCID(string cid)
+        public void ActivateByCID(string tcid)
         {
-            if (cid == null || cid == "")
+            if (tcid == null || tcid == "")
             {
                 status.Text = "Status: Please provide CID";
             }
             else {
-                string command = "/c cscript //nologo ospp.vbs /actcid:" + cid;
-                string output = CMDCommand(command,true,false);
+                string command = "/c cscript //nologo ospp.vbs /actcid:" + tcid;
+                CMDCommand(command,true,false);
                 status.Text = "Status: CID Activation Attempted";
             }
         }
 
-        public void activateByKEY(string key)
+        public void ActivateByKEY(string key)
         {
             if (key == null || key == "")
             {
@@ -296,8 +293,12 @@ namespace GETIID
             }
             else
             {
-                string command = "/c /user:Administrator cscript //nologo ospp.vbs /inpkey:" + key;
-                CMDCommand(command,false,false);
+                string command = "/c cscript //nologo ospp.vbs /inpkey:" + key;
+                CMDCommand(command,true,true);
+                updateList();
+                GetIID();
+                GetCID();
+                ActivateByCID(cid_textbox.Text);
                 status.Text = "Status: Key Activation Attempted";
             }
 
@@ -319,7 +320,8 @@ namespace GETIID
                 }
                 else if (e is WebDriverTimeoutException)
                 {
-                    MessageBox.Show("Oops! " + e.Message);
+                    //MessageBox.Show("Oops! " + e.Message);
+                    Console.WriteLine("Could not find the Number of installs element, moving on.");
                     return null;
                 }
                 else
@@ -327,37 +329,37 @@ namespace GETIID
                     MessageBox.Show("Oops! " + e.Message);
                     return null;
                 }
-
-                return null;
             }
         }
 
         public string CMDCommand(string command, bool noWindow, bool shellexe)
         {
             
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardInput = true;
-            startInfo.CreateNoWindow = noWindow;
-            startInfo.FileName = "cmd.exe";
-            startInfo.UseShellExecute = shellexe;
-            startInfo.Verb = "runas";
-            startInfo.Arguments = command;
-            process.StartInfo = startInfo;
-            process.Start();
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                CreateNoWindow = noWindow,
+                FileName = "cmd.exe",
+                UseShellExecute = shellexe,
+                Verb = "runas",
+                Arguments = command
+            };
+
 
             if (shellexe == false)
             {
+                startInfo.RedirectStandardOutput = true;
+                startInfo.RedirectStandardInput = true;
+                process.StartInfo = startInfo;
+                process.Start();
                 string output = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
                 process.Close();
                 return output;
             }
             else {
-                process.WaitForExit();
-                process.Close();
+                process.StartInfo = startInfo;
+                process.Start();
                 return null;
             }
             
@@ -374,6 +376,7 @@ namespace GETIID
             ACTIVATE_BUTTON.Enabled = !string.IsNullOrWhiteSpace(cid_textbox.Text);
             
         }
-    }
 
+        
+    }
 }

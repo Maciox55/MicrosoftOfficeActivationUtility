@@ -284,13 +284,14 @@ namespace GETIID
                     
                     status.Text = "Status: Problem getting CID";
                 }
-
-                driver.Quit();
             }
             catch(Exception e){
                 MessageBox.Show("Oops! " + e.Message);
                 driver.Quit();
+                driver.Close();
             }
+            driver.Quit();
+            driver.Close();
         }
         public void ActivateByCID(string tcid)
         {

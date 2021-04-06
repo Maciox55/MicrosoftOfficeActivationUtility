@@ -5,14 +5,8 @@
     <Setting Name="url" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://microsoft.gointeract.io/interact/index?interaction=1461173234028-3884f8602eccbe259104553afa8415434b4581-05d1&amp;accountId=microsoft&amp;loadFrom=CDN&amp;appkey=196de13c-e946-4531-98f6-2719ec8405ce&amp;Language=English&amp;name=pana&amp;CountryCode=en-US&amp;Click%20To%20Call%20Caller%20Id=+17142064889&amp;startedFromSmsToken=3jUenpr&amp;dnis=26&amp;token=0Yr8Nd</Value>
     </Setting>
-    <Setting Name="browser_driver" Type="System.String" Scope="User">
-      <Value Profile="(Default)">chrome</Value>
-    </Setting>
     <Setting Name="browser_binary_location" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="portable_mode" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="browser_driver_location" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -22,6 +16,24 @@
     </Setting>
     <Setting Name="remote_server_platform" Type="System.String" Scope="User">
       <Value Profile="(Default)">WINDOWS</Value>
+    </Setting>
+    <Setting Name="browser_driver" Type="System.String" Scope="User">
+      <Value Profile="(Default)">chrome</Value>
+    </Setting>
+    <Setting Name="portable_mode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="licenses_location" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="db_ipaddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="db_username" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="db_password" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

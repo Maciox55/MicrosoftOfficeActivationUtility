@@ -183,6 +183,7 @@ namespace GETIID
         public void GetCID() { 
             try
             {
+                cid = "";
                 if (Properties.Settings.Default.portable_mode == false)
                 {
                     if (Properties.Settings.Default.browser_driver == "chrome")
@@ -238,7 +239,7 @@ namespace GETIID
                 driver.FindElement(By.Id("custom-msft-submit")).Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 
-                var numinstalls = WaitUntilElementVisible(driver, "numberOfInstalls", 10);
+                var numinstalls = WaitUntilElementVisible(driver, "numberOfInstalls", 3);
 
                 if (numinstalls != null)
                 {
@@ -250,6 +251,7 @@ namespace GETIID
 
                 if (elements != null)
                 {
+
                     foreach (var element in elements)
                     {
                         Console.WriteLine(element.Text);
@@ -264,14 +266,17 @@ namespace GETIID
                 {
                     status.Text = "Status: Problem getting CID";
                 }
-
-                driver.Quit();
+               
             }
             catch(Exception e){
                 MessageBox.Show("Oops! " + e.Message);
+                driver.Close();
                 driver.Quit();
             }
+            driver.Close();
+            driver.Quit();
         }
+
         public void ActivateByCID(string tcid)
         {
             if (tcid == null || tcid == "")

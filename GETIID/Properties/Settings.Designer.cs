@@ -37,18 +37,6 @@ namespace GETIID.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("chrome")]
-        public string browser_driver {
-            get {
-                return ((string)(this["browser_driver"]));
-            }
-            set {
-                this["browser_driver"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string browser_binary_location {
             get {
@@ -56,18 +44,6 @@ namespace GETIID.Properties {
             }
             set {
                 this["browser_binary_location"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool portable_mode {
-            get {
-                return ((bool)(this["portable_mode"]));
-            }
-            set {
-                this["portable_mode"] = value;
             }
         }
         
@@ -104,6 +80,78 @@ namespace GETIID.Properties {
             }
             set {
                 this["remote_server_platform"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("chrome")]
+        public string browser_driver {
+            get {
+                return ((string)(this["browser_driver"]));
+            }
+            set {
+                this["browser_driver"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool portable_mode {
+            get {
+                return ((bool)(this["portable_mode"]));
+            }
+            set {
+                this["portable_mode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string licenses_location {
+            get {
+                return ((string)(this["licenses_location"]));
+            }
+            set {
+                this["licenses_location"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string db_ipaddress {
+            get {
+                return ((string)(this["db_ipaddress"]));
+            }
+            set {
+                this["db_ipaddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string db_username {
+            get {
+                return ((string)(this["db_username"]));
+            }
+            set {
+                this["db_username"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string db_password {
+            get {
+                return ((string)(this["db_password"]));
+            }
+            set {
+                this["db_password"] = value;
             }
         }
     }

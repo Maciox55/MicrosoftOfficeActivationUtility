@@ -12,7 +12,6 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Remote;
-using DYMO.Label.Framework;
 //using MongoDB.Driver;
 //using MongoDB.Bson;
 namespace GETIID
@@ -26,17 +25,19 @@ namespace GETIID
 
         private void button1_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Title = "Find browser";
-            dialog.Filter = "Label files|*.label";
+            //OpenFileDialog dialog = new OpenFileDialog();
+            //dialog.Title = "Find browser";
+            //dialog.Filter = "Label files|*.label";
 
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                
-                var label = DYMO.Label.Framework.Label.Open(dialog.FileName);
-                label.SetObjectText("Office_Key", "Testing");
-                label.Print("DYMO LabelWriter 450 Turbo");
-            }
+            //if (dialog.ShowDialog() == DialogResult.OK)
+            //{
+
+            //var label = DYMO.Label.Framework.Label.Open(dialog.FileName);
+            //label.SetObjectText("Office_Key", "Testing");
+            //label.Print("DYMO LabelWriter 450 Turbo");
+            //}
+            
+            //DYMO.Label.Framework.Printers;
         }
 
         private void button2_Click(object sender, EventArgs e)

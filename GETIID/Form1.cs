@@ -24,6 +24,7 @@ namespace GETIID
     public partial class  Form1 : Form
     {
         public ProductKey[] productKeys;
+        
         public string iid;
         public string cid;
         public HttpClient client = new HttpClient();
@@ -201,18 +202,15 @@ namespace GETIID
                 {
                     if (Properties.Settings.Default.browser_driver == "chrome")
                     {
-
                         var chromeOptions = new ChromeOptions();
                         chromeOptions.AddArgument("no-sandbox");
                         //chromeOptions.AddArgument("no-sandbox");
                         chromeOptions.PlatformName = Properties.Settings.Default.remote_server_platform;
+
                         
                         driver = new RemoteWebDriver(new Uri("http://" + Properties.Settings.Default.remote_server_address + "/wd/hub"),chromeOptions.ToCapabilities());
                         //ICapabilities capabilities = ((RemoteWebDriver)driver).Capabilities;
                         //Console.WriteLine((capabilities.GetCapability("chrome") as Dictionary<string, object>)["chromedriverVersion"]);
-                        
-
-
                     }
                     else if (Properties.Settings.Default.browser_driver == "edge")
                     {
@@ -225,17 +223,21 @@ namespace GETIID
                 }
 
                 driver.Navigate().GoToUrl(Properties.Settings.Default.url);
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                var wait = new WebDriverWait(driver,new TimeSpan(0, 0, 30));
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")));
+                //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+                //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 
-
+                //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("field")));
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 for (int f = 0; f < 9; f++)
                 {
-
                     IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
                     element.SendKeys(iid.Substring(f * 7, 7));
                 }
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("custom-msft-submit")));
+                //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 driver.FindElement(By.Id("custom-msft-submit")).Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 
@@ -269,6 +271,7 @@ namespace GETIID
                
             }
             catch(Exception e){
+                Console.WriteLine(e.Message);
                 MessageBox.Show("Oops! " + e.Message);
                 driver.Close();
                 driver.Quit();
@@ -374,14 +377,11 @@ namespace GETIID
             var debug = new DebugMenu();
             debug.Show();
         }
-
         private void cid_textbox_TextChanged(object sender, EventArgs e)
         {
             
             ACTIVATE_BUTTON.Enabled = !string.IsNullOrWhiteSpace(cid_textbox.Text);
             
         }
-
-        
     }
 }

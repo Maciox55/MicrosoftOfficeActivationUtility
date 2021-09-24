@@ -14,12 +14,17 @@ namespace GETIID
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            PortableSettingsProvider.SettingsFileName = "settings.config";
-            PortableSettingsProvider.ApplyProvider(Properties.Settings.Default);
 
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+            //PortableJsonSettingsProvider.SettingsFileName = "portable.config";
+            //PortableSettingsProvider.SettingsDirectory = "c:\\testconfig\\school";
+            //System.IO.Directory.CreateDirectory(PortableSettingsProvider.SettingsDirectory);
+            PortableSettingsProvider.ApplyProvider(Properties.Settings.Default);
+                Application.Run(new Form1());
+
+            
+
         }
     }
 }

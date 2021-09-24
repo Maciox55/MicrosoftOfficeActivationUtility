@@ -291,7 +291,7 @@ namespace GETIID
             catch(Exception e){
                 Console.WriteLine(e.Message);
                 MessageBox.Show("Oops! " + e.Message);
-                9driver.Close();
+                driver.Close();
                 driver.Quit();
             }
             driver.Close();

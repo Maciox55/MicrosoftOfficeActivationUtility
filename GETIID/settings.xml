@@ -4,6 +4,6 @@
   <remote_server_platform>WINDOWS</remote_server_platform>
   <browser_driver>chrome</browser_driver>
   <portable_mode>true</portable_mode>
-  <remote_server_address>10.0.45.247:4445</remote_server_address>
-  <remote_server_address>4446</remote_server_address>
+  <remote_server_address>10.0.45.247:4444</remote_server_address>
+  <remote_server_address>4444</remote_server_address>
 </Settings>

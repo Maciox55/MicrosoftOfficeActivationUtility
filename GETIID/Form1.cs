@@ -188,7 +188,7 @@ namespace GETIID
 
         private void configToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var optionsForm = new Options_Form();
+            var optionsForm = new Options_Form(this);
             optionsForm.Show();
         }
 

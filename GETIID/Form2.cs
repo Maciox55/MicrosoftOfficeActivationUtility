@@ -20,12 +20,15 @@ namespace GETIID
         public XmlSerializer xser;
         public FileStream ioStreamer;
         public string path;
-        public Options_Form()
+        public Form1 parent;
+        public Options_Form(Form1 parentForm)
         {
             InitializeComponent();
             Console.WriteLine(Directory.GetCurrentDirectory());
             string directory = Directory.GetCurrentDirectory();
             path = directory + "\\settings.xml";
+            parent = parentForm;
+            s = parent.settings;
             try
             {
 
@@ -41,7 +44,6 @@ namespace GETIID
                 Console.WriteLine(s.remote_server_platform);
                 Remote_Server_Platform.SelectedItem = s.remote_server_platform;
                 Console.WriteLine(s.browser_driver);
-                ioStreamer.Close();
                 //Close the file editing process
 
             }
@@ -71,28 +73,35 @@ namespace GETIID
         {
             XmlSerializer xser = new XmlSerializer(s.GetType());
 
-                s.url = url_textbox.Text;
-                Properties.Settings.Default.url = url_textbox.Text;
+            s.url = url_textbox.Text;
+            parent.settings.url = url_textbox.Text;
+            Properties.Settings.Default.url = url_textbox.Text;
+           
+            s.browser_driver = Default_Browser_Settings.SelectedItem.ToString();
+            parent.settings.browser_driver = Default_Browser_Settings.SelectedItem.ToString();
+            Properties.Settings.Default.browser_driver = Default_Browser_Settings.SelectedItem.ToString();
 
-                s.browser_driver = Default_Browser_Settings.SelectedItem.ToString();
-                Console.WriteLine(s.browser_driver);
-                Properties.Settings.Default.browser_driver = Default_Browser_Settings.SelectedItem.ToString();
+            s.remote_server_address = Remote_Server_Address.Text;
+            parent.settings.remote_server_address = Remote_Server_Address.Text;
+            Properties.Settings.Default.remote_server_address = Remote_Server_Address.Text;
 
-                s.remote_server_address = Remote_Server_Address.Text;
-                Properties.Settings.Default.remote_server_address = Remote_Server_Address.Text;
-
-                s.remote_server_platform = Remote_Server_Platform.SelectedItem.ToString();
-                Properties.Settings.Default.remote_server_platform = Remote_Server_Platform.SelectedItem.ToString();
-                s.remote_server_port = "4444";
+            s.remote_server_platform = Remote_Server_Platform.SelectedItem.ToString();
+            parent.settings.remote_server_platform = Remote_Server_Platform.SelectedItem.ToString();
+            Properties.Settings.Default.remote_server_platform = Remote_Server_Platform.SelectedItem.ToString();
+               
+            s.remote_server_port = "4444";
+            parent.settings.remote_server_port = "4444";
 
 
             s.portable_mode = Portable_Mode.Checked;
+            parent.settings.portable_mode = Portable_Mode.Checked;
             Properties.Settings.Default.portable_mode = Portable_Mode.Checked;
+
+            //Save User defaults
             Properties.Settings.Default.Save();
 
 
-            XmlTextWriter writer =
-      new XmlTextWriter(path, Encoding.UTF8);
+            XmlTextWriter writer = new XmlTextWriter(path, Encoding.UTF8);
             writer.Formatting = Formatting.Indented;
             writer.Indentation = 4;
             xser.Serialize(writer, s);

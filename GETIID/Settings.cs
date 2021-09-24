@@ -3,25 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace GETIID
 {
     public class Settings
     {
-        public string url;
-        public string remote_server_platform;
-        public string browser_driver;
-        public bool portable_mode;
-        public string remote_server_address;
-        public string remote_server_port;
+        public string url { get; set; }
+        public string remote_server_platform { get; set; }
+        public string browser_driver { get; set; }
+        public bool portable_mode { get; set; }
+        public string remote_server_address { get; set; }
+        public string remote_server_port { get; set; }
 
-        public Settings load()
-        {
-            return null;
-        }
-        public Settings save()
-        {
-            return null;
-        }
     }
 }

@@ -16,6 +16,9 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Remote;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 using System.Management;
 using SeleniumExtras.WaitHelpers;
 
@@ -24,16 +27,31 @@ namespace GETIID
     public partial class  Form1 : Form
     {
         public ProductKey[] productKeys;
-        
+        public Settings settings = new Settings(); //For read only
         public string iid;
         public string cid;
         public HttpClient client = new HttpClient();
+
+        public FileStream ioStreamer;
         public string url;
         public IWebDriver driver;
+        public string path;
         public Form1()
         {
             InitializeComponent();
-            
+
+            string directory = Directory.GetCurrentDirectory();
+            path = directory + "\\settings.xml";
+            ioStreamer = new FileStream(path, FileMode.Open);
+            XmlSerializer xser = new XmlSerializer(settings.GetType());
+            settings = (Settings)xser.Deserialize(ioStreamer);
+
+            Console.WriteLine(settings.url);
+            Console.WriteLine(settings.remote_server_address);
+            Console.WriteLine(settings.url);
+            Console.WriteLine(settings.url);
+
+            ioStreamer.Close();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -185,44 +203,44 @@ namespace GETIID
             try
             {
                 cid = "";
-                if (Properties.Settings.Default.portable_mode == false)
+                if (settings.portable_mode == false)
                 {
-                    if (Properties.Settings.Default.browser_driver == "chrome")
+                    if (settings.browser_driver == "chrome")
                     {
                         driver = new ChromeDriver();
                     }
-                    else if (Properties.Settings.Default.browser_driver == "edge")
+                    else if (settings.browser_driver == "edge")
                     {
                         var options = new EdgeOptions();
                         options.UseChromium = true;
                         driver = new EdgeDriver(options);
                     }
                 }
-                else if (Properties.Settings.Default.portable_mode == true)
+                else if (settings.portable_mode == true)
                 {
-                    if (Properties.Settings.Default.browser_driver == "chrome")
+                    if (settings.browser_driver == "chrome")
                     {
                         var chromeOptions = new ChromeOptions();
                         chromeOptions.AddArgument("no-sandbox");
                         //chromeOptions.AddArgument("no-sandbox");
-                        chromeOptions.PlatformName = Properties.Settings.Default.remote_server_platform;
+                        chromeOptions.PlatformName = settings.remote_server_platform;
 
                         
-                        driver = new RemoteWebDriver(new Uri("http://" + Properties.Settings.Default.remote_server_address + "/wd/hub"),chromeOptions.ToCapabilities());
+                        driver = new RemoteWebDriver(new Uri("http://" + settings.remote_server_address + "/wd/hub"),chromeOptions.ToCapabilities());
                         //ICapabilities capabilities = ((RemoteWebDriver)driver).Capabilities;
                         //Console.WriteLine((capabilities.GetCapability("chrome") as Dictionary<string, object>)["chromedriverVersion"]);
                     }
-                    else if (Properties.Settings.Default.browser_driver == "edge")
+                    else if (settings.browser_driver == "edge")
                     {
                         var options = new EdgeOptions();
                         options.UseChromium = true;
-                        options.PlatformName = Properties.Settings.Default.remote_server_platform;
-                        driver = new RemoteWebDriver(new Uri("http://" + Properties.Settings.Default.remote_server_address + "/wd/hub"), options);
+                        options.PlatformName = settings.remote_server_platform;
+                        driver = new RemoteWebDriver(new Uri("http://" + settings.remote_server_address + "/wd/hub"), options);
                     }
 
                 }
 
-                driver.Navigate().GoToUrl(Properties.Settings.Default.url);
+                driver.Navigate().GoToUrl(settings.url);
                 var wait = new WebDriverWait(driver,new TimeSpan(0, 0, 30));
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")));
                 //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -273,7 +291,7 @@ namespace GETIID
             catch(Exception e){
                 Console.WriteLine(e.Message);
                 MessageBox.Show("Oops! " + e.Message);
-                driver.Close();
+                9driver.Close();
                 driver.Quit();
             }
             driver.Close();

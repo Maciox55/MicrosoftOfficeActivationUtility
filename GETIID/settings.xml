@@ -1,1 +1,9 @@
-﻿
+<?xml version="1.0" encoding="utf-8"?>
+<Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <url>https://microsoft.gointeract.io/interact/index?interaction=1461173234028-3884f8602eccbe259104553afa8415434b4581-05d1&amp;accountId=microsoft&amp;loadFrom=CDN&amp;appkey=196de13c-e946-4531-98f6-2719ec8405ce&amp;Language=English&amp;name=pana&amp;CountryCode=en-US&amp;Click%20To%20Call%20Caller%20Id=+17142064889&amp;startedFromSmsToken=3jUenpr&amp;dnis=26&amp;token=0Yr8Nd</url>
+  <remote_server_platform>WINDOWS</remote_server_platform>
+  <browser_driver>chrome</browser_driver>
+  <portable_mode>true</portable_mode>
+  <remote_server_address>10.0.45.247:4445</remote_server_address>
+  <remote_server_address>4446</remote_server_address>
+</Settings>

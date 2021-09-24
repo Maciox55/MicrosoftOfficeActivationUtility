@@ -16,7 +16,7 @@ namespace GETIID
     public partial class Options_Form : Form
     {
 
-        public Settings s = new Settings();
+        public Settings s;
         public XmlSerializer xser;
         public FileStream ioStreamer;
         public string path;
@@ -28,22 +28,28 @@ namespace GETIID
             path = directory + "\\settings.xml";
             try
             {
-                ioStreamer = new FileStream(path, FileMode.Open);
 
-                s = (Settings)xser.Deserialize(ioStreamer);
+                //ioStreamer = new FileStream(path, FileMode.Open);
+                //XmlSerializer xser = new XmlSerializer(s.GetType());
+                //s = (Settings)xser.Deserialize(ioStreamer);
+                
 
+                Portable_Mode.Checked = s.portable_mode;
                 url_textbox.Text = s.url;
                 Default_Browser_Settings.SelectedItem = s.browser_driver;
                 Remote_Server_Address.Text = s.remote_server_address;
+                Console.WriteLine(s.remote_server_platform);
                 Remote_Server_Platform.SelectedItem = s.remote_server_platform;
-
+                Console.WriteLine(s.browser_driver);
                 ioStreamer.Close();
                 //Close the file editing process
 
             }
-            catch(FileNotFoundException e) {
+            catch (FileNotFoundException e)
+            {
                 File.Create(path);
 
+                Portable_Mode.Checked = Properties.Settings.Default.portable_mode;
                 url_textbox.Text = Properties.Settings.Default.url;
                 Default_Browser_Settings.SelectedItem = Properties.Settings.Default.browser_driver;
                 Remote_Server_Address.Text = Properties.Settings.Default.remote_server_address;
@@ -51,7 +57,11 @@ namespace GETIID
                 Console.WriteLine("File Not Found, created and applied default values");
 
             }
-
+            
+            //url_textbox.Text = Properties.Settings.Default.url;
+            //Default_Browser_Settings.SelectedItem = Properties.Settings.Default.browser_driver;
+            //Remote_Server_Address.Text = Properties.Settings.Default.remote_server_address;
+            //Remote_Server_Platform.SelectedItem = Properties.Settings.Default.remote_server_platform;
 
 
             //PortTextBox.Text = Properties.Settings.Default.remote_server_port;
@@ -61,35 +71,30 @@ namespace GETIID
         {
             XmlSerializer xser = new XmlSerializer(s.GetType());
 
-            if (url_textbox.Text != null || url_textbox.Text != "")
-            {
                 s.url = url_textbox.Text;
                 Properties.Settings.Default.url = url_textbox.Text;
-            }
-            if (Default_Browser_Settings.SelectedItem.ToString() != Properties.Settings.Default.browser_driver)
-            {
+
                 s.browser_driver = Default_Browser_Settings.SelectedItem.ToString();
+                Console.WriteLine(s.browser_driver);
                 Properties.Settings.Default.browser_driver = Default_Browser_Settings.SelectedItem.ToString();
-            }
-            if (Remote_Server_Address != null || Remote_Server_Address.Text != "")
-            {
+
                 s.remote_server_address = Remote_Server_Address.Text;
                 Properties.Settings.Default.remote_server_address = Remote_Server_Address.Text;
-            }
-            if (Remote_Server_Platform.SelectedText != Properties.Settings.Default.remote_server_platform)
-            {
-                s.remote_server_platform = Remote_Server_Platform.SelectedText.ToString();
+
+                s.remote_server_platform = Remote_Server_Platform.SelectedItem.ToString();
                 Properties.Settings.Default.remote_server_platform = Remote_Server_Platform.SelectedItem.ToString();
-            }
-            //if (PortTextBox.Text != Properties.Settings.Default.remote_server_port)
-            //{
-            //    Properties.Settings.Default.remote_server_port = PortTextBox.Text;
-            //}
+                s.remote_server_port = "4444";
+
+
             s.portable_mode = Portable_Mode.Checked;
             Properties.Settings.Default.portable_mode = Portable_Mode.Checked;
             Properties.Settings.Default.Save();
-            XmlWriter writer =
-      new XmlTextWriter(path, Encoding.Unicode);
+
+
+            XmlTextWriter writer =
+      new XmlTextWriter(path, Encoding.UTF8);
+            writer.Formatting = Formatting.Indented;
+            writer.Indentation = 4;
             xser.Serialize(writer, s);
             writer.Close();
             this.Close();

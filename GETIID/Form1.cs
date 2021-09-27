@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
@@ -16,10 +10,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Remote;
-using System.IO;
-using System.Xml;
 using System.Xml.Serialization;
-using System.Management;
 using SeleniumExtras.WaitHelpers;
 
 namespace GETIID
@@ -327,7 +318,6 @@ namespace GETIID
                 ActivateByCID(cid_textbox.Text);
                 status.Text = "Status: Key Activation Attempted";
             }
-
         }
         public static IWebElement WaitUntilElementVisible(IWebDriver drvr,string elementSelector, int timeout = 10)
         {
@@ -371,7 +361,6 @@ namespace GETIID
                 Arguments = command
             };
 
-
             if (shellexe == false)
             {
                 startInfo.RedirectStandardOutput = true;
@@ -388,7 +377,6 @@ namespace GETIID
                 process.Start();
                 return null;
             }
-            
         }
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {

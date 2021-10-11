@@ -76,7 +76,6 @@ namespace GETIID
         private void OFFICE_ACTIVATION_BUTTON_Click(object sender, EventArgs e)
         {
             ActivateByKEY(officekey_textbox.Text);
-            
         }
 
         private void REFRESH_BUTTON_Click(object sender, EventArgs e)
@@ -93,7 +92,6 @@ namespace GETIID
             string command = "/c cscript //nologo ospp.vbs /dstatusall";
             
             string output = CMDCommand(command,true,false);
-
 
             output = output.Remove(0, Convert.ToString(output).Split('\n').FirstOrDefault().Length + 1);//Remove the first PROCESSING line.
             string[] separators = {"---------------------------------------"};
@@ -194,6 +192,7 @@ namespace GETIID
             try
             {
                 cid = "";
+                //
                 if (settings.portable_mode == false)
                 {
                     if (settings.browser_driver == "chrome")
@@ -213,13 +212,9 @@ namespace GETIID
                     {
                         var chromeOptions = new ChromeOptions();
                         chromeOptions.AddArgument("no-sandbox");
-                        //chromeOptions.AddArgument("no-sandbox");
                         chromeOptions.PlatformName = settings.remote_server_platform;
-
                         
                         driver = new RemoteWebDriver(new Uri("http://" + settings.remote_server_address + "/wd/hub"),chromeOptions.ToCapabilities());
-                        //ICapabilities capabilities = ((RemoteWebDriver)driver).Capabilities;
-                        //Console.WriteLine((capabilities.GetCapability("chrome") as Dictionary<string, object>)["chromedriverVersion"]);
                     }
                     else if (settings.browser_driver == "edge")
                     {
@@ -228,56 +223,121 @@ namespace GETIID
                         options.PlatformName = settings.remote_server_platform;
                         driver = new RemoteWebDriver(new Uri("http://" + settings.remote_server_address + "/wd/hub"), options);
                     }
-
                 }
-
                 driver.Navigate().GoToUrl(settings.url);
-                var wait = new WebDriverWait(driver,new TimeSpan(0, 0, 30));
-                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")));
-                //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-                driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
-                //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
-
-                //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("field")));
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-                for (int f = 0; f < 9; f++)
+                var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 30));
+                //Selcting the 7-segment button
+                try
                 {
-                    IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
-                    element.SendKeys(iid.Substring(f * 7, 7));
+                    wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")));
+
+                    driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
+
+                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 }
-                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("custom-msft-submit")));
-                //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-                driver.FindElement(By.Id("custom-msft-submit")).Click();
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
-
-                var numinstalls = WaitUntilElementVisible(driver, "numberOfInstalls", 3);
-
-                if (numinstalls != null)
+                catch (Exception e) {
+                    MessageBox.Show("Could not find the key type selection button on the page. Verify the button ID in the Inspector");
+                };
+                //Inputting the IID into the 9, 7-segment fields
+                try
                 {
-                    numinstalls.SendKeys("0");
-                    driver.FindElement(By.Id("custom-msft-submit")).Click();
-                }
-
-                var elements = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
-
-                if (elements != null)
-                {
-
-                    foreach (var element in elements)
+                    for (int f = 0; f < 9; f++)
                     {
-                        Console.WriteLine(element.Text);
-                        cid += element.Text;
+                        IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
+                        element.SendKeys(iid.Substring(f * 7, 7));
                     }
-                    cid_textbox.Text = cid;
-                    status.Text = "Status: CID retireved, ready for activation";
 
-                    //activateByCID(cid);
                 }
-                else
+                catch (Exception e)
+                { 
+                    MessageBox.Show("Encountered problem with inputting the 7-character segments of the IID");
+                }
+                //Submit the IID
+                try {
+                    wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("custom-msft-submit")));
+                    driver.FindElement(By.Id("custom-msft-submit")).Click();
+                    
+                }
+                catch (Exception e) { 
+                    MessageBox.Show("Encountered problem with submitting the 7-character segments of the IID");
+
+                }
+                //Input the amount of times the key has been activated
+                try
                 {
-                    status.Text = "Status: Problem getting CID";
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='numberOfInstalls']")));
+                    //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+                    IWebElement numinstalls = driver.FindElement(By.XPath("//*[@id='numberOfInstalls']"));
+
+                    if (numinstalls != null)
+                    {
+                        numinstalls.SendKeys("0");
+                        driver.FindElement(By.Id("custom-msft-submit")).Click();
+                    }
                 }
-               
+                catch (NullReferenceException e)
+                { 
+                    MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again!");
+
+                }
+                //Returning the CID, or not
+                try
+                {
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div[2]/div[2]/div/div/p/p[1]")));
+                    if (wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div[2]/div[2]/div/div/p/p[1]"))).Displayed)
+                    {
+                        MessageBox.Show("The entered Key is NOT VALID, please try activating using another key.");
+                    }
+                    else {
+                        try
+                        {
+                            //wait.Until(ExpectedConditions.ElementExists(By.XPath("//*[@id='index - page']/body/div[2]/div[2]/div/div[1]/p/p[1]/text()")));
+                            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']")));
+                            var elements = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
+
+                            if (elements != null)
+                            {
+
+                                foreach (var element in elements)
+                                {
+                                    Console.WriteLine(element.Text);
+                                    cid += element.Text;
+                                }
+                                cid_textbox.Text = cid;
+                                status.Text = "Status: CID retireved, ready for activation";
+
+
+                                //activateByCID(cid);
+                            }
+                            else
+                            {
+                                //status.Text = "Status: Problem getting CID";
+                                MessageBox.Show("Problem reading CID from page, try again a few times, otherwise key is invalid");
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+
+
+                            try
+                            {
+
+                                var textElement = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+                        }
+                    }
+                }
+                catch(Exception e) {
+
+                    MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again!");
+                }
             }
             catch(Exception e){
                 Console.WriteLine(e.Message);

@@ -12,7 +12,7 @@ Xpath submitting the number of installs button
 
 Xpath of not valid key message
 full path : /html/body/div[2]/div[2]/div/div/p/p[1]
-//*[@id="index-page"]/body/div[2]/div[2]/div/div/p/p[1]
+"//*[@id='index - page']/body/div[2]/div[2]/div/div/p/p[1]"
 
 
 Text to test for in event Key is valid:

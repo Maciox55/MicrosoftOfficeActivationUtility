@@ -21,7 +21,6 @@ namespace GETIID
         public Settings settings = new Settings(); //For read only
         public string iid;
         public string cid;
-        public HttpClient client = new HttpClient();
 
         public FileStream ioStreamer;
         public string url;
@@ -37,10 +36,6 @@ namespace GETIID
             XmlSerializer xser = new XmlSerializer(settings.GetType());
             settings = (Settings)xser.Deserialize(ioStreamer);
 
-            Console.WriteLine(settings.url);
-            Console.WriteLine(settings.remote_server_address);
-            Console.WriteLine(settings.url);
-            Console.WriteLine(settings.url);
 
             ioStreamer.Close();
         }

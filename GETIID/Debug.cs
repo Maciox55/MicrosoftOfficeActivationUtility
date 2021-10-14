@@ -26,6 +26,7 @@ namespace GETIID
         public IWebDriver driver;
         public string path;
         public Uri latestVersionUrl;
+        public string responseString;
         private static readonly HttpClient client = new HttpClient();
         public DebugMenu()
         {
@@ -37,45 +38,42 @@ namespace GETIID
             XmlSerializer xser = new XmlSerializer(settings.GetType());
             settings = (Settings)xser.Deserialize(ioStreamer);
             //latestVersionUrl = new Uri("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             //InvalidOperationException
 
-            try {
-                WebDriver driver = new ChromeDriver();
-                driver.Navigate().GoToUrl(settings.url);
-                driver.Close();
-                driver.Quit();
-            }
-            catch (InvalidOperationException ee) {
-                Console.WriteLine("ChromeDriver is not up to date, updating.");
-                get();
+            get();
+            //try
+            //{
+            //    driver = new ChromeDriver();
+            //    //driver.Navigate().GoToUrl(settings.url);
+            //    //driver.Quit();
+            //    MessageBox.Show("Chrome driver is up to date.");
+                
+            //}
+            //catch (InvalidOperationException ee) {
 
-            }
-
+            //    get();
+            //}
 
         }
         private async void get() { 
+
             var responseString = await client.GetStringAsync("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
 
             using (var client = new WebClient())
             {
                 client.DownloadFile("https://chromedriver.storage.googleapis.com/"+responseString+"/chromedriver_win32.zip", "chromedriver.zip");
             }
-            using (ZipArchive archive = ZipFile.Open("/chromedriver.zip", ZipArchiveMode.Update))
+            using (ZipArchive archive = ZipFile.Open(Directory.GetCurrentDirectory()+"/chromedriver.zip", ZipArchiveMode.Update))
             {
-                ZipFileExtensions.ExtractToFile(,"/chromedriver.zip" , true);
+                Console.WriteLine(archive.GetEntry("chromedriver.exe"));
+                ZipArchiveEntry file = archive.GetEntry("chromedriver.exe");
+                ZipFileExtensions.ExtractToFile(file , "chromedriver.exe", true);
             }
-                
-            //ZipFile.CreateFromDirectory(Directory.GetCurrentDirectory(), "chromedriver.zip");
-            
-
-
-
+            MessageBox.Show("Chromedriver was updated to version: " + responseString);
         }
-
     }
 }

@@ -4,6 +4,9 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using System.IO.Compression;
+using System.Net;
+using System.Net.Http;
 
 namespace GETIID
 {
@@ -15,6 +18,8 @@ namespace GETIID
         public FileStream ioStreamer;
         public string path;
         public Form1 parent;
+        private string responseString;
+        private static readonly HttpClient client = new HttpClient();
         public Options_Form(Form1 parentForm)
         {
             InitializeComponent();
@@ -37,6 +42,7 @@ namespace GETIID
                 Remote_Server_Address.Text = s.remote_server_address;
                 Console.WriteLine(s.remote_server_platform);
                 Remote_Server_Platform.SelectedItem = s.remote_server_platform;
+                chromeversionLabel.Text = s.currentVersion;
                 Console.WriteLine(s.browser_driver);
                 //Close the file editing process
 
@@ -66,7 +72,15 @@ namespace GETIID
         private void Save_Button_Click(object sender, EventArgs e)
         {
             XmlSerializer xser = new XmlSerializer(s.GetType());
-
+            if (responseString != null && !s.versions.Exists(v => v == responseString))
+            {
+               
+                s.versions.Add(responseString);
+            }
+            else {
+                Console.WriteLine("No responseString or alread in list");
+            }
+            
             s.url = url_textbox.Text;
             parent.settings.url = url_textbox.Text;
             Properties.Settings.Default.url = url_textbox.Text;
@@ -90,7 +104,6 @@ namespace GETIID
             s.portable_mode = Portable_Mode.Checked;
             parent.settings.portable_mode = Portable_Mode.Checked;
             Properties.Settings.Default.portable_mode = Portable_Mode.Checked;
-
             //Save User defaults
             Properties.Settings.Default.Save();
 
@@ -106,6 +119,25 @@ namespace GETIID
         private void github_link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/Maciox55/MicrosoftOfficeActivationUtility");
+        }
+
+        private async void updateButton_Click(object sender, EventArgs e)
+        {
+            responseString = await client.GetStringAsync("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+
+            using (var client = new WebClient())
+            {
+                client.DownloadFile("https://chromedriver.storage.googleapis.com/" + responseString + "/chromedriver_win32.zip", "chromedriver.zip");
+            }
+            using (ZipArchive archive = ZipFile.Open(Directory.GetCurrentDirectory() + "/chromedriver.zip", ZipArchiveMode.Update))
+            {
+                Console.WriteLine(archive.GetEntry("chromedriver.exe"));
+                ZipArchiveEntry file = archive.GetEntry("chromedriver.exe");
+                ZipFileExtensions.ExtractToFile(file, "chromedriver.exe", true);
+            }
+            s.currentVersion = responseString;
+            chromeversionLabel.Text = responseString;
+            MessageBox.Show("Chromedriver was updated to version: " + responseString);
         }
     }
 }

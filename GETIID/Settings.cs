@@ -15,6 +15,7 @@ namespace GETIID
         public bool portable_mode { get; set; }
         public string remote_server_address { get; set; }
         public string remote_server_port { get; set; }
-
+        public List<string> versions { get; set; }
+        public string currentVersion { get; set; }
     }
 }

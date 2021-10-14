@@ -42,6 +42,7 @@ namespace GETIID
                 Remote_Server_Address.Text = s.remote_server_address;
                 Console.WriteLine(s.remote_server_platform);
                 Remote_Server_Platform.SelectedItem = s.remote_server_platform;
+                chromeversionLabel.Text = s.currentVersion;
                 Console.WriteLine(s.browser_driver);
                 //Close the file editing process
 
@@ -73,12 +74,13 @@ namespace GETIID
             XmlSerializer xser = new XmlSerializer(s.GetType());
             if (responseString != null && !s.versions.Exists(v => v == responseString))
             {
+               
                 s.versions.Add(responseString);
             }
             else {
                 Console.WriteLine("No responseString or alread in list");
             }
-
+            
             s.url = url_textbox.Text;
             parent.settings.url = url_textbox.Text;
             Properties.Settings.Default.url = url_textbox.Text;
@@ -102,7 +104,6 @@ namespace GETIID
             s.portable_mode = Portable_Mode.Checked;
             parent.settings.portable_mode = Portable_Mode.Checked;
             Properties.Settings.Default.portable_mode = Portable_Mode.Checked;
-
             //Save User defaults
             Properties.Settings.Default.Save();
 
@@ -134,6 +135,8 @@ namespace GETIID
                 ZipArchiveEntry file = archive.GetEntry("chromedriver.exe");
                 ZipFileExtensions.ExtractToFile(file, "chromedriver.exe", true);
             }
+            s.currentVersion = responseString;
+            chromeversionLabel.Text = responseString;
             MessageBox.Show("Chromedriver was updated to version: " + responseString);
         }
     }

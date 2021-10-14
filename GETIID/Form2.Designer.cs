@@ -46,12 +46,16 @@ namespace GETIID
             this.Portable_Mode = new System.Windows.Forms.CheckBox();
             this.updateButton = new System.Windows.Forms.Button();
             this.updateButtonLablel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.chromeversionLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.About_Group.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chromeversionLabel);
+            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.updateButtonLablel);
             this.groupBox1.Controls.Add(this.updateButton);
             this.groupBox1.Controls.Add(this.label3);
@@ -226,6 +230,23 @@ namespace GETIID
             this.updateButtonLablel.TabIndex = 19;
             this.updateButtonLablel.Text = "Get Latest ChromeDriver";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 209);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(152, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Current ChromeDriver Version: ";
+            // 
+            // chromeversionLabel
+            // 
+            this.chromeversionLabel.AutoSize = true;
+            this.chromeversionLabel.Location = new System.Drawing.Point(9, 233);
+            this.chromeversionLabel.Name = "chromeversionLabel";
+            this.chromeversionLabel.Size = new System.Drawing.Size(0, 13);
+            this.chromeversionLabel.TabIndex = 21;
+            // 
             // Options_Form
             // 
             this.AcceptButton = this.Save_Button;
@@ -267,5 +288,7 @@ namespace GETIID
         private System.Windows.Forms.ComboBox Remote_Server_Platform;
         private System.Windows.Forms.Label updateButtonLablel;
         private System.Windows.Forms.Button updateButton;
+        private System.Windows.Forms.Label chromeversionLabel;
+        private System.Windows.Forms.Label label1;
     }
 }

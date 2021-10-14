@@ -18,6 +18,7 @@ namespace GETIID
         public FileStream ioStreamer;
         public string path;
         public Form1 parent;
+        private string responseString;
         private static readonly HttpClient client = new HttpClient();
         public Options_Form(Form1 parentForm)
         {
@@ -70,6 +71,13 @@ namespace GETIID
         private void Save_Button_Click(object sender, EventArgs e)
         {
             XmlSerializer xser = new XmlSerializer(s.GetType());
+            if (responseString != null && !s.versions.Exists(v => v == responseString))
+            {
+                s.versions.Add(responseString);
+            }
+            else {
+                Console.WriteLine("No responseString or alread in list");
+            }
 
             s.url = url_textbox.Text;
             parent.settings.url = url_textbox.Text;
@@ -114,7 +122,7 @@ namespace GETIID
 
         private async void updateButton_Click(object sender, EventArgs e)
         {
-            var responseString = await client.GetStringAsync("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+            responseString = await client.GetStringAsync("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
 
             using (var client = new WebClient())
             {

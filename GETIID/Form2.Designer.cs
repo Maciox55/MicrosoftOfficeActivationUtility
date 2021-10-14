@@ -35,7 +35,6 @@ namespace GETIID
             this.Remote_Server_Platform = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.Remote_Server_Address = new System.Windows.Forms.TextBox();
-            this.Portable_Mode = new System.Windows.Forms.CheckBox();
             this.Default_Browser_Driver_Label = new System.Windows.Forms.Label();
             this.Default_Browser_Settings = new System.Windows.Forms.ComboBox();
             this.url_textbox = new System.Windows.Forms.TextBox();
@@ -44,12 +43,17 @@ namespace GETIID
             this.About_Group = new System.Windows.Forms.GroupBox();
             this.github_link = new System.Windows.Forms.LinkLabel();
             this.Author_Label = new System.Windows.Forms.Label();
+            this.Portable_Mode = new System.Windows.Forms.CheckBox();
+            this.updateButton = new System.Windows.Forms.Button();
+            this.updateButtonLablel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.About_Group.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.updateButtonLablel);
+            this.groupBox1.Controls.Add(this.updateButton);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.Remote_Server_Platform);
             this.groupBox1.Controls.Add(this.label2);
@@ -105,19 +109,6 @@ namespace GETIID
             this.Remote_Server_Address.Name = "Remote_Server_Address";
             this.Remote_Server_Address.Size = new System.Drawing.Size(128, 20);
             this.Remote_Server_Address.TabIndex = 14;
-            // 
-            // Portable_Mode
-            // 
-            this.Portable_Mode.AutoSize = true;
-            this.Portable_Mode.Checked = global::GETIID.Properties.Settings.Default.portable_mode;
-            this.Portable_Mode.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.Portable_Mode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::GETIID.Properties.Settings.Default, "portable_mode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Portable_Mode.Location = new System.Drawing.Point(192, 86);
-            this.Portable_Mode.Name = "Portable_Mode";
-            this.Portable_Mode.Size = new System.Drawing.Size(93, 17);
-            this.Portable_Mode.TabIndex = 7;
-            this.Portable_Mode.Text = "Remote Mode";
-            this.Portable_Mode.UseVisualStyleBackColor = true;
             // 
             // Default_Browser_Driver_Label
             // 
@@ -203,6 +194,38 @@ namespace GETIID
             this.Author_Label.TabIndex = 2;
             this.Author_Label.Text = "Created By: Maciej \"Mac\" Bregisz";
             // 
+            // Portable_Mode
+            // 
+            this.Portable_Mode.AutoSize = true;
+            this.Portable_Mode.Checked = global::GETIID.Properties.Settings.Default.portable_mode;
+            this.Portable_Mode.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Portable_Mode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::GETIID.Properties.Settings.Default, "portable_mode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Portable_Mode.Location = new System.Drawing.Point(192, 86);
+            this.Portable_Mode.Name = "Portable_Mode";
+            this.Portable_Mode.Size = new System.Drawing.Size(93, 17);
+            this.Portable_Mode.TabIndex = 7;
+            this.Portable_Mode.Text = "Remote Mode";
+            this.Portable_Mode.UseVisualStyleBackColor = true;
+            // 
+            // updateButton
+            // 
+            this.updateButton.Location = new System.Drawing.Point(192, 233);
+            this.updateButton.Name = "updateButton";
+            this.updateButton.Size = new System.Drawing.Size(122, 23);
+            this.updateButton.TabIndex = 18;
+            this.updateButton.Text = "Update ChromeDriver";
+            this.updateButton.UseVisualStyleBackColor = true;
+            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
+            // 
+            // updateButtonLablel
+            // 
+            this.updateButtonLablel.AutoSize = true;
+            this.updateButtonLablel.Location = new System.Drawing.Point(189, 217);
+            this.updateButtonLablel.Name = "updateButtonLablel";
+            this.updateButtonLablel.Size = new System.Drawing.Size(123, 13);
+            this.updateButtonLablel.TabIndex = 19;
+            this.updateButtonLablel.Text = "Get Latest ChromeDriver";
+            // 
             // Options_Form
             // 
             this.AcceptButton = this.Save_Button;
@@ -242,5 +265,7 @@ namespace GETIID
         private System.Windows.Forms.TextBox Remote_Server_Address;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox Remote_Server_Platform;
+        private System.Windows.Forms.Label updateButtonLablel;
+        private System.Windows.Forms.Button updateButton;
     }
 }

@@ -4,6 +4,9 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using System.IO.Compression;
+using System.Net;
+using System.Net.Http;
 
 namespace GETIID
 {
@@ -15,6 +18,7 @@ namespace GETIID
         public FileStream ioStreamer;
         public string path;
         public Form1 parent;
+        private static readonly HttpClient client = new HttpClient();
         public Options_Form(Form1 parentForm)
         {
             InitializeComponent();
@@ -106,6 +110,23 @@ namespace GETIID
         private void github_link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/Maciox55/MicrosoftOfficeActivationUtility");
+        }
+
+        private async void updateButton_Click(object sender, EventArgs e)
+        {
+            var responseString = await client.GetStringAsync("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+
+            using (var client = new WebClient())
+            {
+                client.DownloadFile("https://chromedriver.storage.googleapis.com/" + responseString + "/chromedriver_win32.zip", "chromedriver.zip");
+            }
+            using (ZipArchive archive = ZipFile.Open(Directory.GetCurrentDirectory() + "/chromedriver.zip", ZipArchiveMode.Update))
+            {
+                Console.WriteLine(archive.GetEntry("chromedriver.exe"));
+                ZipArchiveEntry file = archive.GetEntry("chromedriver.exe");
+                ZipFileExtensions.ExtractToFile(file, "chromedriver.exe", true);
+            }
+            MessageBox.Show("Chromedriver was updated to version: " + responseString);
         }
     }
 }

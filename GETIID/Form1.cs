@@ -145,11 +145,11 @@ namespace GETIID
             int matchCount = 0;
             if (m.Success)
             {
-                Console.WriteLine("Match" + (++matchCount));
+                //Console.WriteLine("Match" + (++matchCount));
                 for (int i = 1; i <= 2; i++)
                 {
                     Group g = m.Groups[i];
-                    Console.WriteLine("Group"+i+"="+g);
+                    //Console.WriteLine("Group"+i+"="+g);
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace GETIID
                     }
                 }
                 driver.Navigate().GoToUrl(settings.url);
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
 
                 //Selcting the 7-segment button
                 try
@@ -267,8 +267,8 @@ namespace GETIID
             try
             {
                 //wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='numberOfInstalls']")));
-                //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-                IWebElement element = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='numberOfInstalls']")));
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                var element = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("numberOfInstalls")));
 
                 //IWebElement numinstalls = driver.FindElement(By.XPath("//*[@id='numberOfInstalls']"));
 
@@ -285,80 +285,80 @@ namespace GETIID
             }
             catch (NoSuchElementException e)
             {
-                MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again!");
+                MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again.");
             }
             catch (Exception f)
             {
                 if (f is WebDriverTimeoutException ||f is NullReferenceException)
                 {
-                    //Returning the CID, or not
+                    Console.WriteLine("Could not find the number of installs element, try again.");
+                }
+            }
+
+            //Returning the CID, or not
+            try
+            {
+                //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                //wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='index - page']/body/div[2]/div[2]/div/div/p/p[1]")));
+                //Key not valid
+                IWebElement ele = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='index - page']/body/div[2]/div[2]/div/div/p/p[1]")));
+                Console.WriteLine(ele);
+                if (ele != null)
+                {
+                    MessageBox.Show("The entered Key is NOT VALID, please try activating using another key.");
+                }
+            }
+            catch (NoSuchElementException e)
+            {
+                driver.Close();
+                driver.Quit();
+                MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again!");
+
+            }
+            catch (WebDriverTimeoutException el)
+            {
+                try
+                {
+                    //wait.Until(ExpectedConditions.ElementExists(By.XPath("//*[@id='index - page']/body/div[2]/div[2]/div/div[1]/p/p[1]/text()")));
+                    wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']")));
+                    var elements = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
+
+                    if (elements != null)
+                    {
+
+                        foreach (var element in elements)
+                        {
+                            Console.WriteLine(element.Text);
+                            cid += element.Text;
+                        }
+                        cid_textbox.Text = cid;
+                        status.Text = "Status: CID retireved, ready for activation";
+
+                        //activateByCID(cid);
+                    }
+                    else
+                    {
+                        //status.Text = "Status: Problem getting CID";
+                        MessageBox.Show("Problem reading CID from page, try again a few times, otherwise key is invalid");
+                    }
+                }
+                catch (NoSuchElementException e)
+                {
                     try
                     {
-                        //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-                        //wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='index - page']/body/div[2]/div[2]/div/div/p/p[1]")));
-                        //Key not valid
-                        IWebElement ele = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='index - page']/body/div[2]/div[2]/div/div/p/p[1]")));
-                        Console.WriteLine(ele);
-                        if (ele != null)
-                        {
-                            MessageBox.Show("The entered Key is NOT VALID, please try activating using another key.");
-                        }
+                        var textElement = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
                     }
-                    catch (NoSuchElementException e)
+                    catch (NoSuchElementException ex)
                     {
                         driver.Close();
                         driver.Quit();
                         MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again!");
 
                     }
-                    catch (WebDriverTimeoutException el)
-                    {
-                        try
-                        {
-                            //wait.Until(ExpectedConditions.ElementExists(By.XPath("//*[@id='index - page']/body/div[2]/div[2]/div/div[1]/p/p[1]/text()")));
-                            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']")));
-                            var elements = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
-
-                            if (elements != null)
-                            {
-
-                                foreach (var element in elements)
-                                {
-                                    Console.WriteLine(element.Text);
-                                    cid += element.Text;
-                                }
-                                cid_textbox.Text = cid;
-                                status.Text = "Status: CID retireved, ready for activation";
-
-                                //activateByCID(cid);
-                            }
-                            else
-                            {
-                                //status.Text = "Status: Problem getting CID";
-                                MessageBox.Show("Problem reading CID from page, try again a few times, otherwise key is invalid");
-                            }
-                        }
-                        catch (NoSuchElementException e)
-                        {
-                            try
-                            {
-                                var textElement = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
-                            }
-                            catch (NoSuchElementException ex)
-                            {
-                                driver.Close();
-                                driver.Quit();
-                                MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again!");
-
-                            }
-                        }
-                    }
-                    driver.Close();
-                    driver.Quit();
                 }
-
-                
             }
+            driver.Close();
+            driver.Quit();
         }
 
         public void ActivateByCID(string tcid)

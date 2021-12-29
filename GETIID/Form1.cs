@@ -12,6 +12,8 @@ using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Remote;
 using System.Xml.Serialization;
 using SeleniumExtras.WaitHelpers;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace GETIID
 {
@@ -35,6 +37,8 @@ namespace GETIID
             ioStreamer = new FileStream(path, FileMode.Open);
             XmlSerializer xser = new XmlSerializer(settings.GetType());
             settings = (Settings)xser.Deserialize(ioStreamer);
+            getSeleniumStatus(settings.remote_server_address, settings.remote_server_port);
+
 
 
             ioStreamer.Close();
@@ -187,6 +191,7 @@ namespace GETIID
             //try
             //{
                 cid = "";
+                progressBar.Value = 0;
                 if (settings.portable_mode == false)
                 {
                     if (settings.browser_driver == "chrome")
@@ -218,6 +223,7 @@ namespace GETIID
                         driver = new RemoteWebDriver(new Uri("http://" + settings.remote_server_address + "/wd/hub"), options);
                     }
                 }
+                 progressBar.Increment(10);
                 driver.Navigate().GoToUrl(settings.url);
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
 
@@ -227,7 +233,8 @@ namespace GETIID
                     wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")));
                     driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
                     driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
-                }
+                    progressBar.Increment(10);
+            }
                 catch (Exception e) {
                     driver.Close();
                     driver.Quit();
@@ -242,7 +249,8 @@ namespace GETIID
                         IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
                         element.SendKeys(iid.Substring(f * 7, 7));
                     }
-                }
+                    progressBar.Increment(10);
+            }
                 catch (Exception e)
                 { 
                     driver.Close();
@@ -255,8 +263,8 @@ namespace GETIID
             try {
                     wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("custom-msft-submit")));
                     driver.FindElement(By.Id("custom-msft-submit")).Click();
-                    
-                }
+                    progressBar.Increment(10);
+            }
                 catch (Exception e) { 
                     driver.Close();
                     driver.Quit();
@@ -269,7 +277,7 @@ namespace GETIID
                 //wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='numberOfInstalls']")));
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
                 var element = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("numberOfInstalls")));
-
+                progressBar.Increment(10);
                 //IWebElement numinstalls = driver.FindElement(By.XPath("//*[@id='numberOfInstalls']"));
 
                 if (element != null)
@@ -307,6 +315,7 @@ namespace GETIID
                 {
                     MessageBox.Show("The entered Key is NOT VALID, please try activating using another key.");
                 }
+
             }
             catch (NoSuchElementException e)
             {
@@ -333,7 +342,7 @@ namespace GETIID
                         }
                         cid_textbox.Text = cid;
                         status.Text = "Status: CID retireved, ready for activation";
-
+                        progressBar.Increment(10);
                         //activateByCID(cid);
                     }
                     else
@@ -347,6 +356,7 @@ namespace GETIID
                     try
                     {
                         var textElement = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
+                        progressBar.Increment(10);
                     }
                     catch (NoSuchElementException ex)
                     {
@@ -357,6 +367,7 @@ namespace GETIID
                     }
                 }
             }
+            progressBar.Value = 70;
             driver.Close();
             driver.Quit();
         }
@@ -453,6 +464,35 @@ namespace GETIID
                 return null;
             }
         }
+
+        public void getSeleniumStatus(string ip, string port)
+        {
+            try
+            {
+                string conn = "http://"+ip + ":" + port + "/wd/hub/status";
+                Console.WriteLine(ip);
+                var json = new WebClient().DownloadString("http://"+ip+"/wd/hub/status");
+                Root response = JsonConvert.DeserializeObject<Root>(json);
+                Console.WriteLine("Checking If Selenium Server is ready.");
+                Console.WriteLine(response.status);
+
+                if (response.status == 0 && response.value.ready)
+                {
+                    connectonStatus.Text = "Selenium Server Detected";
+                    connectonStatus.ForeColor = System.Drawing.Color.Green;
+                }
+                else {
+                    connectonStatus.Text = "Selenium Server Detected, but not all services may be running";
+                    connectonStatus.ForeColor = System.Drawing.Color.Orange;
+                }
+            }
+            catch (Exception e){
+                MessageBox.Show(e.Message);
+                connectonStatus.Text = "Error connecting to Selenium Server, check if server is running";
+                connectonStatus.ForeColor = System.Drawing.Color.Red;
+            }
+        }
+
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var debug = new DebugMenu();
@@ -465,4 +505,38 @@ namespace GETIID
             
         }
     }
+}
+
+public class Build
+{
+    public string revision { get; set; }
+    public DateTime time { get; set; }
+    public string version { get; set; }
+}
+
+public class Os
+{
+    public string arch { get; set; }
+    public string name { get; set; }
+    public string version { get; set; }
+}
+
+public class Java
+{
+    public string version { get; set; }
+}
+
+public class Value
+{
+    public bool ready { get; set; }
+    public string message { get; set; }
+    public Build build { get; set; }
+    public Os os { get; set; }
+    public Java java { get; set; }
+}
+
+public class Root
+{
+    public int status { get; set; }
+    public Value value { get; set; }
 }

@@ -113,6 +113,7 @@ namespace GETIID
             writer.Indentation = 4;
             xser.Serialize(writer, s);
             writer.Close();
+            parent.getSeleniumStatus(parent.settings.remote_server_address, parent.settings.remote_server_port, false);
             this.Close();
         }
 
@@ -138,6 +139,11 @@ namespace GETIID
             s.currentVersion = responseString;
             chromeversionLabel.Text = responseString;
             MessageBox.Show("Chromedriver was updated to version: " + responseString);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            parent.getSeleniumStatus(parent.settings.remote_server_address, parent.settings.remote_server_port, true);
         }
     }
 }

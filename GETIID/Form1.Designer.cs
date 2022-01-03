@@ -51,6 +51,8 @@ namespace GETIID
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.connectonStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.ActivationGroup = new System.Windows.Forms.GroupBox();
             this.CID_GET_BUTTON = new System.Windows.Forms.Button();
             this.OFFICE_ACTIVATION_BUTTON = new System.Windows.Forms.Button();
@@ -60,8 +62,6 @@ namespace GETIID
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.connectonStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ActivationGroup.SuspendLayout();
@@ -247,6 +247,19 @@ namespace GETIID
             this.status.Size = new System.Drawing.Size(42, 17);
             this.status.Text = "Status:";
             // 
+            // progressBar
+            // 
+            this.progressBar.Maximum = 70;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(100, 16);
+            // 
+            // connectonStatus
+            // 
+            this.connectonStatus.Name = "connectonStatus";
+            this.connectonStatus.Size = new System.Drawing.Size(104, 17);
+            this.connectonStatus.Text = "Connection Status";
+            this.connectonStatus.Click += new System.EventHandler(this.connectonStatus_Click);
+            // 
             // ActivationGroup
             // 
             this.ActivationGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -340,18 +353,6 @@ namespace GETIID
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // progressBar
-            // 
-            this.progressBar.Maximum = 70;
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(100, 16);
-            // 
-            // connectonStatus
-            // 
-            this.connectonStatus.Name = "connectonStatus";
-            this.connectonStatus.Size = new System.Drawing.Size(104, 17);
-            this.connectonStatus.Text = "Connection Status";
             // 
             // Form1
             // 

@@ -31,10 +31,15 @@ namespace GETIID
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options_Form));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chromeversionLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.updateButtonLablel = new System.Windows.Forms.Label();
+            this.updateButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.Remote_Server_Platform = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.Remote_Server_Address = new System.Windows.Forms.TextBox();
+            this.Portable_Mode = new System.Windows.Forms.CheckBox();
             this.Default_Browser_Driver_Label = new System.Windows.Forms.Label();
             this.Default_Browser_Settings = new System.Windows.Forms.ComboBox();
             this.url_textbox = new System.Windows.Forms.TextBox();
@@ -43,17 +48,14 @@ namespace GETIID
             this.About_Group = new System.Windows.Forms.GroupBox();
             this.github_link = new System.Windows.Forms.LinkLabel();
             this.Author_Label = new System.Windows.Forms.Label();
-            this.Portable_Mode = new System.Windows.Forms.CheckBox();
-            this.updateButton = new System.Windows.Forms.Button();
-            this.updateButtonLablel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.chromeversionLabel = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.About_Group.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.chromeversionLabel);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.updateButtonLablel);
@@ -74,6 +76,42 @@ namespace GETIID
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Config";
+            // 
+            // chromeversionLabel
+            // 
+            this.chromeversionLabel.AutoSize = true;
+            this.chromeversionLabel.Location = new System.Drawing.Point(9, 233);
+            this.chromeversionLabel.Name = "chromeversionLabel";
+            this.chromeversionLabel.Size = new System.Drawing.Size(0, 13);
+            this.chromeversionLabel.TabIndex = 21;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 209);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(152, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Current ChromeDriver Version: ";
+            // 
+            // updateButtonLablel
+            // 
+            this.updateButtonLablel.AutoSize = true;
+            this.updateButtonLablel.Location = new System.Drawing.Point(189, 217);
+            this.updateButtonLablel.Name = "updateButtonLablel";
+            this.updateButtonLablel.Size = new System.Drawing.Size(123, 13);
+            this.updateButtonLablel.TabIndex = 19;
+            this.updateButtonLablel.Text = "Get Latest ChromeDriver";
+            // 
+            // updateButton
+            // 
+            this.updateButton.Location = new System.Drawing.Point(192, 233);
+            this.updateButton.Name = "updateButton";
+            this.updateButton.Size = new System.Drawing.Size(122, 23);
+            this.updateButton.TabIndex = 18;
+            this.updateButton.Text = "Update ChromeDriver";
+            this.updateButton.UseVisualStyleBackColor = true;
+            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
             // 
             // label3
             // 
@@ -113,6 +151,19 @@ namespace GETIID
             this.Remote_Server_Address.Name = "Remote_Server_Address";
             this.Remote_Server_Address.Size = new System.Drawing.Size(128, 20);
             this.Remote_Server_Address.TabIndex = 14;
+            // 
+            // Portable_Mode
+            // 
+            this.Portable_Mode.AutoSize = true;
+            this.Portable_Mode.Checked = global::GETIID.Properties.Settings.Default.portable_mode;
+            this.Portable_Mode.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Portable_Mode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::GETIID.Properties.Settings.Default, "portable_mode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Portable_Mode.Location = new System.Drawing.Point(192, 86);
+            this.Portable_Mode.Name = "Portable_Mode";
+            this.Portable_Mode.Size = new System.Drawing.Size(93, 17);
+            this.Portable_Mode.TabIndex = 7;
+            this.Portable_Mode.Text = "Remote Mode";
+            this.Portable_Mode.UseVisualStyleBackColor = true;
             // 
             // Default_Browser_Driver_Label
             // 
@@ -198,54 +249,15 @@ namespace GETIID
             this.Author_Label.TabIndex = 2;
             this.Author_Label.Text = "Created By: Maciej \"Mac\" Bregisz";
             // 
-            // Portable_Mode
+            // button1
             // 
-            this.Portable_Mode.AutoSize = true;
-            this.Portable_Mode.Checked = global::GETIID.Properties.Settings.Default.portable_mode;
-            this.Portable_Mode.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.Portable_Mode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::GETIID.Properties.Settings.Default, "portable_mode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Portable_Mode.Location = new System.Drawing.Point(192, 86);
-            this.Portable_Mode.Name = "Portable_Mode";
-            this.Portable_Mode.Size = new System.Drawing.Size(93, 17);
-            this.Portable_Mode.TabIndex = 7;
-            this.Portable_Mode.Text = "Remote Mode";
-            this.Portable_Mode.UseVisualStyleBackColor = true;
-            // 
-            // updateButton
-            // 
-            this.updateButton.Location = new System.Drawing.Point(192, 233);
-            this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(122, 23);
-            this.updateButton.TabIndex = 18;
-            this.updateButton.Text = "Update ChromeDriver";
-            this.updateButton.UseVisualStyleBackColor = true;
-            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
-            // 
-            // updateButtonLablel
-            // 
-            this.updateButtonLablel.AutoSize = true;
-            this.updateButtonLablel.Location = new System.Drawing.Point(189, 217);
-            this.updateButtonLablel.Name = "updateButtonLablel";
-            this.updateButtonLablel.Size = new System.Drawing.Size(123, 13);
-            this.updateButtonLablel.TabIndex = 19;
-            this.updateButtonLablel.Text = "Get Latest ChromeDriver";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 209);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(152, 13);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "Current ChromeDriver Version: ";
-            // 
-            // chromeversionLabel
-            // 
-            this.chromeversionLabel.AutoSize = true;
-            this.chromeversionLabel.Location = new System.Drawing.Point(9, 233);
-            this.chromeversionLabel.Name = "chromeversionLabel";
-            this.chromeversionLabel.Size = new System.Drawing.Size(0, 13);
-            this.chromeversionLabel.TabIndex = 21;
+            this.button1.Location = new System.Drawing.Point(143, 186);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(51, 20);
+            this.button1.TabIndex = 22;
+            this.button1.Text = "Check Connection To Server";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Options_Form
             // 
@@ -290,5 +302,6 @@ namespace GETIID
         private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.Label chromeversionLabel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
     }
 }

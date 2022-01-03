@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using SeleniumExtras.WaitHelpers;
 using System.Net;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace GETIID
 {
@@ -37,7 +38,7 @@ namespace GETIID
             ioStreamer = new FileStream(path, FileMode.Open);
             XmlSerializer xser = new XmlSerializer(settings.GetType());
             settings = (Settings)xser.Deserialize(ioStreamer);
-            getSeleniumStatus(settings.remote_server_address, settings.remote_server_port);
+            getSeleniumStatus(settings.remote_server_address, settings.remote_server_port,false);
 
 
 
@@ -187,95 +188,99 @@ namespace GETIID
             iid_textbox.Text = iid;
         }
 
-        public void GetCID() { 
+        public void GetCID()
+        {
             //try
             //{
-                cid = "";
-                progressBar.Value = 0;
-                if (settings.portable_mode == false)
+            cid = "";
+            progressBar.Value = 0;
+            if (settings.portable_mode == false)
+            {
+                if (settings.browser_driver == "chrome")
                 {
-                    if (settings.browser_driver == "chrome")
-                    {
-                        driver = new ChromeDriver();
-                    }
-                    else if (settings.browser_driver == "edge")
-                    {
-                        var options = new EdgeOptions();
-                        options.UseChromium = true;
-                        driver = new EdgeDriver(options);
-                    }
+                    driver = new ChromeDriver();
                 }
-                else if (settings.portable_mode == true)
+                else if (settings.browser_driver == "edge")
                 {
-                    if (settings.browser_driver == "chrome")
-                    {
-                        var chromeOptions = new ChromeOptions();
-                        chromeOptions.AddArgument("no-sandbox");
-                        chromeOptions.PlatformName = settings.remote_server_platform;
-                        
-                        driver = new RemoteWebDriver(new Uri("http://" + settings.remote_server_address + "/wd/hub"),chromeOptions.ToCapabilities());
-                    }
-                    else if (settings.browser_driver == "edge")
-                    {
-                        var options = new EdgeOptions();
-                        options.UseChromium = true;
-                        options.PlatformName = settings.remote_server_platform;
-                        driver = new RemoteWebDriver(new Uri("http://" + settings.remote_server_address + "/wd/hub"), options);
-                    }
+                    var options = new EdgeOptions();
+                    options.UseChromium = true;
+                    driver = new EdgeDriver(options);
                 }
-                 progressBar.Increment(10);
-                driver.Navigate().GoToUrl(settings.url);
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-
-                //Selcting the 7-segment button
-                try
-                {
-                    wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")));
-                    driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
-                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
-                    progressBar.Increment(10);
             }
-                catch (Exception e) {
-                    driver.Close();
-                    driver.Quit();
-                    MessageBox.Show("Could not find the key type selection button on the page. Verify the button ID in the Inspector");
-                };
-
-                //Inputting the IID into the 9, 7-segment fields
-                try
+            else if (settings.portable_mode == true)
+            {
+                if (settings.browser_driver == "chrome")
                 {
-                    for (int f = 0; f < 9; f++)
-                    {
-                        IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
-                        element.SendKeys(iid.Substring(f * 7, 7));
-                    }
-                    progressBar.Increment(10);
+                    var chromeOptions = new ChromeOptions();
+                    chromeOptions.AddArgument("no-sandbox");
+                    chromeOptions.PlatformName = settings.remote_server_platform;
+
+                    driver = new RemoteWebDriver(new Uri("http://" + settings.remote_server_address + "/wd/hub"), chromeOptions.ToCapabilities());
+                }
+                else if (settings.browser_driver == "edge")
+                {
+                    var options = new EdgeOptions();
+                    options.UseChromium = true;
+                    options.PlatformName = settings.remote_server_platform;
+                    driver = new RemoteWebDriver(new Uri("http://" + settings.remote_server_address + "/wd/hub"), options);
+                }
             }
-                catch (Exception e)
-                { 
-                    driver.Close();
-                    driver.Quit();
-                    MessageBox.Show("Encountered problem with inputting the 7-character segments of the IID, try again.");
+            progressBar.Increment(10);
+            driver.Navigate().GoToUrl(settings.url);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+
+            //Selcting the 7-segment button
+            try
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")));
+                driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+                progressBar.Increment(10);
+            }
+            catch (Exception e)
+            {
+                driver.Quit();
+                MessageBox.Show("Could not find the key type selection button on the page. Verify the button ID in the Inspector");
+            };
+
+            //Inputting the IID into the 9, 7-segment fields
+            try
+            {
+                for (int f = 0; f < 9; f++)
+                {
+                    IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
+                    element.SendKeys(iid.Substring(f * 7, 7));
+                }
+                progressBar.Increment(10);
+            }
+            catch (Exception e)
+            {
+                driver.Quit();
+                MessageBox.Show("Encountered problem with inputting the 7-character segments of the IID, try again.");
 
             }
 
             //Submit the IID
-            try {
-                    wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("custom-msft-submit")));
-                    driver.FindElement(By.Id("custom-msft-submit")).Click();
-                    progressBar.Increment(10);
+            try
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("custom-msft-submit")));
+                driver.FindElement(By.Id("custom-msft-submit")).Click();
+                progressBar.Increment(10);
             }
-                catch (Exception e) { 
-                    driver.Close();
-                    driver.Quit();
-                    MessageBox.Show("Encountered problem with submitting the 7-character segments of the IID, try again.");
+            catch (Exception e)
+            {
+                
+               
+                driver.Quit();
+                MessageBox.Show("Encountered problem with submitting the 7-character segments of the IID, try again.");
+                return;
             }
 
             //Input the amount of times the key has been activated
             try
             {
                 //wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='numberOfInstalls']")));
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
                 var element = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("numberOfInstalls")));
                 progressBar.Increment(10);
                 //IWebElement numinstalls = driver.FindElement(By.XPath("//*[@id='numberOfInstalls']"));
@@ -287,20 +292,29 @@ namespace GETIID
                 }
                 else
                 {
-                    Console.WriteLine("Number of installs not found");
-                    throw new Exception();
+                    driver.Quit();
+                    MessageBox.Show("Number of installs not found");
                 }
             }
             catch (NoSuchElementException e)
             {
+                driver.Dispose();
                 MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again.");
+                return;
             }
             catch (Exception f)
             {
-                if (f is WebDriverTimeoutException ||f is NullReferenceException)
+                if (f is WebDriverTimeoutException || f is NullReferenceException)
                 {
-                    Console.WriteLine("Could not find the number of installs element, try again.");
+
+
+                    Thread t = new Thread(() => MessageBox.Show("Could not find the number of installs element, try again. Could be a false positive." + f.Message));
+                    t.Start();
+                    //MessageBox.Show("Could not find the number of installs element, try again." + f.Message);
+                    
+
                 }
+                //MessageBox.Show(f.ToString());
             }
 
             //Returning the CID, or not
@@ -313,15 +327,11 @@ namespace GETIID
                 Console.WriteLine(ele);
                 if (ele != null)
                 {
-                    MessageBox.Show("The entered Key is NOT VALID, please try activating using another key.");
-                }
 
-            }
-            catch (NoSuchElementException e)
-            {
-                driver.Close();
-                driver.Quit();
-                MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again!");
+                    MessageBox.Show("The entered Key is NOT VALID, please try activating using another key.");
+
+                    
+                }
 
             }
             catch (WebDriverTimeoutException el)
@@ -351,25 +361,21 @@ namespace GETIID
                         MessageBox.Show("Problem reading CID from page, try again a few times, otherwise key is invalid");
                     }
                 }
-                catch (NoSuchElementException e)
+                catch (NoSuchElementException)
                 {
-                    try
-                    {
-                        var textElement = driver.FindElements(By.XPath("//tbody/tr[@style='font-size:14pt;']/td[@align='center']"));
-                        progressBar.Increment(10);
-                    }
-                    catch (NoSuchElementException ex)
-                    {
-                        driver.Close();
-                        driver.Quit();
-                        MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again!");
 
-                    }
+                    MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again!");
+
                 }
             }
             progressBar.Value = 70;
-            driver.Close();
+            Console.WriteLine("exiting getcid");
             driver.Quit();
+        }
+
+        private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            driver.Dispose();
         }
 
         public void ActivateByCID(string tcid)
@@ -465,7 +471,7 @@ namespace GETIID
             }
         }
 
-        public void getSeleniumStatus(string ip, string port)
+        public void getSeleniumStatus(string ip, string port, bool asPopup)
         {
             try
             {
@@ -478,12 +484,27 @@ namespace GETIID
 
                 if (response.status == 0 && response.value.ready)
                 {
-                    connectonStatus.Text = "Selenium Server Detected";
-                    connectonStatus.ForeColor = System.Drawing.Color.Green;
+                    if (asPopup)
+                    {
+                        MessageBox.Show("Selenium Server Detected");
+                    }
+                    else
+                    {
+                        connectonStatus.Text = "Selenium Server Detected";
+                        connectonStatus.ForeColor = System.Drawing.Color.Green;
+                    }
+                    
                 }
                 else {
-                    connectonStatus.Text = "Selenium Server Detected, but not all services may be running";
-                    connectonStatus.ForeColor = System.Drawing.Color.Orange;
+                    if (asPopup)
+                    {
+                        MessageBox.Show("Selenium Server Detected, but not all services may be running");
+                    }
+                    else
+                    {
+                        connectonStatus.Text = "Selenium Server Detected, but not all services may be running";
+                        connectonStatus.ForeColor = System.Drawing.Color.Orange;
+                    }
                 }
             }
             catch (Exception e){
@@ -500,9 +521,12 @@ namespace GETIID
         }
         private void cid_textbox_TextChanged(object sender, EventArgs e)
         {
-            
             ACTIVATE_BUTTON.Enabled = !string.IsNullOrWhiteSpace(cid_textbox.Text);
-            
+        }
+
+        private void connectonStatus_Click(object sender, EventArgs e)
+        {
+            getSeleniumStatus(settings.remote_server_address, settings.remote_server_port,false);
         }
     }
 }

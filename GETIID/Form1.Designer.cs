@@ -48,7 +48,6 @@ namespace GETIID
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
@@ -62,6 +61,8 @@ namespace GETIID
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.versionStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ActivationGroup.SuspendLayout();
@@ -100,7 +101,7 @@ namespace GETIID
             // REFRESH_BUTTON
             // 
             this.REFRESH_BUTTON.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.REFRESH_BUTTON.Location = new System.Drawing.Point(3, 259);
+            this.REFRESH_BUTTON.Location = new System.Drawing.Point(3, 252);
             this.REFRESH_BUTTON.Name = "REFRESH_BUTTON";
             this.REFRESH_BUTTON.Size = new System.Drawing.Size(550, 50);
             this.REFRESH_BUTTON.TabIndex = 2;
@@ -112,7 +113,7 @@ namespace GETIID
             // UNINSTALL_SELECTED_BUTTON
             // 
             this.UNINSTALL_SELECTED_BUTTON.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.UNINSTALL_SELECTED_BUTTON.Location = new System.Drawing.Point(3, 309);
+            this.UNINSTALL_SELECTED_BUTTON.Location = new System.Drawing.Point(3, 302);
             this.UNINSTALL_SELECTED_BUTTON.Name = "UNINSTALL_SELECTED_BUTTON";
             this.UNINSTALL_SELECTED_BUTTON.Size = new System.Drawing.Size(550, 55);
             this.UNINSTALL_SELECTED_BUTTON.TabIndex = 1;
@@ -137,7 +138,7 @@ namespace GETIID
             this.ACTIVE_SERIALS.Location = new System.Drawing.Point(8, 19);
             this.ACTIVE_SERIALS.MultiSelect = false;
             this.ACTIVE_SERIALS.Name = "ACTIVE_SERIALS";
-            this.ACTIVE_SERIALS.Size = new System.Drawing.Size(542, 234);
+            this.ACTIVE_SERIALS.Size = new System.Drawing.Size(542, 220);
             this.ACTIVE_SERIALS.TabIndex = 0;
             this.toolTip1.SetToolTip(this.ACTIVE_SERIALS, "Select the installation key that you want to uninstall");
             this.ACTIVE_SERIALS.UseCompatibleStateImageBehavior = false;
@@ -209,8 +210,7 @@ namespace GETIID
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configToolStripMenuItem,
-            this.debugToolStripMenuItem});
+            this.configToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -218,23 +218,18 @@ namespace GETIID
             // configToolStripMenuItem
             // 
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
-            this.configToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.configToolStripMenuItem.Text = "Config";
             this.configToolStripMenuItem.Click += new System.EventHandler(this.configToolStripMenuItem_Click);
-            // 
-            // debugToolStripMenuItem
-            // 
-            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.debugToolStripMenuItem.Text = "Debug";
-            this.debugToolStripMenuItem.Click += new System.EventHandler(this.debugToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.status,
             this.progressBar,
-            this.connectonStatus});
+            this.connectonStatus,
+            this.toolStripStatusLabel1,
+            this.versionStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 441);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1088, 22);
@@ -255,9 +250,11 @@ namespace GETIID
             // 
             // connectonStatus
             // 
+            this.connectonStatus.AutoToolTip = true;
             this.connectonStatus.Name = "connectonStatus";
             this.connectonStatus.Size = new System.Drawing.Size(104, 17);
             this.connectonStatus.Text = "Connection Status";
+            this.connectonStatus.ToolTipText = "Selenium Server Connection Status, Click to Refresh";
             this.connectonStatus.Click += new System.EventHandler(this.connectonStatus_Click);
             // 
             // ActivationGroup
@@ -329,13 +326,16 @@ namespace GETIID
             this.OfficeKeysGroup.Controls.Add(this.UNINSTALL_SELECTED_BUTTON);
             this.OfficeKeysGroup.Location = new System.Drawing.Point(6, 4);
             this.OfficeKeysGroup.Name = "OfficeKeysGroup";
-            this.OfficeKeysGroup.Size = new System.Drawing.Size(556, 367);
+            this.OfficeKeysGroup.Size = new System.Drawing.Size(556, 360);
             this.OfficeKeysGroup.TabIndex = 14;
             this.OfficeKeysGroup.TabStop = false;
             this.OfficeKeysGroup.Text = "Installed Office Keys";
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(502, 27);
             this.tabControl1.Name = "tabControl1";
@@ -351,9 +351,21 @@ namespace GETIID
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(578, 377);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Installed Office Keys";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(749, 17);
+            this.toolStripStatusLabel1.Spring = true;
+            // 
+            // versionStatus
+            // 
+            this.versionStatus.Name = "versionStatus";
+            this.versionStatus.Size = new System.Drawing.Size(45, 17);
+            this.versionStatus.Text = "Version";
+           // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -407,7 +419,6 @@ namespace GETIID
         private System.Windows.Forms.Button OFFICE_ACTIVATION_BUTTON;
         private System.Windows.Forms.Button CID_GET_BUTTON;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader ch_skuid;
         private System.Windows.Forms.ColumnHeader ch_desc;
         private System.Windows.Forms.ColumnHeader ch_status;
@@ -415,6 +426,8 @@ namespace GETIID
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.ToolStripProgressBar progressBar;
         private System.Windows.Forms.ToolStripStatusLabel connectonStatus;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel versionStatus;
     }
 }
 

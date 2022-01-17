@@ -29,15 +29,20 @@ namespace GETIID
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DebugMenu));
             this.SuspendLayout();
             // 
             // DebugMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(221, 346);
+            this.ClientSize = new System.Drawing.Size(204, 346);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "DebugMenu";
-            this.Text = "Debug";
+            this.Text = "Update";
+            this.TopMost = true;
             this.ResumeLayout(false);
 
         }

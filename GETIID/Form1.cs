@@ -15,6 +15,8 @@ using SeleniumExtras.WaitHelpers;
 using System.Net;
 using Newtonsoft.Json;
 using System.Threading;
+using System.Reflection;
+
 
 namespace GETIID
 {
@@ -33,14 +35,16 @@ namespace GETIID
         {
             InitializeComponent();
 
+
             string directory = Directory.GetCurrentDirectory();
             path = directory + "\\settings.xml";
             ioStreamer = new FileStream(path, FileMode.Open);
             XmlSerializer xser = new XmlSerializer(settings.GetType());
             settings = (Settings)xser.Deserialize(ioStreamer);
             getSeleniumStatus(settings.remote_server_address, settings.remote_server_port,false);
+            status.Text = "Status: Ready";
 
-
+            versionStatus.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             ioStreamer.Close();
         }
@@ -179,6 +183,7 @@ namespace GETIID
         {
             var optionsForm = new Options_Form(this);
             optionsForm.Show();
+            
         }
 
         public void GetIID() {
@@ -235,11 +240,13 @@ namespace GETIID
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")));
                 driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+               
                 progressBar.Increment(10);
             }
             catch (Exception e)
             {
                 driver.Quit();
+                status.Text = "Status: Failed while selecting button on the Webpage";
                 MessageBox.Show("Could not find the key type selection button on the page. Verify the button ID in the Inspector");
             };
 
@@ -251,13 +258,14 @@ namespace GETIID
                     IWebElement element = driver.FindElement(By.Id("field" + (f + 1)));
                     element.SendKeys(iid.Substring(f * 7, 7));
                 }
+                status.Text = "Status: Filled webpage with IID";
                 progressBar.Increment(10);
             }
             catch (Exception e)
             {
                 driver.Quit();
+                status.Text = "Status: Failed to fill out the webpage with IID";
                 MessageBox.Show("Encountered problem with inputting the 7-character segments of the IID, try again.");
-
             }
 
             //Submit the IID
@@ -265,14 +273,15 @@ namespace GETIID
             {
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("custom-msft-submit")));
                 driver.FindElement(By.Id("custom-msft-submit")).Click();
+                status.Text = "Status: Submitting IID...";
+
                 progressBar.Increment(10);
             }
             catch (Exception e)
             {
-                
-               
                 driver.Quit();
                 MessageBox.Show("Encountered problem with submitting the 7-character segments of the IID, try again.");
+                status.Text = "Status: Failed to Submit IID on webpage";
                 return;
             }
 
@@ -282,23 +291,29 @@ namespace GETIID
                 //wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='numberOfInstalls']")));
                 //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
                 var element = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("numberOfInstalls")));
+
+
                 progressBar.Increment(10);
                 //IWebElement numinstalls = driver.FindElement(By.XPath("//*[@id='numberOfInstalls']"));
 
                 if (element != null)
                 {
                     element.SendKeys("0");
+                    status.Text = "Status: Submitting Number of times the key has been used...";
+
                     driver.FindElement(By.Id("custom-msft-submit")).Click();
                 }
                 else
                 {
                     driver.Quit();
+                    status.Text = "Status: Could not find field for number of installations";
                     MessageBox.Show("Number of installs not found");
                 }
             }
             catch (NoSuchElementException e)
             {
                 driver.Dispose();
+                
                 MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again.");
                 return;
             }
@@ -306,13 +321,9 @@ namespace GETIID
             {
                 if (f is WebDriverTimeoutException || f is NullReferenceException)
                 {
-
-
                     Thread t = new Thread(() => MessageBox.Show("Could not find the number of installs element, try again. Could be a false positive." + f.Message));
                     t.Start();
                     //MessageBox.Show("Could not find the number of installs element, try again." + f.Message);
-                    
-
                 }
                 //MessageBox.Show(f.ToString());
             }
@@ -327,12 +338,9 @@ namespace GETIID
                 Console.WriteLine(ele);
                 if (ele != null)
                 {
-
+                    status.Text = "Status: Provided Key is INVALID";
                     MessageBox.Show("The entered Key is NOT VALID, please try activating using another key.");
-
-                    
                 }
-
             }
             catch (WebDriverTimeoutException el)
             {
@@ -344,7 +352,6 @@ namespace GETIID
 
                     if (elements != null)
                     {
-
                         foreach (var element in elements)
                         {
                             Console.WriteLine(element.Text);
@@ -363,7 +370,7 @@ namespace GETIID
                 }
                 catch (NoSuchElementException)
                 {
-
+                    status.Text = "Status: Activation encoutered a problem, try again";
                     MessageBox.Show("Encountered problem with finding and submitting the amount of times the key has been activated, try again!");
 
                 }
@@ -408,7 +415,6 @@ namespace GETIID
                 status.Text = "Status: Key Activation Attempted";
             }
         }
-     
 
         public static IWebElement WaitUntilElementVisible(IWebDriver drvr,string elementSelector, int timeout = 10)
         {
@@ -438,7 +444,6 @@ namespace GETIID
                 }
             }
         }
-        
        
         public string CMDCommand(string command, bool noWindow, bool shellexe)
         {
@@ -528,6 +533,7 @@ namespace GETIID
         {
             getSeleniumStatus(settings.remote_server_address, settings.remote_server_port,false);
         }
+
     }
 }
 

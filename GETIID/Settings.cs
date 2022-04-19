@@ -17,5 +17,6 @@ namespace GETIID
         public string remote_server_port { get; set; }
         public List<string> versions { get; set; }
         public string currentVersion { get; set; }
+        public int timeout { get; set; }
     }
 }

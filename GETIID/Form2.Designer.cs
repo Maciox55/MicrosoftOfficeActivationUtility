@@ -31,6 +31,7 @@ namespace GETIID
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options_Form));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.chromeversionLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.updateButtonLablel = new System.Windows.Forms.Label();
@@ -48,13 +49,17 @@ namespace GETIID
             this.About_Group = new System.Windows.Forms.GroupBox();
             this.github_link = new System.Windows.Forms.LinkLabel();
             this.Author_Label = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.timeoutField = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.About_Group.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.timeoutField)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.timeoutField);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.chromeversionLabel);
             this.groupBox1.Controls.Add(this.label1);
@@ -76,6 +81,16 @@ namespace GETIID
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Config";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(143, 186);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(51, 20);
+            this.button1.TabIndex = 22;
+            this.button1.Text = "Check Connection To Server";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // chromeversionLabel
             // 
@@ -249,15 +264,36 @@ namespace GETIID
             this.Author_Label.TabIndex = 2;
             this.Author_Label.Text = "Created By: Maciej \"Mac\" Bregisz";
             // 
-            // button1
+            // timeoutField
             // 
-            this.button1.Location = new System.Drawing.Point(143, 186);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(51, 20);
-            this.button1.TabIndex = 22;
-            this.button1.Text = "Check Connection To Server";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.timeoutField.Location = new System.Drawing.Point(179, 135);
+            this.timeoutField.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.timeoutField.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.timeoutField.Name = "timeoutField";
+            this.timeoutField.Size = new System.Drawing.Size(120, 20);
+            this.timeoutField.TabIndex = 23;
+            this.timeoutField.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(179, 118);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(96, 13);
+            this.label4.TabIndex = 24;
+            this.label4.Text = "Timeout (Seconds)";
             // 
             // Options_Form
             // 
@@ -278,6 +314,7 @@ namespace GETIID
             this.groupBox1.PerformLayout();
             this.About_Group.ResumeLayout(false);
             this.About_Group.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.timeoutField)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -303,5 +340,7 @@ namespace GETIID
         private System.Windows.Forms.Label chromeversionLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown timeoutField;
     }
 }

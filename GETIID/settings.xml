@@ -6,4 +6,5 @@
   <portable_mode>true</portable_mode>
   <remote_server_address>10.0.239.63:4444</remote_server_address>
   <remote_server_address>4444</remote_server_address>
+	<timeout>5</timeout>
 </Settings>

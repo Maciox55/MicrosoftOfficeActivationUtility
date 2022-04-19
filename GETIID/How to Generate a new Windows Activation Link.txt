@@ -1,0 +1,5 @@
+﻿To generate an activation URL call this number from a smartphone: 888-571-2048
+Follow prompts until it asks you if you are in front of the activation screen, say YES,
+The the system will ask you if you would like to do it on a smartphone, say YES,
+Wait for the activation link to be send via SMS, open that link in a browser on the phone then copy the URL and transfer it to a PC by sending an email to yourself/whatever other means.
+At that point you can use it in Mac's IID_GET program by pasting it in the Settings window under Microsoft URL.

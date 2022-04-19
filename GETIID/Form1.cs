@@ -232,12 +232,15 @@ namespace GETIID
             }
             progressBar.Increment(10);
             driver.Navigate().GoToUrl(settings.url);
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+
+            Thread.Sleep(settings.timeout*1000);
+
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
             //Selcting the 7-segment button
             try
             {
-                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")));
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")));
                 driver.FindElement(By.Id("1461173234025-3129f8602eccbe259104553afa8415434b4581-02de_1461173234023-2568f8602eccbe259104553afa8415434b458-10ad")).Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
                

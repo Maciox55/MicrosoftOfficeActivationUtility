@@ -43,6 +43,7 @@ namespace GETIID
                 Console.WriteLine(s.remote_server_platform);
                 Remote_Server_Platform.SelectedItem = s.remote_server_platform;
                 chromeversionLabel.Text = s.currentVersion;
+                timeoutField.Value = s.timeout;
                 Console.WriteLine(s.browser_driver);
                 //Close the file editing process
 
@@ -56,6 +57,7 @@ namespace GETIID
                 Default_Browser_Settings.SelectedItem = Properties.Settings.Default.browser_driver;
                 Remote_Server_Address.Text = Properties.Settings.Default.remote_server_address;
                 Remote_Server_Platform.SelectedItem = Properties.Settings.Default.remote_server_platform;
+                timeoutField.Value = Properties.Settings.Default.timeout;
                 Console.WriteLine("File Not Found, created and applied default values");
 
             }
@@ -99,6 +101,10 @@ namespace GETIID
                
             s.remote_server_port = "4444";
             parent.settings.remote_server_port = "4444";
+
+            s.timeout = ((int)timeoutField.Value);
+            parent.settings.timeout = ((int)timeoutField.Value);
+            Properties.Settings.Default.timeout = ((int)timeoutField.Value);
 
 
             s.portable_mode = Portable_Mode.Checked;
